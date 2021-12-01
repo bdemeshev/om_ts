@@ -1,0 +1,51 @@
+% !TEX root = ../om_ts_01.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Наивные модели прогнозирования}
+
+\end{frame}
+
+
+
+\begin{frame}{Наивные модели: план}
+  \begin{itemize}[<+->]
+    \item Белый шум. 
+    \item Независимые наблюдения.
+    \item Случайное блуждание.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Белый шум}
+
+\begin{block}{Белый шум}
+Временной ряд $u_t$ — белый шум, если:
+\begin{itemize}
+  \item $\E(u_t) = 0$;
+  \item $\Var(u_t) = \sigma^2$;
+  \item $\Cov(u_s, u_t) = 0$ при $s\neq t$.
+\end{itemize}
+\end{block}
+
+\pause
+\begin{itemize}[<+->]
+  \item Составная часть всех моделей. Чаще всего белый шум — это, что отказались моделировать. 
+  \item Часто дополнительно предполагают \alert{независимость} и \alert{нормальность}. 
+  \item В белом шуме \alert{черти водятся}.
+  
+  ARCH, GARCH модели волатильности основаны на том, что $u_t$ и $u_s$ могут быть зависимы!
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Наивные модели: итоги}
+
+  \begin{itemize}[<+->]
+    \item Белый шум, независимые наблюдения, случайное блуждание.
+    \item Идеи и составные части других моделей.
+    \item База для сравнения.
+  \end{itemize}
+\end{frame}
+
