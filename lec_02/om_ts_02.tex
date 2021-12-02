@@ -57,6 +57,8 @@ cross/.default={5pt}}
 \newcommand{\E}{\mathbb{E}}
 
 \newcommand{\cN}{\mathcal{N}}
+\newcommand{\dN}{\mathcal{N}}
+
 \newcommand{\qL}{q_{\text{left}}}
 \newcommand{\qR}{q_{\text{right}}}
 
@@ -73,10 +75,14 @@ cross/.default={5pt}}
 \newcommand{\bzero}{\mathbf{0}}
 
 
-\DeclareMathOperator{\Lin}{Span}
-\DeclareMathOperator{\Span}{Span}
-\DeclareMathOperator{\Image}{Image}
+
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\sVar}{sVar}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\sCov}{sCov}
+\DeclareMathOperator{\sCorr}{sCorr}
+\DeclareMathOperator{\Corr}{Corr}
+
 \DeclareMathOperator{\plim}{plim}
 
 
@@ -93,15 +99,20 @@ cross/.default={5pt}}
 \begin{frame} % название лекции
 
 
-\lecturetitle{Метод ближайших соседей и мэтчинг}
+\lecturetitle{Модели экспоненциального сглаживания}
 
 \end{frame}
 
 
-\input{chapters/14_01_knn.tex}
+\input{chapters/02_01_ets_ann.tex}
 
-\input{chapters/14_03_matching.tex}
+\input{chapters/02_02_ets_aan.tex}
 
+\end{document}
+\input{chapters/02_05_box_cox.tex}
 
+\input{chapters/02_07_cv.tex}
+
+\input{chapters/02_09_model_average.tex}
 
 \end{document}

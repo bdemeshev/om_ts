@@ -105,15 +105,15 @@ $ACF_2$: на сколько единиц в среднем $y_t$ выше ср�
   \begin{block}{Выборочная PACF}
     Оценим множество множественных регрессий:
     \[
-    \hat y_t = \hat\alpha + \hat\beta_1 y_{t-1}, \quad PACF_1 = \hat\beta_2;
+    \hat y_t = \hat\alpha + \hat\beta_1 y_{t-1}, \quad PACF_1 = \hat\beta_1;
     \]
     \pause
     \[
-      \hat y_t = \hat\beta  + \hat\beta_1 y_{t-1} + \hat\beta_2 y_{t-2}, \quad ACF_2 = \hat\beta_2;
+      \hat y_t = \hat\beta  + \hat\beta_1 y_{t-1} + \hat\beta_2 y_{t-2}, \quad PACF_2 = \hat\beta_2;
     \]
     \pause
     \[
-      \hat y_t = \hat\beta + \hat\beta_1 y_{t-1} + \ldots + \hat\beta_k y_{t-k}, \quad ACF_k = \hat\beta_k;
+      \hat y_t = \hat\beta + \hat\beta_1 y_{t-1} + \ldots + \hat\beta_k y_{t-k}, \quad PACF_k = \hat\beta_k;
     \]
   \end{block}
   
@@ -181,14 +181,13 @@ $ACF_2$: на сколько единиц в среднем $y_t$ выше ср�
     \alert{Идея определения:}
     При идеальном разложении с некоррелированными компонентами:
     \[
-      F_{trend} = \frac{\sVar(trend)}{\sVar(trend) + \sVar(remainder)}, F_{seas} = \frac{\sVar(seas)}{\sVar(seas) + \sVar(remainder)}, 
+      F_{trend} = \frac{\sVar(trend)}{\sVar(trend) + \sVar(remainder)},
     \]
 
     \pause
-    \alert{Выборочная дисперсия} ряда:
     \[
-      \sVar(y) = \frac{\sum (y_i - \bar y)^2}{T - 1}.
-    \]
+    F_{seas} = \frac{\sVar(seas)}{\sVar(seas) + \sVar(remainder)},
+  \]
   \end{frame}
 
   \begin{frame}{Выраженность тренда и сезонности}

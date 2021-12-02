@@ -91,11 +91,11 @@
   \begin{itemize}
     \item Выбор \alert{степени полинома}.
     \[
-      \min \sum_i \alert{w_q(x_i - x}) (y_i - \hat\beta_1 - \hat\beta_2 x_i - \hat\beta_3 x_i^2)^2
+      \min \sum_i \alert{K_h(x_i - x}) (y_i - \hat\beta_1 - \hat\beta_2 x_i - \hat\beta_3 x_i^2)^2
     \]  
     \item Выбор \alert{ядерной} функции.
     \[
-      w_h(d) = \frac{1}{\sqrt{2\pi}h} \exp(- d^2/2h^2)
+      K_h(d) = \frac{1}{\sqrt{2\pi}h} \exp(- d^2/2h^2)
     \]
     \item Выбор \alert{ширины окна} $h$.
 
@@ -235,4 +235,3 @@
 
 
 
-\end{document}

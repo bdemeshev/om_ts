@@ -1,219 +1,155 @@
-% !TEX root = ../om_metrics_14.tex
+% !TEX root = ../om_ts_02.tex
 
 \begin{frame} % название фрагмента
 
-\videotitle{Метод ближайших соседей}
+\videotitle{ETS(AAN)}
 
 \end{frame}
 
 
 
-\begin{frame}{Метод ближайших соседей: план}
+\begin{frame}{ETS(AAN): план}
   \begin{itemize}[<+->]
-    \item Использование соседей в задаче регрессии. 
-    \item Кого считать соседом?
-    \item Использование соседей в задаче классификации.
+    \item Наконец-то настоящий тренд!
+    \item Формулы для прогнозов.
+    \item Немного подробностей о правдоподобии.
   \end{itemize}
 
 \end{frame}
 
 
-\begin{frame}{Метод $k$ ближайших соседей: регрессия}
+\begin{frame}
+  \frametitle{Настоящий тренд!}
 
-\alert{Цель:} хотим спрогнозировать непрерывную величину $y$.
-\pause
+  $y_t$ — наблюдаемый ряд;
+
+  $\ell_t$ — тренд, очищенный ряд (\alert{единорог});
+
+  $b_t$ — текущая скорость роста очищенного ряда (\alert{единорог});
+
+  $u_t$ — случайная ошибка.
+
+  \pause
+  ETS(AAN):
+
+  A — \alert{аддитивная} ошибка;
+
+  A — \alert{аддитивный} тренд;
+
+  N — \alert{нет} сезонности. 
+
+\end{frame}
 
 
-\alert{Не предполагаем} линейной зависимости $y$ от предикторов. 
+\begin{frame}
+  \frametitle{ETS(AAN): уравнения}
+
+  
+  \[
+    \begin{cases}
+     y_t = \ell_{t-1} + \alert{b_{t-1}} + u_t; \\
+    \ell_t = \ell_{t-1} + \alert{b_{t-1}} + \alpha u_t, \text{ стартовое } \ell_0; \\
+    u_t \sim \dN(0;\sigma^2) \text{ и независимы.} \\
+    \alert{b_t = b_{t-1} + \beta u_{t-1}},\text{ стартовое } b_0; \\
+    \end{cases}
+  \]
+
+  \pause
+  Параметры: $\alpha$, $\beta$, $\sigma^2$, $\ell_0$, $b_0$.
+  
 
 \end{frame}
 
 \begin{frame}
+  \frametitle{ETS(AAN): прогнозируем}
 
-\begin{quotation}
-  Скажи мне, кто твой друг, и я скажу, кто ты. 
-\end{quotation}
-
-\begin{minipage}[H]{0.9\linewidth}
-  \begin{figure}
-  \centering
-    \caption{Мигель де Сервантес}
-    \includegraphics[width=0.55\linewidth]{figures/Servantes.png}
-  \end{figure}
-\end{minipage}
-
-\graylink{wikipedia.org}
-\end{frame}
-
-
-\begin{frame}{Ближайшие соседи}
-
-Зависимая переменная: $y_i$.
-
-Предикторы: $x_i = (a_i, b_i, c_i, \ldots)$.
-\pause
-
-Расстояние между двумя наблюдениями:
-
-\[
-d(x_1, x_2) = \sqrt{(a_1 - a_2)^2 + (b_1 - b_2)^2 + (c_1 - c_2)^2 + \ldots}  
-\]
-\pause
-
-\begin{block}{Естественное определение}
-  \alert{Ближайшими соседями} наблюдения $x$ называем те наблюдения, расстояние от него до которых наименьшее. 
-\end{block}
-
-\end{frame}
-
-\begin{frame}{Прогнозирование}
-
-\alert{Цель}: построить прогноз для $x = (a, b, c, \ldots)$.
-
-\pause
-
-Выбираем $k = 3$ ближайших соседей данного наблюдения. 
-
-\pause 
-
-Допустим это оказались наблюдения номер $5$, $42$ и $100$.
-
-\pause
-
-Считаем прогноз для вектора предикторов $x$ как среднее:
-\[
-\hat y = \frac{y_5 + y_{42} + y_{100}}{3}.
-\]
-\end{frame}
-
-\begin{frame}{Треугольники — соседи квадрата}
-
-\begin{center}
-\includegraphics[scale=0.8]{figures/knn.png}
-\end{center}
-
-\end{frame}
-
-\begin{frame}{Важность нормировки}
-
-Расстояние \alert{чувствительно} к выбору масштаба.
-\[
-d(x_i, x_j) = \sqrt{(a_i - a_j)^2 + (b_i - b_j)^2 + (c_i - c_j)^2 + \ldots}  
-\]
-
-\pause
-
-\alert{Важно} избавиться от единиц измерения!
-
-\pause
-Способ 1:
-\[
-a_i \to  \frac{a_i - \min(a)}{\max(a) - \min(a)}.
-\]
-
-
-\pause 
-
-После преобразования все переменные лежат в отрезке $[0;1]$.
-
-\pause
-
-Данное масштабирование чувствительно к выбросам. 
+Картинка с прогнозами на 2 шага вперед
 
 \end{frame}
 
 
-\begin{frame}{Избавиться от единиц измерения!}
+\begin{frame}
+  \frametitle{Прогноз на 1 шаг вперёд}
 
-  Способ 2:
   \[
-  a_i \to \frac{a_i - \bar a}{\sqrt{\frac{\sum (a_i - \bar a)^2}{n - 1}}}.
+    \begin{cases}
+     y_t = \ell_{t-1} + \alert{b_{t-1}} + u_t; \\
+    \ell_t = \ell_{t-1} + \alert{b_{t-1}} + \alpha u_t, \text{ стартовое } \ell_0; \\
+    u_t \sim \dN(0;\sigma^2) \text{ и независимы.} \\
+    \alert{b_t = b_{t-1} + \beta u_{t-1}},\text{ стартовое } b_0; \\
+    \end{cases}
+  \]
+  \pause
+\[
+y_{T+1} = \ell_T + b_T + u_{T+1}  
+\]
+\pause
+\[
+  (y_{T+1} \mid \mathcal F_T) \sim \dN(\ell_T + b_T; \sigma^2)  
+\]
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Прогноз на 2 шага вперёд}
+
+  \[
+    \begin{cases}
+      y_t = \ell_{t-1} + \alert{b_{t-1}} + u_t; \\
+     \ell_t = \ell_{t-1} + \alert{b_{t-1}} + \alpha u_t, \text{ стартовое } \ell_0; \\
+     u_t \sim \dN(0;\sigma^2) \text{ и независимы.} \\
+     \alert{b_t = b_{t-1} + \beta u_{t-1}},\text{ стартовое } b_0; \\
+     \end{cases}
+   \]
+  \pause
+  \begin{multline*}
+    y_{T+2} = \ell_{T+1} + b_{T+1} + u_{T+2} = (\ell_T + b_T + \alpha u_{T+1}) +\\
+    + (b_T + \beta u_{T+1}) + u_{T+2} 
+  \end{multline*}
+   \pause
+  \[
+  (y_{T+2} \mid \mathcal F_T) \sim \dN(\ell_T + 2b_T; \sigma^2((\alpha + \beta)^2 + 1))
   \]
   
-  \pause 
-  
-  После преобразования каждая переменная имеет среднее равное нулю и 
-  около 95\% её значений лежат в отрезке $[-2;2]$.
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Детали правдоподобия}
+  \alert{Функция правдоподобия}:
+  \begin{multline*}
+    \ln L(y \mid \theta) = \ln L(y_1 \mid \theta) + \ln L(y_2 \mid y_1, \theta) + \ldots + \\
+     + \ln L(y_T \mid y_{T-1}, \ldots, y_1, \theta),
+  \end{multline*}
+
+  где $\theta = (\alpha, \beta, \sigma^2, \ell_0, b_0)$.
+
+  \pause
+  Уравнения для эволюции $y_t$, $b_t$, $\ell_t$ — \alert{линейные}.
   
   \pause
-  
-  Данное масштабирование не учитывает выборочную корреляцию между переменными. 
-  
-\end{frame}
+  \[
+  (y_t \mid \mathcal F_{t-1}) \sim \dN(\ell_{t-1} + b_{t-1}; \sigma^2)
+  \]
 
-
-
-\begin{frame}{Избавиться от единиц измерения!}
-
-  Способ 3: метрика Махаланобиса.
-   \[
-   x_i \to \left(\widehat{ \Var }(x_i)\right)^{-0.5} (x_i - \bar x)
-   \]
-
-\pause
-
-Каждая новая переменная имеет среднее равное нулю и 
-около $95\%$ её значений лежат в отрезке $[-2; 2]$.
-
-\pause 
-Новые переменные имеют нулевую выборочную корреляцию. 
+  \pause
+  \[
+  \ln L(y_t \mid \mathcal F_{t-1}) = 
+  \ln \frac{1}{\sqrt{2\pi \sigma^2}} - \frac{1}{2\sigma^2} (y_t - (\ell_{t-1} + b_{t-1}))^2
+  \]
 
 \end{frame}
 
 
-\begin{frame}{Как выбрать количество соседей?}
-
-Основной способ: \alert{кросс-валидация}. 
-
-\pause 
-Для нескольких разных $k$, например, для $k \in \{1, 2, 3, 4, 5 \}$:
-
-\begin{enumerate}[<+->]
-
-\item Построим прогноз для каждого наблюдения, используя $k$ его ближайших соседей. 
-\item Посчитаем сумму квадратов ошибок прогнозов
-\[
-  MSE_{k} = \frac{1}{n}\sum (y_i - \hat y_i^{cv})^2.
-\]
-\end{enumerate}
-\pause
-Выберем \alert{оптимальное} $k$.
-\end{frame}
-
-
-
-\begin{frame}{Задача классификации}
-
-
-Что изменится, если $y$ — \alert{бинарная} переменная?  
-\pause
-
-Кратко: \alert{ничего}.
-
-\pause
-Зависимая переменная $y$ закодирована как $0$ и $1$, 
-а $x_5$, $x_{42}$, $x_{100}$ — ближайшие наблюдения к $x$.
-
-
-Считаем прогноз для вектора предикторов $x$ как среднее:
-\[
-\hat y = \frac{y_5 + y_{42} + y_{100}}{3}.
-\]
-
-\pause
-
-Величина $\hat y$ — \alert{оценка вероятности} того, что $y = 1$.
-
-\end{frame}
-
-\begin{frame}{Метод $k$ ближайших соседей: итоги}
+\begin{frame}{ETS(AAN): итоги}
 
   \begin{itemize}[<+->]
-    \item Предсказывает непрерывную или дискретную $y$.
-    \item Не требует явного предположения \alert{о виде зависимости} от предикторов.
-    \item Важно привести \alert{предикторы к общему масштабу}.
-    \item \alert{Нет коэффициентов}, чтобы интерпретировать. 
-    \item Можно комбинировать с другими методами.
+    \item Настоящий \alert{тренд в модели}. 
+    \item Наклон линии тренда может меняться.
+    \item Устройство функции правдоподобия.
   \end{itemize}
 \end{frame}
+
+
 
