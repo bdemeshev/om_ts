@@ -1,0 +1,83 @@
+% !TEX root = ../om_ts_02.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Много моделей}
+
+\end{frame}
+
+
+
+\begin{frame}{Много моделей: план}
+  \begin{itemize}[<+->]
+    \item Преобразование переменной. 
+    \item Усреднение моделей. 
+    \item Выбор с помощью кросс-валидации.
+    \item Выбор с помощью AIC.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Преобразование переменной}
+Помимо модели $y_t \sim ETS(AAA)$ можно оценить:
+
+\pause
+\alert{вторую модель} $\ln y_t \sim ETS(AAA)$ или \pause \alert{третью модель} $\sqrt{y_t} \sim ETS(AAA)$.
+
+\pause 
+Чтобы сравнивать прогнозы моделей, нужно работать в общем масштабе!
+
+\pause
+В \alert{зависимости от софта}: либо сами приводим к исходным единицам, либо это происходит автоматически. 
+\end{frame}
+
+\begin{frame}{Преобразование Бокса-Кокса}
+Для $y_t$, чей размах колебаний растёт с ростом $y_t$, \alert{разумно попробовать} логарифм 
+или преобразование Бокса-Кокса. 
+\pause
+Логарифм: $y_t \to \ln y_t$.
+
+Преобразование Бокса-Кокса: $y_t \to bc_{\lambda}(y_t)$.
+
+\pause
+
+(\alert{Обобщённое}) преобразование Бокса-Кокса: 
+\[
+bc_{\lambda}(y_t) =
+\begin{cases}
+\ln y_t, \text{ если } \lambda = 0 \\
+\sign(y_t) (\abs{y_t}^{\lambda} - 1)/\lambda, \text { если } \lambda \neq 0 \\
+\end{cases}
+\]
+
+\end{frame}
+
+
+\begin{frame}{Параметр лямбда}
+
+    Как выбрать параметр $\lambda$ для перехода $y_t \to bc_{lambda}(y_t)$?
+
+\[
+bc_{\lambda}(y_t) =
+\begin{cases}
+\ln y_t, \text{ если } \lambda = 0 \\
+\sign(y_t) (\abs{y_t}^{\lambda} - 1)/\lambda, \text { если } \lambda \neq 0 \\
+\end{cases}
+\]
+\pause
+
+\begin{itemize}[<+->]
+    \item Некоторые модели содержат его внутри себя и сами подбирают $\lambda$.
+    \item Можно подобрать $\lambda$ самостоятельно, чтобы стабилизировать амплитуду колебаний ряда. 
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Много моделей: итоги}
+
+  \begin{itemize}[<+->]
+    \item Сделать \alert{больше моделей}: преобразования переменной, усреднение моделей.
+    \item Отобрать \alert{лучшую}: кросс-валидация, критерий AIC.
+  \end{itemize}
+\end{frame}
+

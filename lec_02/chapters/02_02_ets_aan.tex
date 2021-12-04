@@ -50,7 +50,7 @@
      y_t = \ell_{t-1} + \alert{b_{t-1}} + u_t; \\
     \ell_t = \ell_{t-1} + \alert{b_{t-1}} + \alpha u_t, \text{ стартовое } \ell_0; \\
     u_t \sim \dN(0;\sigma^2) \text{ и независимы.} \\
-    \alert{b_t = b_{t-1} + \beta u_{t-1}},\text{ стартовое } b_0; \\
+    \alert{b_t = b_{t-1} + \beta u_t},\text{ стартовое } b_0; \\
     \end{cases}
   \]
 
@@ -72,12 +72,12 @@
   \frametitle{Прогноз на 1 шаг вперёд}
 
   \[
-    \begin{cases}
-     y_t = \ell_{t-1} + \alert{b_{t-1}} + u_t; \\
-    \ell_t = \ell_{t-1} + \alert{b_{t-1}} + \alpha u_t, \text{ стартовое } \ell_0; \\
-    u_t \sim \dN(0;\sigma^2) \text{ и независимы.} \\
-    \alert{b_t = b_{t-1} + \beta u_{t-1}},\text{ стартовое } b_0; \\
-    \end{cases}
+      \begin{cases}
+        y_t = \ell_{t-1} + b_{t-1} + u_t; \\
+       \ell_t = \ell_{t-1} + b_{t-1} + \alpha u_t, \text{ стартовое } \ell_0; \\
+       u_t \sim \dN(0;\sigma^2) \text{ и независимы.} \\
+       b_t = b_{t-1} + \beta u_t,\text{ стартовое } b_0; \\
+       \end{cases}
   \]
   \pause
 \[
@@ -96,10 +96,10 @@ y_{T+1} = \ell_T + b_T + u_{T+1}
 
   \[
     \begin{cases}
-      y_t = \ell_{t-1} + \alert{b_{t-1}} + u_t; \\
-     \ell_t = \ell_{t-1} + \alert{b_{t-1}} + \alpha u_t, \text{ стартовое } \ell_0; \\
+      y_t = \ell_{t-1} + b_{t-1} + u_t; \\
+     \ell_t = \ell_{t-1} + b_{t-1} + \alpha u_t, \text{ стартовое } \ell_0; \\
      u_t \sim \dN(0;\sigma^2) \text{ и независимы.} \\
-     \alert{b_t = b_{t-1} + \beta u_{t-1}},\text{ стартовое } b_0; \\
+     b_t = b_{t-1} + \beta u_t,\text{ стартовое } b_0; \\
      \end{cases}
    \]
   \pause
