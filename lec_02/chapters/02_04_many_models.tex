@@ -2,18 +2,17 @@
 
 \begin{frame} % название фрагмента
 
-\videotitle{Много моделей}
+\videotitle{Новые модели из старых}
 
 \end{frame}
 
 
 
-\begin{frame}{Много моделей: план}
+\begin{frame}{Новые модели из старых: план}
   \begin{itemize}[<+->]
     \item Преобразование переменной. 
+    \item Разница между ожиданием и медианой.
     \item Усреднение моделей. 
-    \item Выбор с помощью кросс-валидации.
-    \item Выбор с помощью AIC.
   \end{itemize}
 \end{frame}
 
@@ -44,8 +43,8 @@
 \[
 bc_{\lambda}(y_t) =
 \begin{cases}
-\ln y_t, \text{ если } \lambda = 0 \\
-\sign(y_t) (\abs{y_t}^{\lambda} - 1)/\lambda, \text { если } \lambda \neq 0 \\
+\ln y_t, \text{ если } \lambda = 0, \\
+\sign(y_t) (\abs{y_t}^{\lambda} - 1)/\lambda, \text { если } \lambda \neq 0. \\
 \end{cases}
 \]
 
@@ -54,30 +53,115 @@ bc_{\lambda}(y_t) =
 
 \begin{frame}{Параметр лямбда}
 
-    Как выбрать параметр $\lambda$ для перехода $y_t \to bc_{lambda}(y_t)$?
+    Как \alert{выбрать} параметр $\lambda$ для перехода $y_t \to bc_{\lambda}(y_t)$?
 
 \[
 bc_{\lambda}(y_t) =
 \begin{cases}
-\ln y_t, \text{ если } \lambda = 0 \\
-\sign(y_t) (\abs{y_t}^{\lambda} - 1)/\lambda, \text { если } \lambda \neq 0 \\
+\ln y_t, \text{ если } \lambda = 0, \\
+\sign(y_t) (\abs{y_t}^{\lambda} - 1)/\lambda, \text { если } \lambda \neq 0. \\
 \end{cases}
 \]
 \pause
 
 \begin{itemize}[<+->]
-    \item Некоторые модели содержат его внутри себя и сами подбирают $\lambda$.
-    \item Можно подобрать $\lambda$ самостоятельно, чтобы стабилизировать амплитуду колебаний ряда. 
+    \item Некоторые модели содержат его внутри себя и \alert{сами подбирают} $\lambda$.
+    \item Можно подобрать $\lambda$ самостоятельно, чтобы \alert{стабилизировать амплитуду} колебаний ряда. 
 \end{itemize}
 \end{frame}
 
 
+\begin{frame}
+    \frametitle{Разница между медианой и ожиданием}
 
-\begin{frame}{Много моделей: итоги}
+    Для модели $y_t \sim ETS(AAA)$ прогноз $\hat y_{t+h|t}$ означает \alert{две величины}:
+    
+    \begin{itemize}
+        \item Ожидание $\E(y_{t+h} \mid \mathcal F_t)$;
+        \item Медиана $\Med(y_{t+h} \mid \mathcal F_t)$.
+    \end{itemize}
+    
+    \pause 
+
+    Для модели $\ln y_t \sim ETS(AAA)$ ожидание и медиана \alert{не совпадают}! 
+    \[
+        \E(y_{t+h} \mid \mathcal F_t) \neq \Med(y_{t+h} \mid \mathcal F_t).
+    \]
+
+    \pause 
+    Если $Z \sim \dN(\mu, \sigma^2)$, то:
+    \[
+        \Med(e^Z) = \exp(\mu), \quad \E(e^Z) = \exp(\mu) \cdot \exp(\sigma^2/2).
+    \]
+
+
+\end{frame}
+
+\begin{frame}{Преобразование предиктивного интервала}
+
+    Построили предиктивный интервал для $z_t = \ln y_t$:
+    \[
+    z_{T+1} \in [z_{left}; z_{right}].    
+    \]
+
+    \pause
+    Преобразование \alert{естественное}:
+    \[
+    y_{T+1} \in [\exp(z_{left}); \exp(z_{right})].    
+    \]
+
+
+    \pause
+    Предиктивный интервал для $y_{T+1}$ \alert{не симметричен} ни относительно ожидания, 
+    ни относительно медианы. 
+
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Усредняем модели!}
+    Eсть две модели $y_t \sim \text{Model A}$, $y_t \sim \text{Model B}$.
+
+    \pause 
+    Создаём \alert{усреднённый алгоритм}:
+    \[
+    y_t \sim \frac{\text{Model A} + \text{Model B}}{2} = \text{Algorithm C}.    
+    \]
+
+    \pause 
+    Точечные прогнозы считаем как \alert{среднее} прогнозов:
+    \[
+        \hat y^c_{t+h\mid t} = \frac{\hat y^a_{t+h\mid t} + \hat y^b_{t+h\mid t}}{2}.
+    \]
+
+    \pause
+    Строго говоря, это — \alert{алгоритм}.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Маленькое чудо!}
+
+    Усреднённая модель \alert{может быть лучше} каждой из усредняемых.
+
+    \pause
+    Разложение на дисперсию и смещение:
+    \[
+        \E((y_{t+h} - \hat y_{t+h \mid t})^2) = \Var(y_{t+h} - \hat y_{t+h \mid t}) + (\E(y_{t+h} - \hat y_{t+h \mid t}))^2.
+    \]
+    \pause
+    Для \alert{несмещённых} моделей усреднение может снизить дисперсию ошибки прогноза.     
+    
+
+\end{frame}
+
+
+\begin{frame}{Новые модели из старых: итоги}
 
   \begin{itemize}[<+->]
-    \item Сделать \alert{больше моделей}: преобразования переменной, усреднение моделей.
-    \item Отобрать \alert{лучшую}: кросс-валидация, критерий AIC.
+    \item Преобразование переменных: логарифм, преобразование Бокса-Кокса.
+    \item Разница между ожиданием и медианой. 
+    \item Усреднение моделей.
   \end{itemize}
 \end{frame}
 
