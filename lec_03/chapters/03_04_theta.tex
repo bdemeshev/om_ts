@@ -1,0 +1,157 @@
+% !TEX root = ../om_ts_03.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Тета-метод}
+
+\end{frame}
+
+
+\begin{frame}{Тета-метод: план}
+  \begin{itemize}[<+->]
+    \item Неожиданный лидер. 
+    \item Авторская версия.
+    \item Частный случай ETS. 
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Тета-метод}
+
+    Появился в 2000 году и стал сенсацией на \alert{соревнованиях M3} по прогнозированию рядов. 
+
+    \pause
+
+    Работает для \alert{несезонных} рядов. 
+
+    \pause 
+
+    Изначально \alert{без статистической модели}. 
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Авторская версия}
+
+    \begin{enumerate}[<+->]
+        \item Раскладываем ряд на две тета-линии ($\theta=0$, $\theta = 2$).
+        \item Прогнозируем нулевую линию с помощью линейной регрессии. 
+        \item Прогнозируем вторую линию с помощью ETS(ANN).
+        \item Усредняем прогнозы.
+      \end{enumerate}
+
+      \pause
+      Можно предварительно удалить сезонность и в конце вернуть обратно. 
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Что такое тета-линия?}
+
+    Нулевая тета-линия — \alert{регрессия} ряда на время:
+
+    \[
+    \hat y_t = \hat \beta_1 + \hat \beta_2 t.    
+    \]
+    \pause
+    
+    Тета линия для произвольного тета:
+    \[
+        \Delta^2 y^{new}_t = \theta \Delta^2 y_t.
+    \]
+
+\end{frame}
+
+
+\begin{frame}{Интуиция}
+    
+    \begin{itemize}[<+->]
+    \item Нулевая тета-линия ловит долгосрочную тенденцию ряда.
+    \item Тета-линия ($\theta=2$) ловит краткосрочную тенденцию.
+    
+    \alert{Ускорение} тета-линии в $\theta$ раза сильнее 
+    ускорения исходного ряда. 
+    
+
+    \item Усреднение снижает дисперсию прогнозов. 
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Как подбирается тета-линия?}
+
+    Берём $\theta = 2$:
+    \[
+        \Delta^2 y^{new}_t = 2 \Delta^2 y_t.
+    \]
+    \pause
+    Или
+    \[
+        y^{new}_t - 2 y^{new}_{t-1} + y^{new}_{t-2}   = 2(y_t - 2 y_{t-1} + y_{t-2}).
+    \]
+
+    \pause
+    Новый ряд $y^{new}_t$ полностью определяется $y_1^{new}$, $y_{2}^{new}$.
+
+    \pause
+    Решаем оптимизационную задачу:
+    \[
+        \sum_{t=1}^T (y_t - y_t^{new})^2 \to \min.
+    \]
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Статистическая модель}
+
+    Уже в 2003 году появилась модель:
+
+    \[
+        \begin{cases}
+        y_t = \ell_t + b + u_t; \\
+        \ell_t = \ell_{t-1} + b + \alpha u_t; \\
+        \ell_1 = y_1. \\    
+        \end{cases}
+    \]
+
+    \pause
+    Или:
+    \[
+        \Delta y_t = b + (\alpha - 1) u_{t-1} + u_t. 
+    \]
+\end{frame}
+
+\begin{frame}
+    \frametitle{Тета-метод — вариант ETS}
+
+    \alert{Основа} — ETS(AAN):
+    \[
+        \begin{cases}
+          y_t = \ell_{t-1} +  b_{t-1} + u_t; \\
+         \ell_t = \ell_{t-1} + b_{t-1} + \alpha u_t, \text{ стартовое } \ell_1; \\
+         b_t =  b_{t-1} + \beta u_t, \text{ стартовое } b_0; \\
+         u_t \sim \dN(0;\sigma^2) \text{ и независимы.} \\
+         \end{cases}
+    \]
+    \pause
+    Убираем стохастичность тренда $\beta = 0$. 
+
+    \pause
+    Возможны \alert{нюансы} инициализации. 
+\end{frame}
+
+
+
+
+\begin{frame}{Тета-метод: итоги}
+
+  \begin{itemize}[<+->]
+    \item Хорошо работает для \alert{несезонных} данных.
+    \item Особая \alert{вариация} ETS модели. 
+  \end{itemize}
+\end{frame}
+
