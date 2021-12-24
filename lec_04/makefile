@@ -1,4 +1,4 @@
-file_name = om_ts_02
+file_name = om_ts_04
 
 $(file_name).pdf: $(file_name).tex chapters/*.tex figures/ preamble.tex
 	# protection against biber error
