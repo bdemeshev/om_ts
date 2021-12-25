@@ -1,167 +1,170 @@
-% !TEX root = ../om_ts_02.tex
+% !TEX root = ../om_ts_04.tex
 
 \begin{frame} % название фрагмента
 
-\videotitle{Новые модели из старых}
+\videotitle{$MA(\infty)$}
 
 \end{frame}
 
 
 
-\begin{frame}{Новые модели из старых: план}
+\begin{frame}{$MA(\infty)$: план}
   \begin{itemize}[<+->]
-    \item Преобразование переменной. 
-    \item Разница между ожиданием и медианой.
-    \item Усреднение моделей. 
+    \item Определение.
+    \item Существование бесконечных сумм. 
+    \item Стационарность.
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Преобразование переменной}
-Помимо модели $y_t \sim ETS(AAA)$ можно оценить:
+\begin{frame}
+  \frametitle{$MA(\infty)$}
 
-\pause
-\alert{вторую модель} $\ln y_t \sim ETS(AAA)$ или \pause \alert{третью модель} $\sqrt{y_t} \sim ETS(AAA)$.
+  \begin{block}{Определение}
+    Процесс $(y_t)$, который \alert{можно} представить в виде
+    \[
+    y_t = \mu + u_t + \alpha_1 u_{t-1} + \alpha_2 u_{t-2} + \ldots
+    \]
+    где $(u_t)$ — белый шум, бесконечное количество $\alpha_i \neq 0$ и 
+    $\sum_{i=1}^{\infty} \alpha_i^2 < \infty$, 
+    называется $MA(\infty)$ процессом. 
+  \end{block}
 
-\pause 
-Чтобы сравнивать прогнозы моделей, нужно работать в общем масштабе!
+  \pause 
+  $MA(\infty)$:
+  \[
+  y_t = 5 + u_t + 0.5 u_{t-1} + 0.5^2 u_{t-2} + 0.5^3 u_{t-3} + \ldots
+  \]
 
-\pause
-В \alert{зависимости от софта}: либо сами приводим к исходным единицам, либо это происходит автоматически. 
-\end{frame}
-
-\begin{frame}{Преобразование Бокса-Кокса}
-Для $y_t$, чей размах колебаний растёт с ростом $y_t$, \alert{разумно попробовать} логарифм 
-или преобразование Бокса-Кокса. 
-\pause
-Логарифм: $y_t \to \ln y_t$.
-
-Преобразование Бокса-Кокса: $y_t \to bc_{\lambda}(y_t)$.
-
-\pause
-
-(\alert{Обобщённое}) преобразование Бокса-Кокса: 
-\[
-bc_{\lambda}(y_t) =
-\begin{cases}
-\ln y_t, \text{ если } \lambda = 0, \\
-\sign(y_t) (\abs{y_t}^{\lambda} - 1)/\lambda, \text { если } \lambda \neq 0. \\
-\end{cases}
-\]
+  \pause
+  А \alert{так нельзя}:
+  \[
+   y_t = 5 + u_t + \frac{1}{\sqrt{2}}u_{t-1} + \frac{1}{\sqrt{3}} u_{t-2} + \frac{1}{\sqrt{4}} u_{t-3} + \ldots
+  \]
 
 \end{frame}
 
+\begin{frame}
+  \frametitle{Сходимости}
+  \begin{block}{Теорема}
+    Если 
+    $\sum_{i=0}^{\infty} \alpha_i^2 < \infty$ и $(u_t)$ — стационарный процесс с нулевым ожиданием, 
+    то последовательность частичных сумм $y^q_t$
+    \[
+      y^q_t = \sum_{i=0}^q \alpha_i u_{t-i}
+    \]
+  сходится при $q \to \infty$  \alert{в среднеквадртичном}, \alert{по вероятности} и \alert{по распределению}.
+  \end{block}
 
-\begin{frame}{Параметр лямбда}
-
-    Как \alert{выбрать} параметр $\lambda$ для перехода $y_t \to bc_{\lambda}(y_t)$?
-
-\[
-bc_{\lambda}(y_t) =
-\begin{cases}
-\ln y_t, \text{ если } \lambda = 0, \\
-\sign(y_t) (\abs{y_t}^{\lambda} - 1)/\lambda, \text { если } \lambda \neq 0. \\
-\end{cases}
-\]
-\pause
-
-\begin{itemize}[<+->]
-    \item Некоторые модели содержат его внутри себя и \alert{сами подбирают} $\lambda$.
-    \item Можно подобрать $\lambda$ самостоятельно, чтобы \alert{стабилизировать амплитуду} колебаний ряда. 
-\end{itemize}
+  Нюанс: сходимость взвешенной суммы гарантирована для стационарного $(u_t)$.  
+  \pause
+  \begin{block}{Бонус}
+    \ldots и получающийся процесс $(y_t)$ стационарен.
+  \end{block}
 \end{frame}
 
 
 \begin{frame}
-    \frametitle{Разница между медианой и ожиданием}
+  \frametitle{Виды сходимости: $q \to \infty$}
 
-    Для модели $y_t \sim ETS(AAA)$ прогноз $\hat y_{t+h|t}$ означает \alert{две величины}:
-    
+  \begin{block}{$y^q_t \to y_t$ в среднеквадратичном}
+    \[
+      \E((y_t - y_t^q)^2) \to 0.
+    \]
+  \end{block}
+\pause
+\begin{block}{$y^q_t \to y_t$ по вероятности}
+  \[
+    \P(\abs{y_t - y_t^q} > \varepsilon) \to 0 \text{ для любого числа } \varepsilon > 0.
+  \]
+\end{block}
+
+\pause
+\begin{block}{$y^q_t \to y_t$ по распределению}
+  \[
+    \P(y_t^q \leq c)  \to \P(y_t \leq c)
+  \]
+  в точках непрерывности $F(c) = \P(y_t \leq c)$.
+\end{block}
+
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Теорема Вольда}
+
+  \begin{block}{Теорема}
+    Если $(y_t)$ — стационарный процесс, то он представим в виде:
+    \[
+    y_t = \sum_{i=0}^{\infty} \alpha_i u_{t-i} + r_t,   
+    \]
+    где 
     \begin{itemize}
-        \item Ожидание $\E(y_{t+h} \mid \mathcal F_t)$;
-        \item Медиана $\Med(y_{t+h} \mid \mathcal F_t)$.
+      \item $(u_t)$ — белый шум,
+      \item $\sum \alpha_i^2 < \infty$,
+      \item $r_t$ — линейно \alert{предсказуемый} случайный процесс,
+      \item $\Cov(u_t, r_t) = 0$.
     \end{itemize}
-    
-    \pause 
+  \end{block}
 
-    Для модели $\ln y_t \sim ETS(AAA)$ ожидание и медиана \alert{не совпадают}! 
-    \[
-        \E(y_{t+h} \mid \mathcal F_t) \neq \Med(y_{t+h} \mid \mathcal F_t).
-    \]
-
-    \pause 
-    Если $Z \sim \dN(\mu, \sigma^2)$, то:
-    \[
-        \Med(e^Z) = \exp(\mu), \quad \E(e^Z) = \exp(\mu) \cdot \exp(\sigma^2/2).
-    \]
-
-
-\end{frame}
-
-\begin{frame}{Преобразование предиктивного интервала}
-
-    Построили предиктивный интервал для $z_t = \ln y_t$:
-    \[
-    z_{T+1} \in [z_{left}; z_{right}].    
-    \]
-
-    \pause
-    Преобразование \alert{естественное}:
-    \[
-    y_{T+1} \in [\exp(z_{left}); \exp(z_{right})].    
-    \]
-
-
-    \pause
-    Предиктивный интервал для $y_{T+1}$ \alert{не симметричен} ни относительно ожидания, 
-    ни относительно медианы. 
-
+  \pause
+  Ахтунг: \alert{deterministic} часто ошибочно переводят как 
+  последовательность констант. 
 
 \end{frame}
 
 \begin{frame}
-    \frametitle{Усредняем модели!}
-    Eсть две модели $y_t \sim \text{Model A}$, $y_t \sim \text{Model B}$.
+  \frametitle{Предсказуемый процесс}
 
-    \pause 
-    Создаём \alert{усреднённый алгоритм}:
-    \[
-    y_t \sim \frac{\text{Model A} + \text{Model B}}{2} = \text{Algorithm C}.    
-    \]
 
-    \pause 
-    Точечные прогнозы считаем как \alert{среднее} прогнозов:
-    \[
-        \hat y^c_{t+h\mid t} = \frac{\hat y^a_{t+h\mid t} + \hat y^b_{t+h\mid t}}{2}.
-    \]
+\begin{block}{Правильное определение}
+  Процесс $(r_t)$ называется \alert{линейно предсказуемым}, если
+  \begin{itemize}
+    \item $(r_t)$ стационарен,
+    \item $r_t = \beta_0 + \beta_1 r_{t-1} + \beta_2 r_{t-2} + \ldots + \beta_p r_{t-p}$.
+  \end{itemize}
 
-    \pause
-    Строго говоря, это — \alert{алгоритм}.
+  \end{block}
 
 \end{frame}
+
 
 \begin{frame}
-    \frametitle{Маленькое чудо!}
-
-    Усреднённая модель \alert{может быть лучше} каждой из усредняемых.
-
-    \pause
-    Разложение на дисперсию и смещение:
-    \[
-        \E((y_{t+h} - \hat y_{t+h \mid t})^2) = \Var(y_{t+h} - \hat y_{t+h \mid t}) + (\E(y_{t+h} - \hat y_{t+h \mid t}))^2.
-    \]
-    \pause
-    Для \alert{несмещённых} моделей усреднение может снизить дисперсию ошибки прогноза.     
-    
-
-\end{frame}
-
-
-\begin{frame}{Новые модели из старых: итоги}
+  \frametitle{$MA(\infty)$: плюсы}
 
   \begin{itemize}[<+->]
-    \item Преобразование переменных: логарифм, преобразование Бокса-Кокса.
-    \item Разница между ожиданием и медианой. 
-    \item Усреднение моделей.
+    \item \alert{Стационарный} процесс.
+    \item Богатая структура корреляций $\rho_k$.
+    \item \alert{Практически} любой стационарный процесс. 
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{$MA(\infty)$: проблемы}
+
+    \begin{itemize}[<+->]
+        \item Оценить невозможно: \alert{бесконечное} число параметров $\alpha_i$. 
+        
+        \pause
+        Введём \alert{ограничения} на $\alpha_i$!
+
+        \item Да ещё и запись \alert{не единственна}.
+        
+        \pause
+        Договоримся о \alert{канонической} записи!
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{$MA(\infty)$: итоги}
+
+  \begin{itemize}[<+->]
+    \item \alert{Быстро} стремящиеся к нулю коэффициенты. 
+    \item \alert{Стационарный процесс}. 
+    \item \alert{Пока} не ясно как оценивать.
   \end{itemize}
 \end{frame}
 
