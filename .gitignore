@@ -278,3 +278,4 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+lec_01/.DS_Store
