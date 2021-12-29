@@ -1,0 +1,135 @@
+% !TEX root = ../om_ts_05.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{ARMA уравнение}
+
+\end{frame}
+
+
+
+\begin{frame}{ARMA уравнение: план}
+  \begin{itemize}[<+->]
+    \item Определение. 
+    \item Неединственность решений.
+    \item Несократимость уравнения.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{О цели старых проблемах}
+
+  Цель: простое уравнение для широкого множества процессов. 
+
+  \pause
+
+  Проблемки:   
+  \begin{itemize}
+    \item \alert{Неединственность уравнения} для одного процесса. 
+  \end{itemize}
+  \pause 
+
+  Требование \alert{обратимости уравнения}. \pause
+  \begin{itemize}
+    \item У $MA(\infty)$ \alert{бесконечное} число параметров. 
+  \end{itemize}
+    
+  \pause
+  Попробуем \alert{добавить лаги} $y_t$ в уравнение!
+
+  
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Новая проблема}
+
+  \[
+  y_t  - y_{t-1} = u_t - u_{t-1}, \text{ где } (u_t) \text{ — белый шум.}  
+  \]
+
+  \pause
+  Решения:
+  \pause 
+  \begin{itemize}[<+->]
+    \item $y_t = u_t$;
+    \item $y_t = u_t - 0.7$;
+    \item $y_t = u_t - 0.8$;
+  \end{itemize}
+
+  \pause
+  
+  \alert{Бесконечное} число решений. 
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{ARMA уравнение}
+
+  \begin{block}{Определение}
+    Уравнение вида
+    \[
+      y_t = c + \beta_1 y_{t-1} + \ldots + \beta_p y_{t-p} + u_t + \alpha_1 u_{t-1} + \ldots + \alpha_q u_{t-q},
+    \]
+    где $(u_t)$ — белый шум назовём $ARMA$ уравнением. 
+    
+    \alert{ARMA — AutoRegressive Moving Average — \\
+    Авторегрессия и скользящее среднее}
+  \end{block}
+  
+
+  \pause
+  \begin{block}{Определение}
+    Уравнение вида $P(L) y_t = c + Q(L) u_t$, 
+    где $(u_t)$ — белый шум, $P(L)$ и $Q(L)$ полиномы от лага с $P(0)=Q(0)=1$, назовём $ARMA$ уравнением.   
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Уравнение — не процесс!}
+
+  Почему?
+  \begin{itemize}[<+->]
+    \item Одно уравнение имеет \alert{множество решений}.
+    \item Один процесс описывается \alert{несколькими уравнениями}. 
+  \end{itemize}  
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Несократимость уравнения}
+
+  \begin{block}{Определение}
+    $AMRA$ уравнение вида $P(L) y_t = c + Q(L) u_t$ называется \alert{несократимым}, 
+    если полиномы $P(L)$ и $Q(L)$ не имеют общих корней. 
+  \end{block}
+
+  \pause 
+  Сократимое уравнение:
+  \[
+   y_t - y_{t-1} = u_t - u_{t-1}     \text{ или } (1- L)y_t = (1 - L)u_t
+  \]
+  \pause
+  Несократимое уравнение:
+  \[
+   y_t - y_{t-1} = u_t - 0.5u_{t-1}     \text{ или } (1- L)y_t = (1 - 0.5L)u_t
+  \]
+
+\end{frame}
+
+
+
+
+\begin{frame}{ARMA уравнение: итоги}
+
+  \begin{itemize}[<+->]
+    \item Линейное уравнение на $y_t$ и $u_t$.
+    \item Имеет много решений. 
+    \item Требование несократимости. 
+  \end{itemize}
+\end{frame}
+

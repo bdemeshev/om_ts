@@ -1,0 +1,146 @@
+% !TEX root = ../om_ts_05.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Структура решений ARMA уравнения}
+
+\end{frame}
+
+
+
+\begin{frame}{Структура решений: план}
+  \begin{itemize}[<+->]
+    \item Начальные условия. 
+    \item Когда есть стационарные решения? 
+    \item Разрушаем мифы!
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Начальные условия}
+  Несократимое $ARMA$ уравнение:
+  \[
+  y_t = 0.5 y_{t-1} + u_t, \text{ где } (u_t) \text{  — белый шум.}  
+  \]
+
+  \pause
+  Пробуем разные начальные условия:
+  \pause
+  \begin{itemize}
+    \item $\alert{y_0=0}$: 
+  \end{itemize}
+  \pause 
+  $y_1 = u_1$, $y_2 = u_2 + 0.5 u_1$, $y_3 = u_3 + 0.5 u_2 + 0.25 u_1$, \ldots
+  \pause \pause
+  \begin{itemize}
+    \item $\alert{y_0=2u_1}$:
+  \end{itemize}
+  \pause
+    $y_1 = 2u_1$, $y_2 = u_2 + u_1$, $y_3 = u_3 + 0.5 u_2 + 0.5 u_1$, \ldots  
+  \pause
+
+  Начальные условия определяют и прошлые $y_t$!
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{}
+
+  \begin{block}{Теоремка один}
+    Любое $ARMA$ уравнение, где есть хотя бы один лаг $y_t$, имеет бесконечное количество решений. 
+  \end{block}
+  
+  \pause
+  \begin{block}{Теоремка два}
+    Для того, чтобы получить единственное решение $ARMA$ уравнения вида $P(L)y_t = c + Q(L) u_t$, 
+    достаточно задать начальные условия в количестве равном степени $P(L)$.
+  \end{block}
+  \pause
+  \[
+  y_t = 0.6 y_{t-1} + 0.08y_{t-2} + u_t \pause \text{ и } \alert{y_0 = u_0, y_1 = u_0 + 4}
+  \]
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{А сколько стационарных решений?}
+
+  \begin{block}{Правильная теорема}
+    Если $ARMA$ уравнение $P(L) y_t = c + Q(L) u_t$ несократимо, то оно 
+    \begin{itemize}
+      \item имеет ровно одно стационарное решение, если у лагового полинома $P(\ell)$ у всех корней $\abs{\ell_i} \neq 1$;
+      \item не имеет стационарных решений, если у лагового полинома $P(\ell)$ есть корень с $\abs{\ell_i} = 1$.
+    \end{itemize}    
+  \end{block}
+
+  \pause
+  \begin{itemize}
+    \item $y_t = 0.5 y_{t-1} + u_t, P(L) = 1 - 0.5L, \ell_1 = 2$: \pause одно стационарное решение;
+  \end{itemize}
+  \pause  
+  \begin{itemize}
+    \item $y_t = y_{t-1} + u_t, P(L) = 1 - L, \ell_1 = 1$:  нет стационарных решений. 
+  \end{itemize}
+    
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Вариация теоремы}
+
+  \begin{block}{Правильная теорема}
+    Если $ARMA$ уравнение несократимо, то оно 
+    \begin{itemize}
+      \item имеет ровно одно стационарное решение, если у характеристического полинома $\phi_{AR}(\lambda)$ у всех корней $\abs{\lambda_i} \neq 1$;
+      \item не имеет стационарных решений, еслиу характеристического полинома $\phi_{AR}(\lambda)$ есть корень с $\abs{\lambda_i} = 1$.
+    \end{itemize}    
+  \end{block}
+
+
+
+  \pause
+  \begin{itemize}
+    \item $y_t = 0.5 y_{t-1} + u_t, \phi_{AR}(\lambda) = \lambda - 0.5, \lambda_1 = 0.5$: \pause одно стационарное решение;
+  \end{itemize}
+  \pause  
+  \begin{itemize}
+    \item $y_t = y_{t-1} + u_t, \phi_{AR}(\lambda) = \lambda - 1, \lambda_1 = 1$: нет стационарных решений. 
+  \end{itemize}
+
+\end{frame}
+
+
+
+
+\begin{frame}
+  \frametitle{Распространённый миф!}
+  \[
+    y_t =  2y_{t-1} + u_t, \pause  \lambda_1 = 2: \text{ нет стационарных решений? }  
+  \]
+  
+  \pause
+
+  Стационарное решение в студию!
+  \[
+  y_t =  -0.5 u_{t+1} - 0.5^2 u_{t+2} - 0.5^3 u_{t+3} - 0.5^4 u_{t+4} +\ldots 
+  \]
+  
+
+\end{frame}
+
+
+
+\begin{frame}{Структура решений: итоги}
+
+  \begin{itemize}[<+->]
+    \item \alert{Начальные условия} дают единственность решения.
+    \item У несократимого уравнения стационарное решение либо \alert{единственно}, либо не существует.
+    \item Разрушаем \alert{миф} про $\abs{\lambda_i} > 1$.
+  \end{itemize}
+\end{frame}
+
+
+

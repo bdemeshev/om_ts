@@ -1,0 +1,139 @@
+% !TEX root = ../om_ts_05.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Происхождение мифа}
+
+\end{frame}
+
+
+
+\begin{frame}{Происхождение мифа: план}
+  \begin{itemize}[<+->]
+    \item Нюансы $MA(\infty)$. 
+    \item Шумы бывают разные!
+    \item Выводы о структуре решений. 
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Распространённый миф!}
+    \[
+      y_t =  2y_{t-1} + u_t, \pause  \lambda_1 = 2: \text{ есть стационарное решение! }  
+    \]
+    Стационарное решение в студию!
+    \[
+    y_t =  -0.5 u_{t+1} - 0.5^2 u_{t+2} - 0.5^3 u_{t+3} - 0.5^4 u_{t+4} +\ldots 
+    \]
+    
+  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Это не MA($\mathbf{\infty}$)?}
+
+    \[
+        y_t =  -0.5 u_{t+1} - 0.5^2 u_{t+2} - 0.5^3 u_{t+3} - 0.5^4 u_{t+4} +\ldots 
+    \]
+
+    \pause 
+    \begin{block}{Определение}
+        Процесс $(y_t)$, который \alert{можно} представить в виде
+        \[
+        y_t = \mu + u_t + \alpha_1 u_{t-1} + \alpha_2 u_{t-2} + \ldots,
+        \]
+        где $(u_t)$ — белый шум, бесконечное количество $\alpha_i \neq 0$ и 
+        $\sum_{i=1}^{\infty} \alpha_i^2 < \infty$, 
+        называется $MA(\infty)$ процессом. 
+    \end{block}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Это MA($\mathbf{\infty}$)!}
+
+    \[
+        y_t =  -0.5 u_{t+1} - 0.5^2 u_{t+2} - 0.5^3 u_{t+3} - 0.5^4 u_{t+4} +\ldots 
+    \]
+
+    Данный \alert{можно} представить в виде
+    \pause 
+    \[
+      y_t = \nu_t + 0.5 \nu_{t-1} + 0.5^2 \nu_{t-2} +0.5^3 \nu_{t-3} + \ldots, 
+    \]
+    где $(\nu_t)$ — белый шум.
+    \pause 
+    \[
+        \nu_t = (1 - 0.5L) y_t = (1- 0.5L) (-0.5 u_{t+1} - 0.5^2 u_{t+2} - 0.5^3 u_{t+3} +\ldots )   
+    \]
+
+\end{frame}
+
+
+
+
+
+\begin{frame}
+    \frametitle{Происхождение мифа}
+  
+    \begin{block}{Правильная теорема}
+      Если $ARMA$ уравнение $P(L) y_t = c + Q(L) u_t$ несократимо, то оно 
+       имеет ровно одно стационарное решение \alert{вида $MA(\infty)$ относительно $(u_t)$}, 
+        если и только если $\abs{\ell_i} > 1$ для всех корней лагового полинома $P(L)$.
+    \end{block}
+  
+    \pause
+    \begin{block}{Вариация}
+      Если $ARMA$ уравнение $P(L) y_t = c + Q(L) u_t$ несократимо, то оно 
+       имеет ровно одно стационарное решение \alert{вида $MA(\infty)$ относительно $(u_t)$}, 
+        если и только если $\abs{\lambda_i} < 1$ для всех корней характеристического полинома $\phi_{AR}(\lambda)$.
+    \end{block}
+  \end{frame}
+  
+  
+  
+  \begin{frame}
+    \frametitle{Разница в шумах!}
+    
+    Несократимое $ARMA$ уравнение $P(L) y_t = c + Q(L)u_t$.
+  \pause
+    \begin{itemize}[<+->]
+      \item Если у $\phi_{AR}(\lambda)$ есть корень с $\abs{\lambda_i} = 1$,
+      \pause
+      то стационарных решений нет. 
+      \pause
+      \item Если у $\phi_{AR}(\lambda)$ все корни с $\abs{\lambda_i} < 1$,
+      \pause
+      то стационарное решение единственно и имеет вид $MA(\infty)$ относительно $(u_t)$:
+      \[
+        y_t = \mu + u_t + \alpha_1 u_{t-1} + \alpha_2 u_{t-2} +\ldots 
+      \]
+      \pause
+      \item Если у $\phi_{AR}(\lambda)$ все корни с $\abs{\lambda_i} \neq 1$,
+      но есть корень с $\abs{\lambda_i} > 1$,
+      \pause
+      то стационарное решение единственно и \alert{имеет вид $MA(\infty)$}:
+      \[
+        y_t = \mu +  \alert{\nu_t + \alpha_1 \nu_{t-1} + \alpha_2 \nu_{t-2} +\ldots}
+      \]
+  
+    \end{itemize}
+  
+    
+  
+  \end{frame}
+  
+
+
+
+\begin{frame}{Происхождение мифа: итоги}
+
+  \begin{itemize}[<+->]
+    \item Слово «\alert{можно}» в $MA(\infty)$ важно. 
+    \item Разница между $\abs{\lambda_i} < 1$ и $\abs{\lambda_i} > 1$.
+  \end{itemize}
+\end{frame}
+
+
+

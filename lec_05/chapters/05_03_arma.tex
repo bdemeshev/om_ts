@@ -1,0 +1,143 @@
+% !TEX root = ../om_ts_05.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{ARMA процесс}
+
+\end{frame}
+
+
+
+\begin{frame}{ARMA процесс: план}
+  \begin{itemize}[<+->]
+    \item Определение $AR$ и $ARMA$ процесса. 
+    \item Обратимость для единственности записи. 
+    \item Свойства.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{AR процесс}
+
+  \begin{block}{Определение}
+    $AR(p)$ процессом с уравнением 
+    \[
+      y_t = c + \beta_1 y_{t-1} + \ldots + \beta_p y_{t-p} + u_t, 
+    \]
+    где $(u_t)$ — белый шум и $\beta_p \neq 0$ называется 
+    решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.
+  \end{block}
+
+  \pause  
+  \begin{block}{Определение с лагами}
+    $AR(p)$ процессом с уравнением 
+    \[
+      P(L)y_t = c + u_t, 
+    \]
+    где $(u_t)$ — белый шум, $P(L)$ имеет степень $p$ и $P(0)=1$, называется 
+    решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.  
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Определения у разных авторов}
+
+  \pause 
+  В нашем определении $AR(p)$ процесс обязательно \alert{стационарен}. 
+  
+  \pause
+  Некоторые авторы \alert{не включают} в определение $AR(p)$ процесса требование стационарности. 
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{ARMA процесс}
+
+  \begin{block}{Определение}
+    $ARMA(p, q)$ процессом с уравнением 
+    \[
+      y_t = c + \beta_1 y_{t-1} + \ldots + \beta_p y_{t-p} + u_t + \alpha_1 u_{t-1} + \ldots + \alpha_q u_{t-q}, 
+    \]
+    где $(u_t)$ — белый шум, $\beta_p \neq 0$ и $\alpha_q \neq 0$, называется 
+    решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.
+  \end{block}
+
+  \pause  
+  \begin{block}{Определение с лагами}
+    $ARMA(p,q)$ процессом с уравнением 
+    \[
+      P(L)y_t = c + Q(L)u_t, 
+    \]
+    где $(u_t)$ — белый шум, $P(L)$ имеет степень $p$, $Q(L)$ имеет степень $q$, и $P(0)=Q(0)=1$, называется 
+    решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.  
+  \end{block}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{ARMA: нюансы}
+
+  \pause
+  \begin{itemize}
+    \item $AR(1)$ процесс с уравнением $y_t = 0.5 y_{t-1} + u_t$:
+  \end{itemize}
+  \pause
+  \[
+  y_t = u_t + 0.5 u_{t-1} + 0.5^2 u_{t-2} + \ldots   \pause
+  \]
+  \begin{itemize}
+    \item $AR(1)$ процесса с уравнением $y_t = y_{t-1} + u_t$ не существует:
+  \end{itemize}
+  \pause
+  $\phi_{AR}(\lambda) = \lambda - 1$, $\lambda_1 = 1$, нет стационарных решений. 
+
+  \pause
+  \begin{itemize}
+    \item $AR(1)$ процесса с уравнением $y_t = 2 y_{t-1} + u_t$ не существует:
+  \end{itemize}
+  \pause
+  $\phi_{AR}(\lambda) = \lambda - 2$, $\lambda_1 = 2$, есть стационарное решение 
+  вида $MA(\infty)$, но не относительно $(u_t)$.
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{А что с неединственностью записи?}
+
+  Один и тот же $ARMA(p, q)$ процесс $(y_t)$ может описываться разными уравнениями!
+  \pause
+
+  \begin{block}{Спасительная обратимость}
+      Если ряд $(y_t)$ является $ARMA(p, q)$ процессом с уравнением $P(L) y_t = c + Q(L) u_t$, 
+      то данное уравнение будет единственным, если на $MA$ часть выполнено условие обратимости. 
+  \end{block}
+
+  \pause
+  Условие обратимости $ARMA$ уравнения:
+  \begin{itemize}
+    \item у характеристического многочлена $\phi_{MA}(\lambda)$ все корни $\abs{\lambda_i} <1$;
+    \item у лагового многочлена $Q(L)$ все корни $\abs{\ell_i} >1$.
+  \end{itemize}
+
+
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{ARMA процесс: итоги}
+  \begin{itemize}[<+->]
+    \item Процесс стационарен по \alert{определению};
+    \item $AR$ и $MA$ процессы являются \alert{частными случаями} $ARMA$ процесса;
+    \item \alert{Малым числом параметров} описываются разнообразные $MA(\infty)$ процессы. 
+    \item Можно \alert{приблизить} любую структуру $ACF$ и $PACF$.
+    \item Теоретические $ACF$ и $PACF$ \alert{экспоненциально} убывают.
+   \item Условие обратимости гарантирует \alert{единственность записи}. 
+  \end{itemize}
+
+\end{frame}
+
+
+
