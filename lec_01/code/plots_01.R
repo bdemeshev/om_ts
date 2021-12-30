@@ -4,9 +4,16 @@ library(rio) # импорт данных
 library(ggrepel) # симпатичные подписи
 library(patchwork) # расположение графиков
 
-setwd("/Users/polinapogorelova/Documents/GitHub/om_ts/data")
+# theme_set('light') fails with gg_tsdisplay
+plot_height = 15
+plot_width = 20
 
-m = import('marriages.csv')
+# session - set work directory
+# to source file location now (!)
+# then use relative path with ..
+# it will work on all computers ;)
+
+m = import('../../data/marriages.csv')
 glimpse(m)
 
 m2 = mutate(m, date = yearmonth(date))
@@ -15,6 +22,8 @@ glimpse(m2)
 marriages = as_tsibble(m2, index = date,
                        key = c('code', 'name'))
 marriages
+
+marriages = mutate(marriages, total = total / 1000)
 
 marr_rf = filter(marriages, code == 643)
 
@@ -26,8 +35,9 @@ model_table = model(train, snaive = SNAIVE(total))
 model_table
 
 fcst = forecast(model_table, h = '2 years')
-fcst %>% autoplot(marr_rf) + labs(title = "Сезонный наивный прогноз числа свадеб на 2 года", y = "число свадеб", x = NULL)
-ggsave("/Users/polinapogorelova/Documents/GitHub/om_ts/pictures/1-17.png")
+fcst %>% autoplot(marr_rf) + labs(title = "Сезонный наивный прогноз числа свадеб", y = "Число свадеб, тыс.", x = NULL) +
+  theme_light()
+ggsave("../pictures/om_ts_01-017.png", dpi = 300, width = plot_width, height = plot_height, unit = 'cm')
 
 # 1-25. близость рядов
 marr_features_acf = features(marriages, total,
@@ -37,9 +47,10 @@ ggplot(marr_features_acf, aes(x = acf1,
                               y = diff1_acf1,
                               label = name)) +
   geom_point() + geom_text_repel() +
-  labs(title = "Взаиморасположение регионов России",
-       y = "ACF(1) для приращения ряда", x = "ACF(1) для исходного ряда")
-ggsave("/Users/polinapogorelova/Documents/GitHub/om_ts/pictures/1-25.png")
+  labs(title = "Близость регионов России по динамике числа свадеб",
+       y = "ACF(1) для приращения ряда", x = "ACF(1) для исходного ряда") +
+  theme_light()
+ggsave("../pictures/om_ts_01-025.png", dpi = 300, width = plot_width, height = plot_height, unit = 'cm')
 
 # 1-41. stl разложение
 marr_rf = filter(marriages, code == 643)
@@ -59,42 +70,42 @@ components(stl_model)
 components(stl_model) %>%
   pivot_longer(cols = total:remainder, names_to = "component", values_to = "total") %>%
   mutate(component = factor(component, levels = c("total", "trend", "season_year", "remainder"), labels = c("число свадеб, тыс.", "тренд", "сезонность", "остаток"))) %>%
-  ggplot(aes(x = date, y = total/1000)) +
+  ggplot(aes(x = date, y = total)) +
   geom_line(na.rm = TRUE) +
   theme_light() +
   facet_grid(vars(component), scales = "free_y") +
   labs(title = "STL разложение числа свадеб в России",
        subtitle = "Число свадеб = тренд + сезонность + остаток",
        y = NULL, x = NULL)
-ggsave("/Users/polinapogorelova/Documents/GitHub/om_ts/pictures/1-41.png")
+ggsave("../pictures/om_ts_01-041.png", dpi = 300, width = plot_width, height = plot_height, unit = 'cm')
 
 # 1-74. копия 1-41
 components(stl_model) %>%
   pivot_longer(cols = total:remainder, names_to = "component", values_to = "total") %>%
   mutate(component = factor(component, levels = c("total", "trend", "season_year", "remainder"), labels = c("число свадеб, тыс.", "тренд", "сезонность", "остаток"))) %>%
-  ggplot(aes(x = date, y = total/1000)) +
+  ggplot(aes(x = date, y = total)) +
   geom_line(na.rm = TRUE) +
   theme_light() +
   facet_grid(vars(component), scales = "free_y") +
   labs(title = "STL разложение числа свадеб в России",
        subtitle = "Число свадеб = тренд + сезонность + остаток",
        y = NULL, x = NULL)
-ggsave("/Users/polinapogorelova/Documents/GitHub/om_ts/pictures/1-74.png")
+ggsave("../pictures/om_ts_01-074.png", dpi = 300, width = plot_width, height = plot_height, unit = 'cm')
 
 # 1-120. ACF
-p1 <- marr_rf %>% ggplot(aes(x = date, y = total/1000)) +
+p1 <- marr_rf %>% ggplot(aes(x = date, y = total)) +
   geom_line(na.rm = TRUE) +
   theme_light() +
-  labs(y = "число свадеб, тыс.", x = NULL)
+  labs(y = "Число свадеб, тыс.", x = NULL)
 
-p2 <- ACF(marr_rf, total) %>% autoplot() + labs(y = "АКФ", x = NULL)
-(p1 + p2) + plot_annotation(title = "График числа свадьб в России и АКФ")
-ggsave("/Users/polinapogorelova/Documents/GitHub/om_ts/pictures/1-120.png")
+p2 <- ACF(marr_rf, total) %>% autoplot() + labs(y = "ACF", x = NULL) + theme_light()
+(p1 + p2) + plot_annotation(title = "График числа свадеб в России и ACF")
+ggsave("../pictures/om_ts_01-120.png", dpi = 300, width = plot_width, height = plot_height, unit = 'cm')
 
 # 1-127. pacf
-p3 <- PACF(marr_rf, total) %>% autoplot() + labs(y = "ЧАКФ", x = NULL)
-(p1 + p2) + plot_annotation(title = "График числа свадьб в России и ЧАКФ")
-ggsave("/Users/polinapogorelova/Documents/GitHub/om_ts/pictures/1-127.png")
+p3 <- PACF(marr_rf, total) %>% autoplot() + labs(y = "PACF", x = NULL)  + theme_light()
+(p1 + p2) + plot_annotation(title = "График числа свадеб в России и PACF")
+ggsave("../pictures/om_ts_01-127.png", dpi = 300, width = plot_width, height = plot_height, unit = 'cm')
 
 
 # 1-138, похож на 1-25, только другие feat
@@ -105,9 +116,28 @@ ggplot(marr_features_stl, aes(x = trend_strength,
                           y = seasonal_strength_year,
                           label = name)) +
   geom_point() + geom_text_repel() +
-  labs(title = "Взаиморасположение регионов России",
-       y = "выраженность сезонности", x = "выраженность тренда")
-ggsave("/Users/polinapogorelova/Documents/GitHub/om_ts/pictures/1-138.png")
+  labs(title = "Близость регионов России по динамике числа свадеб",
+       y = "Выраженность сезонности", x = "Выраженность тренда")  + theme_light()
+ggsave("../pictures/om_ts_01-138.png", dpi = 300, width = plot_width, height = plot_height, unit = 'cm')
+
+# 1-157 два прогноза
+train = filter(marr_rf, date < ymd('2020-01-01'))
+test =  filter(marr_rf, date >= ymd('2020-01-01'))
+
+model_table = model(train, naive = NAIVE(total),
+                    indep = TSLM(total ~ 1))
+model_table
+
+fcst = forecast(model_table, h = '2 years')
+p1 = filter(fcst, .model == 'naive') %>% autoplot(marr_rf) + labs(title = "Случайное блуждание", y = "Число свадеб", x = NULL) +
+  theme_light() + theme(legend.position = "none")
+p1
+p2 = filter(fcst, .model == 'indep') %>% autoplot(marr_rf) + labs(title = "Модель независимых наблюдений", y = "Число свадеб", x = NULL) +
+  theme_light() + theme(legend.position = "none")
+p2
+(p1 | p2)
+ggsave("../pictures/om_ts_01-157.png", dpi = 300, width = plot_width, height = plot_height, unit = 'cm')
+
 
 
 # 1-162. наивный сезонный
@@ -118,6 +148,7 @@ model_table = model(train, snaive = SNAIVE(total))
 model_table
 
 fcst = forecast(model_table, h = '2 years')
-fcst %>% autoplot(marr_rf) + labs(title = "Сезонный наивный прогноз числа свадеб на 2 года", y = "число свадеб", x = NULL)
-ggsave("/Users/polinapogorelova/Documents/GitHub/om_ts/pictures/1-162.png")
+fcst %>% autoplot(marr_rf) + labs(title = "Сезонный наивный прогноз числа свадеб", y = "Число свадеб, тыс.", x = NULL) +
+  theme_light()
+ggsave("../pictures/om_ts_01-162.png", dpi = 300, width = plot_width, height = plot_height, unit = 'cm')
 

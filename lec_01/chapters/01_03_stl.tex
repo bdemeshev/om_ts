@@ -56,7 +56,8 @@
 
 \begin{frame}{STL: результат}
 
-  здесь будет картинка
+  \includegraphics[width=\textwidth]{pictures/om_ts_01-074.png}
+
 
 \end{frame}
 
@@ -66,7 +67,7 @@
   \item Хотим построить прогноз для точки $x$.
   \item Находим \alert{локальные оценки} $\hat\beta_1(x)$, $\hat\beta_2(x)$. 
   \[
-      \min \sum_i \alert{K_h(x_i - x}) (y_i - \hat\beta_1 - \hat\beta_2 x_i)^2
+      \min \sum_i \alert{K_h(x_i - x)} (y_i - \hat\beta_1 - \hat\beta_2 x_i)^2
   \]
   \item Прогнозируем:
   \[
@@ -91,7 +92,7 @@
   \begin{itemize}
     \item Выбор \alert{степени полинома}.
     \[
-      \min \sum_i \alert{K_h(x_i - x}) (y_i - \hat\beta_1 - \hat\beta_2 x_i - \hat\beta_3 x_i^2)^2
+      \min \sum_i \alert{K_h(x_i - x)} (y_i - \hat\beta_1 - \hat\beta_2 x_i - \hat\beta_3 x_i^2)^2
     \]  
     \item Выбор \alert{ядерной} функции.
     \[
@@ -201,7 +202,7 @@
     Значение $n_o = 1$ часто достаточно.
     \item $n_i$ — число проходов внутреннего цикла. 
 
-    Значение $n_o = 2$ часто достаточно для достижения сходимости.
+    Значение $n_i = 2$ часто достаточно для достижения сходимости.
   \end{itemize}
     
 \end{frame}

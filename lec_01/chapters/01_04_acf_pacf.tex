@@ -82,7 +82,7 @@ $ACF_2$: на сколько единиц в среднем $y_t$ выше ср�
 
 \begin{frame}{Ряд и его ACF}
 
-картинка
+  \includegraphics[width=\textwidth]{pictures/om_ts_01-120.png}
 
 \end{frame}
 
@@ -109,11 +109,11 @@ $ACF_2$: на сколько единиц в среднем $y_t$ выше ср�
     \]
     \pause
     \[
-      \hat y_t = \hat\beta  + \hat\beta_1 y_{t-1} + \hat\beta_2 y_{t-2}, \quad PACF_2 = \hat\beta_2;
+      \hat y_t = \hat\alpha  + \hat\beta_1 y_{t-1} + \hat\beta_2 y_{t-2}, \quad PACF_2 = \hat\beta_2;
     \]
     \pause
     \[
-      \hat y_t = \hat\beta + \hat\beta_1 y_{t-1} + \ldots + \hat\beta_k y_{t-k}, \quad PACF_k = \hat\beta_k;
+      \hat y_t = \hat\alpha + \hat\beta_1 y_{t-1} + \ldots + \hat\beta_k y_{t-k}, \quad PACF_k = \hat\beta_k;
     \]
   \end{block}
   
@@ -126,7 +126,7 @@ $ACF_2$: на сколько единиц в среднем $y_t$ выше ср�
   
   \begin{frame}{Ряд и его PACF}
 
-    картинка
+    \includegraphics[width=\textwidth]{pictures/om_ts_01-127.png}
     
   \end{frame}
     
@@ -202,11 +202,11 @@ $ACF_2$: на сколько единиц в среднем $y_t$ выше ср�
     \begin{itemize}[<+->]
       \item Выраженность тренда:
       \[
-        F_{trend} = \max\left\{1 - \frac{\sVar(remainder)}{\sVar(trend) + \sVar(remainder)}, 0 \right\}.
+        F_{trend} = \max\left\{1 - \frac{\sVar(remainder)}{\sVar(trend + remainder)}, 0 \right\}.
       \]
       \item Выраженность сезонности:
       \[
-        F_{seas} = \max\left\{1 - \frac{\sVar(remainder)}{\sVar(seas) + \sVar(remainder)}, 0 \right\}.
+        F_{seas} = \max\left\{1 - \frac{\sVar(remainder)}{\sVar(seas + remainder)}, 0 \right\}.
       \]
 
     \end{itemize}
@@ -218,7 +218,8 @@ $ACF_2$: на сколько единиц в среднем $y_t$ выше ср�
 
   \begin{frame}{Выраженность тренда и сезонности}
 
-    картинка с рядами по свадьбам
+    \includegraphics[width=\textwidth]{pictures/om_ts_01-138.png}
+
     
   \end{frame}
   
