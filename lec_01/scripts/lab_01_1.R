@@ -21,16 +21,21 @@ autoplot(two, rwalk)
 gg_season(two, rwalk)
 gg_subseries(two, rwalk)
 
+# зависимость текущего значени от лагированных
 gg_lag(two, rwalk)
 gg_lag(two, iid)
 
+# несколько графиков сразу
 gg_tsdisplay(two, rwalk, plot_type = 'season')
 
+# встроенный набор данных по уровню воды в озере Гурон
 LakeHuron
 
+# переводим из формата ts в формат tsibble
 lake = as_tsibble(LakeHuron)
 lake
 
+# переводим из формата tsibble в формат ts
 two_old_ts = as.ts(two)
 two_old_ts
 str(two_old_ts)
