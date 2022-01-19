@@ -134,9 +134,120 @@
 
 \begin{frame}
     \frametitle{Деление на обучающую и тестовую}
-
-    картинка с растущими стрелочками-параболками
-
+    
+        \begin{tikzpicture}[
+            roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+            rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+            unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+            ]
+            \node[roundnode] (1) {};
+            \node[roundnode] (2) [right=of 1] {};
+            \node[roundnode] (3) [right=of 2] {};
+            \node[roundnode] (4) [right=of 3] {};
+            \node[roundnode] (5) [right=of 4] {};
+            \node[rednode] (6) [right=of 5] {};
+            \node[unusednode] (7) [right=of 6] {};
+            \node[unusednode] (8) [right=of 7] {};
+            \node[unusednode] (9) [right=of 8] {};
+            \node[unusednode] (10) [right=of 9] {};
+            \draw[->] (5.north) to [out=30,in=150] (6.north);
+            \draw (1) -- (2);
+            \draw (2) -- (3);
+            \draw (3) -- (4);
+            \draw (4) -- (5);
+    
+        \end{tikzpicture}
+            
+        \begin{tikzpicture}[
+            roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+            rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+            unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+            ]
+            \node[roundnode] (1) {};
+            \node[roundnode] (2) [right=of 1] {};
+            \node[roundnode] (3) [right=of 2] {};
+            \node[roundnode] (4) [right=of 3] {};
+            \node[roundnode] (5) [right=of 4] {};
+            \node[unusednode] (6) [right=of 5] {};
+            \node[rednode] (7) [right=of 6] {};
+            \node[unusednode] (8) [right=of 7] {};
+            \node[unusednode] (9) [right=of 8] {};
+            \node[unusednode] (10) [right=of 9] {};
+            \draw[->] (5.north) to [out=30,in=150] (7.north);
+            \draw (1) -- (2);
+            \draw (2) -- (3);
+            \draw (3) -- (4);
+            \draw (4) -- (5);
+    
+        \end{tikzpicture}
+    
+        \begin{tikzpicture}[
+            roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+            rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+            unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+            ]
+            \node[roundnode] (1) {};
+            \node[roundnode] (2) [right=of 1] {};
+            \node[roundnode] (3) [right=of 2] {};
+            \node[roundnode] (4) [right=of 3] {};
+            \node[roundnode] (5) [right=of 4] {};
+            \node[unusednode] (6) [right=of 5] {};
+            \node[unusednode] (7) [right=of 6] {};
+            \node[rednode] (8) [right=of 7] {};
+            \node[unusednode] (9) [right=of 8] {};
+            \node[unusednode] (10) [right=of 9] {};
+            \draw[->] (5.north) to [out=30,in=150] (8.north);
+            \draw (1) -- (2);
+            \draw (2) -- (3);
+            \draw (3) -- (4);
+            \draw (4) -- (5);
+        \end{tikzpicture}
+    
+        \begin{tikzpicture}[
+            roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+            rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+            unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+            ]
+            \node[roundnode] (1) {};
+            \node[roundnode] (2) [right=of 1] {};
+            \node[roundnode] (3) [right=of 2] {};
+            \node[roundnode] (4) [right=of 3] {};
+            \node[roundnode] (5) [right=of 4] {};
+            \node[unusednode] (6) [right=of 5] {};
+            \node[unusednode] (7) [right=of 6] {};
+            \node[unusednode] (8) [right=of 7] {};
+            \node[rednode] (9) [right=of 8] {};
+            \node[unusednode] (10) [right=of 9] {};
+            \draw[->] (5.north) to [out=30,in=150] (9.north);
+            \draw (1) -- (2);
+            \draw (2) -- (3);
+            \draw (3) -- (4);
+            \draw (4) -- (5);
+        \end{tikzpicture}
+    
+        \begin{tikzpicture}[
+            roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+            rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+            unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+            ]
+            \node[roundnode] (1) {};
+            \node[roundnode] (2) [right=of 1] {};
+            \node[roundnode] (3) [right=of 2] {};
+            \node[roundnode] (4) [right=of 3] {};
+            \node[roundnode] (5) [right=of 4] {};
+            \node[unusednode] (6) [right=of 5] {};
+            \node[unusednode] (7) [right=of 6] {};
+            \node[unusednode] (8) [right=of 7] {};
+            \node[unusednode] (9) [right=of 8] {};
+            \node[rednode] (10) [right=of 9] {};
+            \draw[->] (5.north) to [out=30,in=150] (10.north);
+            \draw (1) -- (2);
+            \draw (2) -- (3);
+            \draw (3) -- (4);
+            \draw (4) -- (5);
+        \end{tikzpicture}
+    
+    
 \end{frame}
 
 
@@ -160,7 +271,118 @@
 \begin{frame}
     \frametitle{Кросс-валидация скользящим окном}
 
-    картинка с растущими стрелочками-параболками
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[roundnode] (1) {};
+        \node[roundnode] (2) [right=of 1] {};
+        \node[roundnode] (3) [right=of 2] {};
+        \node[roundnode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[rednode] (6) [right=of 5] {};
+        \node[unusednode] (7) [right=of 6] {};
+        \node[unusednode] (8) [right=of 7] {};
+        \node[unusednode] (9) [right=of 8] {};
+        \node[unusednode] (10) [right=of 9] {};
+        \draw[->] (5.north) to [out=30,in=150] (6.north);
+        \draw (1) -- (2);
+        \draw (2) -- (3);
+        \draw (3) -- (4);
+        \draw (4) -- (5);
+
+    \end{tikzpicture}
+        
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[unusednode] (1) {};
+        \node[roundnode] (2) [right=of 1] {};
+        \node[roundnode] (3) [right=of 2] {};
+        \node[roundnode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[roundnode] (6) [right=of 5] {};
+        \node[rednode] (7) [right=of 6] {};
+        \node[unusednode] (8) [right=of 7] {};
+        \node[unusednode] (9) [right=of 8] {};
+        \node[unusednode] (10) [right=of 9] {};
+        \draw[->] (6.north) to [out=30,in=150] (7.north);
+        \draw (2) -- (3);
+        \draw (3) -- (4);
+        \draw (4) -- (5);
+        \draw (5) -- (6);
+
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[unusednode] (1) {};
+        \node[unusednode] (2) [right=of 1] {};
+        \node[roundnode] (3) [right=of 2] {};
+        \node[roundnode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[roundnode] (6) [right=of 5] {};
+        \node[roundnode] (7) [right=of 6] {};
+        \node[rednode] (8) [right=of 7] {};
+        \node[unusednode] (9) [right=of 8] {};
+        \node[unusednode] (10) [right=of 9] {};
+        \draw[->] (7.north) to [out=30,in=150] (8.north);
+        \draw (3) -- (4);
+        \draw (4) -- (5);
+        \draw (5) -- (6);
+        \draw (6) -- (7);
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[unusednode] (1) {};
+        \node[unusednode] (2) [right=of 1] {};
+        \node[unusednode] (3) [right=of 2] {};
+        \node[roundnode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[roundnode] (6) [right=of 5] {};
+        \node[roundnode] (7) [right=of 6] {};
+        \node[roundnode] (8) [right=of 7] {};
+        \node[rednode] (9) [right=of 8] {};
+        \node[unusednode] (10) [right=of 9] {};
+        \draw[->] (8.north) to [out=30,in=150] (9.north);
+        \draw (4) -- (5);
+        \draw (5) -- (6);
+        \draw (6) -- (7);
+        \draw (7) -- (8);
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[unusednode] (1) {};
+        \node[unusednode] (2) [right=of 1] {};
+        \node[unusednode] (3) [right=of 2] {};
+        \node[unusednode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[roundnode] (6) [right=of 5] {};
+        \node[roundnode] (7) [right=of 6] {};
+        \node[roundnode] (8) [right=of 7] {};
+        \node[roundnode] (9) [right=of 8] {};
+        \node[rednode] (10) [right=of 9] {};
+        \draw[->] (9.north) to [out=30,in=150] (10.north);
+        \draw (5) -- (6);
+        \draw (6) -- (7);
+        \draw (7) -- (8);
+        \draw (8) -- (9);
+    \end{tikzpicture}
+
 
 \end{frame}
 
@@ -186,7 +408,128 @@
 \begin{frame}
     \frametitle{Кросс-валидация растущим окном}
 
-    картинка с растущими стрелочками-параболками
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[roundnode] (1) {};
+        \node[roundnode] (2) [right=of 1] {};
+        \node[roundnode] (3) [right=of 2] {};
+        \node[roundnode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[rednode] (6) [right=of 5] {};
+        \node[unusednode] (7) [right=of 6] {};
+        \node[unusednode] (8) [right=of 7] {};
+        \node[unusednode] (9) [right=of 8] {};
+        \node[unusednode] (10) [right=of 9] {};
+        \draw[->] (5.north) to [out=30,in=150] (6.north);
+        \draw (1) -- (2);
+        \draw (2) -- (3);
+        \draw (3) -- (4);
+        \draw (4) -- (5);
+
+    \end{tikzpicture}
+        
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[roundnode] (1) {};
+        \node[roundnode] (2) [right=of 1] {};
+        \node[roundnode] (3) [right=of 2] {};
+        \node[roundnode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[roundnode] (6) [right=of 5] {};
+        \node[rednode] (7) [right=of 6] {};
+        \node[unusednode] (8) [right=of 7] {};
+        \node[unusednode] (9) [right=of 8] {};
+        \node[unusednode] (10) [right=of 9] {};
+        \draw[->] (6.north) to [out=30,in=150] (7.north);
+        \draw (1) -- (2);
+        \draw (2) -- (3);
+        \draw (3) -- (4);
+        \draw (4) -- (5);
+        \draw (5) -- (6);
+
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[roundnode] (1) {};
+        \node[roundnode] (2) [right=of 1] {};
+        \node[roundnode] (3) [right=of 2] {};
+        \node[roundnode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[roundnode] (6) [right=of 5] {};
+        \node[roundnode] (7) [right=of 6] {};
+        \node[rednode] (8) [right=of 7] {};
+        \node[unusednode] (9) [right=of 8] {};
+        \node[unusednode] (10) [right=of 9] {};
+        \draw[->] (7.north) to [out=30,in=150] (8.north);
+        \draw (1) -- (2);
+        \draw (2) -- (3);
+        \draw (3) -- (4);
+        \draw (4) -- (5);
+        \draw (5) -- (6);
+        \draw (6) -- (7);
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[roundnode] (1) {};
+        \node[roundnode] (2) [right=of 1] {};
+        \node[roundnode] (3) [right=of 2] {};
+        \node[roundnode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[roundnode] (6) [right=of 5] {};
+        \node[roundnode] (7) [right=of 6] {};
+        \node[roundnode] (8) [right=of 7] {};
+        \node[rednode] (9) [right=of 8] {};
+        \node[unusednode] (10) [right=of 9] {};
+        \draw[->] (8.north) to [out=30,in=150] (9.north);
+        \draw (1) -- (2);
+        \draw (2) -- (3);
+        \draw (3) -- (4);
+        \draw (4) -- (5);
+        \draw (5) -- (6);
+        \draw (6) -- (7);
+        \draw (7) -- (8);
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[
+        roundnode/.style={circle, draw=black!60, fill=black!20, very thick, minimum size=7mm},
+        rednode/.style={circle, draw=orange!60, fill=orange!20, very thick, minimum size=7mm},
+        unusednode/.style={circle, draw=black!60, fill=black!2, very thick, minimum size=5mm},
+        ]
+        \node[roundnode] (1) {};
+        \node[roundnode] (2) [right=of 1] {};
+        \node[roundnode] (3) [right=of 2] {};
+        \node[roundnode] (4) [right=of 3] {};
+        \node[roundnode] (5) [right=of 4] {};
+        \node[roundnode] (6) [right=of 5] {};
+        \node[roundnode] (7) [right=of 6] {};
+        \node[roundnode] (8) [right=of 7] {};
+        \node[roundnode] (9) [right=of 8] {};
+        \node[rednode] (10) [right=of 9] {};
+        \draw[->] (9.north) to [out=30,in=150] (10.north);
+        \draw (1) -- (2);
+        \draw (2) -- (3);
+        \draw (3) -- (4);
+        \draw (4) -- (5);
+        \draw (5) -- (6);
+        \draw (6) -- (7);
+        \draw (7) -- (8);
+        \draw (8) -- (9);
+    \end{tikzpicture}
+
 
 \end{frame}
 
