@@ -1,8 +1,8 @@
 # Esli russkie bukvi prevratilitis v krakozyabry, to...
 # File - Reopen with encoding... - UTF-8 - Set as default - OK
 
-# Временные ряды. Неделя 4. Скрипт 2.
-# MA процессы: оценка и прогнозы
+# Временные ряды. Неделя 5. Скрипт 2.
+# MA, AR, ARMA процессы: оценка и прогнозы
 
 library(tidyverse) # обработка данных
 library(fpp3) # куча плюшек для рядов
@@ -11,7 +11,18 @@ library(rio) # импорт данных
 m = import('marriages.csv')
 glimpse(m)
 
-m2 = mutate(m, date = yearmonth(date))
+m2 = mutate(m, year = year(floor_date(date, 'year')))
+m2
+m_agg = m2 %>% group_by(code, year, name) %>%
+    summarise(sum = sum(total),
+              max = max(total), .groups = 'keep')
+m_agg
+
+
+m_agg_t = group_by(m2, code, year, name)
+m_agg_t
+
+m2 = mutate(m, date = ymd(date))
 glimpse(m2)
 
 marriages = as_tsibble(m2, index = date,
@@ -20,6 +31,9 @@ marriages
 
 
 rf = filter(marriages, code == 643)
+rf_year = index_by(rf, year = ~ year(date)) %>%
+    summarize(total = sum(total), max = max(total))
+
 gg_tsdisplay(rf, total)
 
 
