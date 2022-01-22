@@ -2,6 +2,7 @@ bureaucracy/
 lena_examples/
 .Rhistory
 __MACOSX
+.DS_Store
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
