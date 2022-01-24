@@ -1,6 +1,6 @@
 file_name = om_ts_03
 
-$(file_name).pdf: $(file_name).tex chapters/*.tex figures/ preamble.tex
+$(file_name).pdf: $(file_name).tex chapters/*.tex figures/ pictures/ preamble.tex
 	# protection against biber error
 	# http://tex.stackexchange.com/questions/140814/
 	rm -rf `biber --cache`
