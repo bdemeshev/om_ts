@@ -102,8 +102,32 @@
 
 \begin{frame}
   \frametitle{Два угла на графике}
+  \begin{center}
+  \begin{tikzpicture}
+    \coordinate [label=right:$U$] (U) at (2,9);
+    \coordinate [label=right:$U^*$] (Ustar) at (2,2);
+    \coordinate [label=left:$D$] (D) at (-3,9);
+    \coordinate [label=left:$D^*$] (Dstar) at (-3,2);
+    \coordinate [label=left:$R$] (R) at (0,8);
+    \coordinate (0) at (0,0);
+    \coordinate [label=left:$\color{red} R^{\perp}$] (Rort) at (3, 0);
 
-  обычная и частная корреляции
+
+    \draw[line width=2pt,-stealth] (0)--(U);
+    \draw[line width=2pt,-stealth] (0)--(D);
+    \draw[line width=2pt,-stealth] (0)--(Ustar);
+    \draw[line width=2pt,-stealth] (0)--(Dstar);
+    \draw[line width=1pt,-stealth] (0)--(R);
+    \draw[dashed] (U)--(Ustar);
+    \draw[dashed] (D)--(Dstar);
+    \draw[dashed, red] (0,1) ellipse (7 and 2);
+   
+   
+  \end{tikzpicture}
+\end{center}
+\[
+\cos \measuredangle{UD} = \Corr(U, D), \quad \cos \measuredangle{U^*D^*} = \pCorr(U, D; R)
+\]
 
 \end{frame}
 
