@@ -1,0 +1,186 @@
+% arara: xelatex
+%% arara: xelatex
+
+\documentclass[12pt]{article}
+
+\usepackage{tikz} % картинки в tikz
+\usepackage{microtype} % свешивание пунктуации
+
+\usepackage{array} % для столбцов фиксированной ширины
+
+\usepackage{indentfirst} % отступ в первом параграфе
+
+\usepackage{sectsty} % для центрирования названий частей
+\allsectionsfont{\centering}
+
+\usepackage{amsmath, amssymb, amsthm} % куча стандартных математических плюшек
+
+\usepackage{amsfonts}
+
+\usepackage{comment}
+
+\usepackage[top=2cm, left=1.2cm, right=1.2cm, bottom=2cm]{geometry} % размер текста на странице
+
+\usepackage{lastpage} % чтобы узнать номер последней страницы
+
+\usepackage{enumitem} % дополнительные плюшки для списков
+%  например \begin{enumerate}[resume] позволяет продолжить нумерацию в новом списке
+\usepackage{caption}
+
+
+\usepackage{hyperref} % гиперссылки
+
+\usepackage{multicol} % текст в несколько столбцов
+
+
+\usepackage{fancyhdr} % весёлые колонтитулы
+\pagestyle{fancy}
+\lhead{Анализ временных рядов, Экономический анализ, НИУ-ВШЭ}
+\rhead{Домашнее задание}
+
+\rfoot{}
+% \rfoot{\thepage/3}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+
+% \usepackage{todonotes} % для вставки в документ заметок о том, что осталось сделать
+% \todo{Здесь надо коэффициенты исправить}
+% \missingfigure{Здесь будет Последний день Помпеи}
+% \listoftodos - печатает все поставленные \todo'шки
+
+
+% более красивые таблицы
+\usepackage{booktabs}
+% заповеди из документации:
+% 1. Не используйте вертикальные линии
+% 2. Не используйте двойные линии
+% 3. Единицы измерения - в шапку таблицы
+% 4. Не сокращайте .1 вместо 0.1
+% 5. Повторяющееся значение повторяйте, а не говорите "то же"
+
+
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setmainlanguage{russian}
+\setotherlanguages{english}
+
+% download "Linux Libertine" fonts:
+% http://www.linuxlibertine.org/index.php?id=91&L=1
+\setmainfont{Linux Libertine O} % or Helvetica, Arial, Cambria
+% why do we need \newfontfamily:
+% http://tex.stackexchange.com/questions/91507/
+\newfontfamily{\cyrillicfonttt}{Linux Libertine O}
+
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ} % для списков с русскими буквами
+\setlist[enumerate, 2]{label=\asbuk*),ref=\asbuk*}
+
+%% эконометрические сокращения
+\let\P\relax
+\DeclareMathOperator{\P}{\mathbb{P}}
+\DeclareMathOperator{\Cov}{\mathbb{C}ov}
+\DeclareMathOperator{\Corr}{\mathbb{C}orr}
+\DeclareMathOperator{\Var}{\mathbb{V}ar}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\tr}{trace}
+\newcommand \hb{\hat{\beta}}
+\newcommand \hs{\hat{\sigma}}
+\newcommand \htheta{\hat{\theta}}
+\newcommand \s{\sigma}
+\newcommand \hy{\hat{y}}
+\newcommand \hY{\hat{Y}}
+\newcommand \vone{\vec{1}}
+\newcommand \e{\varepsilon}
+\newcommand \he{\hat{\e}}
+\newcommand \z{z}
+\newcommand \hVar{\widehat{\Var}}
+\newcommand \hCorr{\widehat{\Corr}}
+\newcommand \hCov{\widehat{\Cov}}
+\newcommand \cN{\mathcal{N}}
+
+
+
+\begin{document}
+
+
+\begin{enumerate}
+
+\item Рассмотрим $MA(2)$ процесс $y_t = 10 + u_t + 3 u_{t-1}$, где величины $u_t$ независимы и нормально распределены 
+$\cN(0;4)$.
+
+\begin{enumerate}
+    \item Рассчитайте теоретическую автокорреляционную функцию процесса $ACF$, $\rho_k$.
+    \item Рассчитайте первые два значения частной автокорреляционной функции $PACF$, $\phi_{11}$, $\phi_{22}$.
+    \item Сгенерируйте траекторию данного процесса длиной 30 наблюдений. 
+    Постройте график ряда, график первых десяти значений выборочной $ACF$ и $PACF$. 
+    \item Повторите предыдущий пункт для 300 наблюдений. Коротко прокомментируйте похожесть выборочной и истинной $ACF$ и $PACF$.
+\end{enumerate}
+
+
+\item Рассмотрим случайное блуждание $y_t = 1 + y_{t-1} + u_t$, где величины $u_t$ независимы и нормально распределены 
+$\cN(0;4)$, а $y_0 = 10$.
+
+\begin{enumerate}
+    \item Рассчитайте $\E(y_t)$, $\Var(y_t)$, $\Cov(y_{10}, y_{20})$.
+    \item Сравните $\Corr(y_{10}, y_{20})$ и $\Corr(y_{110}, y_{120})$.
+    \item Сгенерируйте траекторию данного процесса длиной 30 наблюдений. 
+    Постройте график ряда, график первых десяти значений выборочной $ACF$ и $PACF$. 
+    \item Повторите предыдущий пункт для 300 наблюдений. 
+    Верно ли, что с ростом числа наблюдений выборочная $ACF$ сходится к истинной $ACF$?
+\end{enumerate}
+
+
+\item Возьмите любой несезонный ряд годовой периодичности. 
+Можно взять ряд с \url{https://fedstat.ru/}, \url{http://sophist.hse.ru/} или других источников. 
+
+\begin{enumerate}
+    \item Постройте график ряда, графики выборочных $ACF$ и $PACF$.
+    \item Визуально оцените, есть ли тренд? Похож ли процесс на стационарный?
+    \item Оцените для ряда $ETS(AAN)$ модель. 
+    \item Выпишите полученные уравнение, использовав оценённые значения параметров вместо параметров.
+    \item Получите 80\%-й доверительный интервал на один и два шага вперёд «руками», исходя из выписанных уравнений. 
+    \item Получите 80\%-й доверительный интервал на один и два шага вперёд встроенными функциями.
+    \item Постройте график прогноза и сам ряд. 
+\end{enumerate}
+
+\newpage
+
+\item Возьмите любой сезонный ряд квартальной или месячной периодичности. 
+
+\begin{enumerate}
+    \item Постройте разложение ряда на составляющие, используя $STL$ алгоритм. 
+    Визуализируйте результат для трех разных значений силы сглаживания сезонности. Кратко прокомментируйте.
+    
+    \item Постройте разложение ряда на составляющие, используя $ETS(AAA)$ модель. 
+    
+    \item Разделите данные на обучающую и тестовую выборку, выделив на тестовую выборку два года наблюдений. 
+    
+    \item Оцените $ETS(AAA)$, $ETS(MAM)$, сезонную наивную модель и примените тета-метод с $STL$-разложением по умолчанию и $ETS(AAA)$ для логарифма ряда. 
+    
+    \item Для каждого подхода найдите $MASE$ на тестовой выборке.
+    
+    \item Постройте прогноз, усредняющий прогнозы двух лидирующих по $MASE$ подхода. Удалось ли обыграть два усредняемых подхода?
+    
+\end{enumerate}
+
+
+
+Работу следует представить в виде отчёта в pdf формате. 
+В начале работы должен идти текст с графиками, в конце работы в качестве приложения должен идти код. 
+Общий объем текста (без приложений) должен составлять \textbf{не более 10 страниц}.
+
+Дедлайн сдачи - \textbf{28 февраля 2022, 20:59}. До указанного времени файл в формате pdf должен быть загружен по ссылке
+\url{....}.
+
+\end{enumerate}
+
+
+
+
+
+\end{document}
+
+
