@@ -1,0 +1,139 @@
+% !TEX root = ../om_ts_06.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Буковка I}
+
+\end{frame}
+
+
+
+\begin{frame}{Буковка I: план}
+  \begin{itemize}[<+->]
+    \item Стационарность $ARMA$. 
+    \item Определение $ARIMA$.
+    \item Нужно ли переходить к разностям?
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{$ARMA$ процесс}
+
+  \begin{block}{Определение}
+    $ARMA(p, q)$ процессом с уравнением 
+    \[
+      y_t = c + \beta_1 y_{t-1} + \ldots + \beta_p y_{t-p} + u_t + \alpha_1 u_{t-1} + \ldots + \alpha_q u_{t-q}, 
+    \]
+    где $(u_t)$ — белый шум, $\beta_p \neq 0$ и $\alpha_q \neq 0$, уравнение несократимо, называется 
+    решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.
+  \end{block}
+
+  \pause  
+  \begin{block}{Определение с лагами}
+    $ARMA(p,q)$ процессом с уравнением 
+    \[
+      P(L)y_t = c + Q(L)u_t, 
+    \]
+    где $(u_t)$ — белый шум, $P(L)$ имеет степень $p$, $Q(L)$ имеет степень $q$, и $P(0)=Q(0)=1$, 
+    $P(Q)$ и $Q(L)$ несократимы, называется решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.  
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Нюансы}
+
+  \begin{itemize}[<+->]
+    \item Процесс $y_t \sim ARMA(p, q)$ стационарен \alert{по определению}:
+    
+    $\E(y_t) = \mu_y$, $\Var(y_t) = \gamma_0$, $\Cov(y_t, y_{t-k}) = \gamma_k$.
+
+    \item В \alert{канонической записи} $ARMA(p, q)$ процесса $P(L) y_t = c+ Q(L) u_t$ у полинома $P(L)$
+    все корни $\abs{\ell} > 1$. 
+
+    Возможны неканонические варианты.   
+
+    \item При оценке $ARMA(p, q)$ процесса методом максимального правдоподобия эти ограничения наложены \alert{а-приори}. 
+    
+    Есть упрощённые варианты правдоподобия.
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Что делать с нестационарными процессами?}
+
+  \begin{block}{Определение}
+    Случайный процесс $(y_t)$ называется $ARIMA(p, 1, q)$ процессом относительно белого шума $(u_t)$, 
+    если $(y_t)$ нестационарен, но $\Delta y_t$ — стационарный $ARMA(p, q)$ процесс относительно белого шума $(u_t)$.  
+  \end{block}
+
+  \pause
+
+  \begin{block}{Определение}
+    Случайный процесс $(y_t)$ называется $ARIMA(p, 2, q)$ процессом относительно белого шума $(u_t)$, 
+    если $(y_t)$ нестационарен, но $\Delta^2 y_t$ — стационарный $ARMA(p, q)$ процесс относительно белого шума $(u_t)$.  
+  \end{block}
+
+  \pause
+  $\Delta y_t = y_t - y_{t-1}$, $\Delta^2 y_t = \Delta y_t - \Delta y_{t-1}$
+
+  \pause 
+  ARIMA — \alert{A}uto\alert{R}egressive \alert{I}ntegrated \alert{M}oving \alert{A}verage
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Как выбрать?}
+  
+  $y_t \sim ARMA(p, q)$ или $\Delta y_t \sim ARMA(p, q)$ или $\Delta^2 y_t \sim ARMA(p, q)$
+\pause
+  \begin{itemize}[<+->]
+    \item Посмотреть на график!
+    
+    \pause График стационарного процесса колеблется в полосе постоянной ширины вокруг своего ожидания.
+
+    \item Оценить все эти модели и выбрать наилучшую по кросс-валидации.
+    
+    \pause Затратно по времени!
+
+    \item Применять $AIC$ нельзя!
+    
+    \pause $\ln L(y_1, \ldots, y_n \mid \theta)$ и $\ln L(y_2, \ldots, y_n \mid \theta, y_1)$ и $\ln L(y_3, \ldots, y_n \mid \theta, y_1, y_2)$
+
+    несравнимы!
+    \item Есть тесты на единичный корень!
+    
+    \pause ADF, KPSS, PP, \ldots
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Выбираем «на глазок»}
+
+  четыре небольших графика на одном слайде
+
+  явно стационарный (x)
+
+  случайное блуждание (y)
+
+  явно с трендом (z)
+
+  что-то спорное (w)
+  
+\end{frame}
+
+
+
+\begin{frame}{Буковка I: итоги}
+
+  \begin{itemize}[<+->]
+    \item $ARMA$ модель подходит только для \alert{стационарных} рядов. 
+    \item Иногда стационарен $\Delta y_t$ или $\Delta^2 y_t$. 
+    \item Выбираем между $ARMA$ и $ARIMA$.
+  \end{itemize}
+\end{frame}
+
