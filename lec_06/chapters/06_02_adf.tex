@@ -10,7 +10,8 @@
 
 \begin{frame}{ADF тест: план}
   \begin{itemize}[<+->]
-    \item ADF тест. 
+    \item Предположения теста.
+    \item Алгоритм теста.
     \item Три вариации теста.
   \end{itemize}
 
@@ -28,7 +29,8 @@
   \end{itemize}
 
   \pause
-  Название «тест на единичные корни»
+  Название «тест на единичные корни»:
+  \pause
   \[
   \Delta = 1 - L = P(L) 
   \]
@@ -40,7 +42,9 @@
   \frametitle{ADF тест}
   
   \begin{block}{Расшифровка}
-    Augmented Dickey Fuller test, расширенный тест Дики-Фуллера  
+    Augmented Dickey Fuller test
+    
+    Расширенный тест Дики-Фуллера  
   \end{block}
 
   \pause 
@@ -51,26 +55,23 @@
 
 \begin{frame}
   \frametitle{ADF с константой}
-
-  Предположения:
-
   \[
-  \Delta y_t = c + \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_k \Delta y_{t-p} + u_t,  
+  \Delta y_t = c + \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_p \Delta y_{t-p} + u_t,  
   \]
 
   \pause
 
-  $H_0$: $\beta = 0$;
+  \alert{$H_0$: $\beta = 0$};
   
-  $\Delta y_t$ — стационарный $AR(p)$ процесс;
+  $(\Delta y_t)$ — стационарный $AR(p)$ процесс;
 
-  $y_t = y_0 + ct + \sum_{i=1}^t (\Delta y_t - \E(\Delta y_t))$;
+  $y_t = y_0 + mt + \sum_{i=1}^t (\Delta y_t - \E(\Delta y_t))$;
 
   \pause
 
-  $H_a$: $\beta < 0$;
+  \alert{$H_a$: $\beta < 0$};
 
-  $y_t$ — стационарный $AR(p + 1)$ процесс;
+  $(y_t)$ — стационарный $AR(p + 1)$ процесс;
 
 \end{frame}
 
@@ -99,11 +100,11 @@
 
   Шаг 1. Оцениваем \alert{регрессию}
   \[
-    \widehat{\Delta y_t} = \hat c + \hat \beta y_{t-1} + \hat d_1 \Delta y_{t-1} + \ldots + \hat d_k \Delta y_{t-p}.  
+    \widehat{\Delta y_t} = \hat c + \hat \beta y_{t-1} + \hat d_1 \Delta y_{t-1} + \ldots + \hat d_p \Delta y_{t-p}.  
   \]
 
   \pause
-  Шаг 2. Считаем по \alert{классической формуле} $t$-статистики
+  Шаг 2. Считаем по \alert{классической формуле} $t$-статистику
   \[
   ADF = \frac{\hat \beta -  0}{se(\hat \beta)}.  
   \]
@@ -121,27 +122,23 @@
 
 \begin{frame}
   \frametitle{ADF без константы}
-
-
-  Предположения:
-
   \[
-  \Delta y_t = \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_k \Delta y_{t-p} + u_t,  
+  \Delta y_t = \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_p \Delta y_{t-p} + u_t,  
   \]
 
   \pause
 
-  $H_0$: $\beta = 0$;
+  \alert{$H_0$: $\beta = 0$};
   
-  $\Delta y_t$ — стационарный $AR(p)$ процесс c $\E(\Delta y_t) = 0$;
+  $(\Delta y_t)$ — стационарный $AR(p)$ процесс c $\E(\Delta y_t) = 0$;
 
   $y_t = y_0 + \sum_{i=1}^t \Delta y_t $;
 
   \pause
 
-  $H_a$: $\beta < 0$;
+  \alert{$H_a$: $\beta < 0$};
 
-  $y_t$ — стационарный $AR(p + 1)$ процесс с $\E(y_t) = 0$;
+  $(y_t)$ — стационарный $AR(p + 1)$ процесс с $\E(y_t) = 0$;
 
   \pause 
 
@@ -151,38 +148,68 @@
 
 
 \begin{frame}
+  \frametitle{ADF без константы: $H_0$ и $H_a$}
+
+
+  тут два графика,
+
+
+  слева $H_0$
+
+
+  справа $H_a$
+
+
+\end{frame}
+
+
+
+\begin{frame}
   \frametitle{ADF с трендом}
-
-
-  Предположения:
-
   \[
-  \Delta y_t = c + g t + \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_k \Delta y_{t-p} + u_t,  
+  \Delta y_t = c + g t + \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_p \Delta y_{t-p} + u_t,  
   \]
 
   \pause
 
-  $H_0$: $\beta = 0$;
+  \alert{$H_0$: $\beta = 0$};
   
   $\Delta y_t = k_1 + k_2 t + x_t$;
   
-  $x_t$ — стационарный $AR(p)$ процесс c $\E(x_t) = 0$;
+  $(x_t)$ — стационарный $AR(p)$ процесс c $\E(x_t) = 0$;
 
   $y_t = y_0 + m_1 t + m_2 t^2 + \sum_{i=1}^t x_t$;
 
   \pause
 
-  $H_a$: $\beta < 0$;
+  \alert{$H_a$: $\beta < 0$};
 
   $y_t = m_1 + m_2 t + x_t$;
   
-  $x_t$ — стационарный $AR(p + 1)$ процесс с $\E(x_t) = 0$;
+  $(x_t)$ — стационарный $AR(p + 1)$ процесс с $\E(x_t) = 0$;
 
   \pause 
 
   В алгоритме будет регрессия \alert{с константой и трендом} и другое распределение $DF^{ct}$.
 
 \end{frame}
+
+
+\begin{frame}
+  \frametitle{ADF с трендом: $H_0$ и $H_a$}
+
+
+  тут два графика,
+
+
+  слева $H_0$
+
+
+  справа $H_a$
+
+
+\end{frame}
+
 
 \begin{frame}{$ADF$ тест: итоги}
 

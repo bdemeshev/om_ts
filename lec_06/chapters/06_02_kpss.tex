@@ -2,195 +2,223 @@
 
 \begin{frame} % название фрагмента
 
-\videotitle{ADF тест}
-
-\end{frame}
-
-
-
-\begin{frame}{ADF тест: план}
-  \begin{itemize}[<+->]
-    \item ADF тест. 
-    \item Три вариации теста.
-  \end{itemize}
-
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Зачем нужен ADF тест?}
-
-  Хотим ответить на вопросы:
-  \pause
-  \begin{itemize}[<+->]
-    \item Использовать $ARMA$ модель для $(y_t)$ или для $(\Delta y_t)$?
-    \item Как включать константу в модель?
-  \end{itemize}
-
-  \pause
-  Название «тест на единичные корни»
-  \[
-  \Delta = 1 - L = P(L) 
-  \]
-  Уравнение $1 - \ell = 0$ имеет корень $\ell =1$.
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{ADF тест}
+  \videotitle{KPSS тест}
   
-  \begin{block}{Расшифровка}
-    Augmented Dickey Fuller test, расширенный тест Дики-Фуллера  
-  \end{block}
-
-  \pause 
-  Три вариации теста: без константы, с константой, c трендом.
+  \end{frame}
   
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{ADF с константой}
-
-  Предположения:
-
-  \[
-  \Delta y_t = c + \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_k \Delta y_{t-p} + u_t,  
-  \]
-
-  \pause
-
-  $H_0$: $\beta = 0$;
   
-  $\Delta y_t$ — стационарный $AR(p)$ процесс;
-
-  $y_t = y_0 + ct + \sum_{i=1}^t (\Delta y_t - \E(\Delta y_t))$;
-
-  \pause
-
-  $H_a$: $\beta < 0$;
-
-  $y_t$ — стационарный $AR(p + 1)$ процесс;
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{ADF с константой: $H_0$ и $H_a$}
-
-
-  тут два графика,
-
-
-  слева $H_0$
-
-  $\Delta y_t$ — стационарный $AR(p)$ процесс;
-
-  $y_t = y_0 + ct + \sum_{i=1}^t (\Delta y_t - \E(\Delta y_t))$;
-
-
-  справа $H_a$
-
-  $y_t$ — стационарный $AR(p + 1)$ процесс c ненулевым ожиданием
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{ADF с константой: алгоритм}
-
-  Шаг 1. Оцениваем \alert{регрессию}
-  \[
-    \widehat{\Delta y_t} = \hat c + \hat \beta y_{t-1} + \hat d_1 \Delta y_{t-1} + \ldots + \hat d_k \Delta y_{t-p}.  
-  \]
-
-  \pause
-  Шаг 2. Считаем по \alert{классической формуле} $t$-статистики
-  \[
-  ADF = \frac{\hat \beta -  0}{se(\hat \beta)}.  
-  \]
-
-  \pause
-  При верной $H_0$ распределение $ADF$-статистики стремится к \alert{особому распределению} $DF^c$!
-
-  \pause 
-  Шаг 3. Делаем вывод:
   
-  Если $ADF < DF^c$, то $H_0$ отвергается. 
-
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{ADF без константы}
-
-
-  Предположения:
-
-  \[
-  \Delta y_t = \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_k \Delta y_{t-p} + u_t,  
-  \]
-
-  \pause
-
-  $H_0$: $\beta = 0$;
+  \begin{frame}{KPSS тест: план}
+    \begin{itemize}[<+->]
+      \item Долгосрочная дисперсия.
+      \item Предпосылки теста.
+      \item Две вариации теста.
+    \end{itemize}
   
-  $\Delta y_t$ — стационарный $AR(p)$ процесс c $\E(\Delta y_t) = 0$;
-
-  $y_t = y_0 + \sum_{i=1}^t \Delta y_t $;
-
-  \pause
-
-  $H_a$: $\beta < 0$;
-
-  $y_t$ — стационарный $AR(p + 1)$ процесс с $\E(y_t) = 0$;
-
-  \pause 
-
-  В алгоритме будет \alert{регрессия без константы} и другое распределение $DF^0$.
-
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{ADF с трендом}
-
-
-  Предположения:
-
-  \[
-  \Delta y_t = c + g t + \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_k \Delta y_{t-p} + u_t,  
-  \]
-
-  \pause
-
-  $H_0$: $\beta = 0$;
+  \end{frame}
   
-  $\Delta y_t = k_1 + k_2 t + x_t$;
   
-  $x_t$ — стационарный $AR(p)$ процесс c $\E(x_t) = 0$;
-
-  $y_t = y_0 + m_1 t + m_2 t^2 + \sum_{i=1}^t x_t$;
-
-  \pause
-
-  $H_a$: $\beta < 0$;
-
-  $y_t = m_1 + m_2 t + x_t$;
+  \begin{frame}
+    \frametitle{Зачем нужен KPSS тест?}
   
-  $x_t$ — стационарный $AR(p + 1)$ процесс с $\E(x_t) = 0$;
+    Хотим ответить на вопросы:
+    \pause
+    \begin{itemize}[<+->]
+      \item Использовать $ARMA$ модель для $(y_t)$ или для $(\Delta y_t)$?
+      \item Как включать константу в модель?
+    \end{itemize}
+    
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{KPSS тест}
+    
+    \begin{block}{Расшифровка}
+      Kwiatkowski–Phillips–Schmidt–Shin test
+      
+      Тест Квятковского-Филлипса-Шмидта-Шина
+    \end{block}
+  
+    \pause 
+    Две вариации теста: с константой, c трендом.
+    
+  \end{frame}
 
-  \pause 
 
-  В алгоритме будет регрессия \alert{с константой и трендом} и другое распределение $DF^{ct}$.
+  \begin{frame}
+    \frametitle{Долгосрочная дисперсия}
 
-\end{frame}
+    \begin{block}{Определение}
+      Для стационарного процесса $(y_t)$ величина $\lambda^2$ называется \alert{долгосрочной дисперсией}, если
+      \[
+        \Var(\bar y) = \frac{\lambda^2}{T} + o(1/T)
+      \]
+      или 
+      \[
+        \lim_{T \to \infty} T \Var(\bar y) = \lambda^2, 
+      \]
+      где $\bar y = (y_1 + \ldots + y_T) / T$.
+    \end{block}
 
-\begin{frame}{$ADF$ тест: итоги}
+    \pause 
 
-  \begin{itemize}[<+->]
-    \item Применим для принятия решения о переходе к $\Delta y_t$.
-    \item Есть три варианта теста с разными предпосылками.
-  \end{itemize}
-\end{frame}
+    \begin{block}{Мотивация}
+      Для независимых наблюдений с одинаковой дисперсией 
+      \[
+        \Var(\bar y) = \frac{\sigma^2}{T},\text{ где }\sigma^2 = \Var(y_i).
+      \]
+  \end{block}  
+  
+  \end{frame}
+  
+  
+  \begin{frame}
+    \frametitle{KPSS с константой}
+    \[
+      y_t = c + rw_t + x_t,
+    \]
+  
+    \pause
+  
+    \alert{$H_0$: $rw_t = 0$};
+    
+    $(x_t)$ — стационарный процесс с $\E(x_t) = 0$;
+    
+    \pause
+  
+    \alert{$H_a$: $rw_t = rw_{t-1} + u_t$};
+
+    $rw_0 = 0$;
+  
+    $(x_t)$ — стационарный процесс с $\E(x_t) = 0$;
+
+    $(u_t)$ — белый шум, независимый с $(x_t)$.
+  
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{KPSS с константой: $H_0$ и $H_a$}
+  
+  
+    тут два графика,
+  
+  
+    слева $H_0$
+    
+    справа $H_a$
+  
+  
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{KPSS с константой: алгоритм}
+  
+    Шаг 1. Оцениваем \alert{регрессию на константу} 
+    \[
+      \widehat{y_t} = \hat c.  
+    \]
+  
+    \pause
+    Шаг 2. Считаем $KPSS$ статистику
+    \[
+    KPSS = \frac{\sum_{t=1}^T S_t^2}{T^2 \hat \lambda^2},
+    \]
+    где $S_t$ — накопленная сумма остатков, $S_t = \hat u_1 + \ldots + \hat u_T$,
+
+    а $\hat\lambda^2$ — состоятельная оценка долгосрочной дисперсии. 
+  
+    \pause
+    При верной $H_0$ распределение $KPSS$-статистики стремится к \alert{особому распределению} $KPSS^c$!
+  
+    \pause 
+    Шаг 3. Делаем вывод:
+    
+    Если $KPSS > KPSS^c$, то $H_0$ отвергается. 
+  
+  \end{frame}
+  
+  
+  \begin{frame}
+    \frametitle{KPSS с трендом}
+    \[
+      y_t = c + bt + rw_t + x_t,
+    \]
+  
+    \pause
+  
+    \alert{$H_0$: $rw_t = 0$};
+    
+    $(x_t)$ — стационарный процесс с $\E(x_t) = 0$;
+    
+    \pause
+  
+    \alert{$H_a$: $rw_t = rw_{t-1} + u_t$};
+
+    $rw_0 = 0$;
+  
+    $(x_t)$ — стационарный процесс с $\E(x_t) = 0$;
+
+    $(u_t)$ — белый шум, независимый с $(x_t)$.
+  
+    \pause 
+  
+    В алгоритме будет регрессия \alert{с константой и трендом} и другое распределение $KPSS^{ct}$.
+  
+  \end{frame}
+  
+  
+  \begin{frame}
+    \frametitle{$KPSS$ с трендом: $H_0$ и $H_a$}
+  
+  
+    тут два графика,
+  
+  
+    слева $H_0$
+  
+  
+    справа $H_a$
+  
+  
+  \end{frame}
+  
+
+  \begin{frame}
+    \frametitle{Устоявшаяся терминология:}
+    \[
+      A. y_t = a + bt + x_t;
+    \]
+
+    $(y_t)$ — \alert{стационарный вокруг тренда} (trend stationary).
+
+    $(x_t)$ — стационарный процесс с $\E(x_t) = 0$.
+
+    \pause Рецепт: оценим регрессию $a + bt$ с $ARMA$ ошибками для $(y_t)$.
+    \pause 
+    \[
+      B. y_t = a + \sum_{i=1}^t x_i \text{ или } y_t = a + bt + \sum_{i=1}^t x_i
+    \]
+
+    $(x_t)$ — стационарный процесс с $\E(x_t) = 0$.
+
+    $(y_t)$ — \alert{стационарный в разностях} (difference stationary).
+
+    \pause Рецепт: оценим $ARMA$ для $(\Delta y_t)$.
+
+    \pause Оба $(y_t)$ нестационарны!
+    
+  \end{frame}
 
 
-
+  
+  \begin{frame}{$KPSS$ тест: итоги}
+  
+    \begin{itemize}[<+->]
+      \item Применим для принятия решения о переходе к $\Delta y_t$.
+      \item Есть два варианта теста с разными предпосылками.
+    \end{itemize}
+  \end{frame}
+  
+  
+  
+  

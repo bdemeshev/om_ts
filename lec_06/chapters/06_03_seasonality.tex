@@ -1,142 +1,154 @@
-% !TEX root = ../om_ts_05.tex
+% !TEX root = ../om_ts_06.tex
 
 \begin{frame} % название фрагмента
 
-\videotitle{ARMA процесс}
+\videotitle{Сезонная ARIMA}
 
 \end{frame}
 
 
 
-\begin{frame}{ARMA процесс: план}
+\begin{frame}{Сезонная ARIMA: план}
   \begin{itemize}[<+->]
-    \item Определение $AR$ и $ARMA$ процесса. 
-    \item Обратимость для единственности записи. 
-    \item Свойства.
+    \item ARMA должна быть экономной! 
+    \item Сезонные полиномы.
+    \item Нужно ли переходить к разностям?
   \end{itemize}
 
 \end{frame}
 
+
 \begin{frame}
-  \frametitle{AR процесс}
+  \frametitle{Сезонность и $ARIMA$}
 
-  \begin{block}{Определение}
-    $AR(p)$ процессом с уравнением 
-    \[
-      y_t = c + \beta_1 y_{t-1} + \ldots + \beta_p y_{t-p} + u_t, 
-    \]
-    где $(u_t)$ — белый шум и $\beta_p \neq 0$ называется 
-    решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.
-  \end{block}
+  С помощью $ARMA$ и $ARIMA$ моделей можно моделировать сезонность!
 
-  \pause  
-  \begin{block}{Определение с лагами}
-    $AR(p)$ процессом с уравнением 
-    \[
-      P(L)y_t = c + u_t, 
-    \]
-    где $(u_t)$ — белый шум, $P(L)$ имеет степень $p$ и $P(0)=1$, называется 
-    решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.  
-  \end{block}
+  \pause
+  Только \alert{дорого}!\pause
+  \[
+   MA(12):     y_t = c + u_t + a_1 u_{t-1} + a_2 u_{t-2} + \ldots + a_{12} u_{t-12}.
+  \]
+  \[
+   ARIMA(12, 1, 0):     \Delta y_t = c + u_t  + b_1 \Delta y_{t-1} + \ldots + b_{12} \Delta y_{t-12}.
+  \]
 
 \end{frame}
 
+
+
 \begin{frame}
-  \frametitle{Определения у разных авторов}
+  \frametitle{ARMA должна быть экономной!}
+
+  Сосредоточимся на коэффициентах \alert{сильнее отличных} от нуля!
+  \pause
+\begin{block}{Определение}
+Если стационарную $ARMA$ модель для $y_t$ можно записать с меньшим числом параметров в виде
+\[
+P_{non}(L)P_{seas}(L^{12}) y_t = c + Q_{non}(L) Q_{seas}(L^{12}) u_t,
+\]
+где степени у лаговых полиномов равны $\deg P_{non} =p$, $\deg P_{seas} =P$, $\deg Q_{non} =q$, $\deg Q_{seas} =Q$, 
+то она также называется $SARMA(p, q)(P, Q)[12]$.
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Примеры}
+
+  \begin{itemize}[<+->]
+    \item $SARMA(1,0)(0,2)[12]$
+    \[
+    (1 - b_1 L) y_t = c + (1 + d_1 L^{12} + d_2 L^{24}) u_t;  
+    \]
+    \item $SARMA(0,2)(1,0)[12]$
+    \[
+    (1 - f_1 L^{12}) y_t = c + (1 + a_1 L + a_2 L^2) u_t;  
+    \]
+    \item $SARMA(1,2)(2,1)[12]$
+    \[
+    (1 - f_1 L^{12} - f_2 L^{24}) (1 - b_1 L^1) y_t = c + (1 + a_1 L + a_2 L^2) (1 + d_1 L^{12}) u_t;  
+    \]
+  \end{itemize}
+
+  
+
+\end{frame}
+
+
+
+
+
+\begin{frame}
+  \frametitle{SARIMA}
+
+  По аналогии с разностью $\Delta y_t = y_t - y_{t-1}$ можно рассмотреть сезонную разность $\Delta_{12} y_t = y_t - y_{t-12}$. 
 
   \pause 
-  В нашем определении $AR(p)$ процесс обязательно \alert{стационарен}. 
-  
-  \pause
-  Некоторые авторы \alert{не включают} в определение $AR(p)$ процесса требование стационарности. 
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{$ARMA$ процесс}
-
   \begin{block}{Определение}
-    $ARMA(p, q)$ процессом с уравнением 
-    \[
-      y_t = c + \beta_1 y_{t-1} + \ldots + \beta_p y_{t-p} + u_t + \alpha_1 u_{t-1} + \ldots + \alpha_q u_{t-q}, 
-    \]
-    где $(u_t)$ — белый шум, $\beta_p \neq 0$ и $\alpha_q \neq 0$, уравнение несократимо, называется 
-    решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.
+    Если ряд $z_t = \Delta^d \Delta^D_{12} y_t$ описывается стационарной моделью $SARMA(p, q)(P, Q)[12]$,
+    то говорят, что $y_t$ описывается моделью $SARIMA(p, d, q)(P, D, Q)[12]$.
   \end{block}
-
-  \pause  
-  \begin{block}{Определение с лагами}
-    $ARMA(p,q)$ процессом с уравнением 
-    \[
-      P(L)y_t = c + Q(L)u_t, 
-    \]
-    где $(u_t)$ — белый шум, $P(L)$ имеет степень $p$, $Q(L)$ имеет степень $q$, и $P(0)=Q(0)=1$, 
-    $P(Q)$ и $Q(L)$ несократимы, называется решение этого уравнения вида $MA(\infty)$ относительно $(u_t)$.  
-  \end{block}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{ARMA: нюансы}
-
   \pause
-  \begin{itemize}
-    \item $AR(1)$ процесс с уравнением $y_t = 0.5 y_{t-1} + u_t$:
-  \end{itemize}
-  \pause
-  \[
-  y_t = u_t + 0.5 u_{t-1} + 0.5^2 u_{t-2} + \ldots   \pause
-  \]
-  \begin{itemize}
-    \item $AR(1)$ процесса с уравнением $y_t = y_{t-1} + u_t$ не существует:
-  \end{itemize}
-  \pause
-  $\phi_{AR}(\lambda) = \lambda - 1$, $\lambda_1 = 1$, нет стационарных решений. 
+  $d$ — количество взятий обычной разности $\Delta = 1 - L$;
 
+  $D$ — количество взятий сезонной разности $\Delta_{12} = 1- L^{12}$;
   \pause
-  \begin{itemize}
-    \item $AR(1)$ процесса с уравнением $y_t = 2 y_{t-1} + u_t$ не существует:
-  \end{itemize}
-  \pause
-  $\phi_{AR}(\lambda) = \lambda - 2$, $\lambda_1 = 2$, есть стационарное решение 
-  вида $MA(\infty)$, но не относительно $(u_t)$.
+  $y_t \sim SARIMA(0, 0, 2)(1, 1, 2)[12]$ означает, что 
   
+  $\Delta_{12} y_t \sim SARMA(0, 2)(1, 2)[12]$
 \end{frame}
 
 \begin{frame}
-  \frametitle{А что с неединственностью записи?}
+  \frametitle{Как выбрать?}
+  
+  $SARIMA(p, 0, q)(P, 0, Q)$ или $SARIMA(p, 0, q)(P, 1, Q)[12]$?
 
-  Один и тот же $ARMA(p, q)$ процесс $(y_t)$ может описываться разными уравнениями!
-  \pause
-
-  \begin{block}{Спасительная обратимость}
-      Если ряд $(y_t)$ является $ARMA(p, q)$ процессом с уравнением $P(L) y_t = c + Q(L) u_t$, 
-      то данное уравнение будет единственным, если на $MA$ часть выполнено условие обратимости. 
-  \end{block}
-
-  \pause
-  Условие обратимости $ARMA$ уравнения:
   \begin{itemize}
-    \item у характеристического многочлена $\phi_{MA}(\lambda)$ все корни $\abs{\lambda_i} <1$;
-    \item у лагового многочлена $Q(L)$ все корни $\abs{\ell_i} >1$.
-  \end{itemize}
+    \onslide<2->{\item Посмотреть на \alert{график}!}
+    
+    \onslide<3->{Слишком выраженная сезонность — повод перейти к $\Delta_{12}y_t$.}
 
+    \onslide<4->{\item Оценить все эти модели и выбрать наилучшую по \alert{кросс-валидации}.}
+    
+    \onslide<5->{Затратно по времени!}
+
+    \onslide<6->{\item \alert{Применять $AIC$ нельзя}!}
+
+    \onslide<7->{Условная и безусловная функции правдоподобия содержат разное число слагаемых.}
+    
+    \onslide<8->{\item Есть \alert{тесты на единичный корень}!}
+    
+    \onslide<9->{И эмпирические правила\ldots}
+  \end{itemize}
 
 \end{frame}
 
 
+\begin{frame}
+  \frametitle{STL разложение и сила сезонности}
+
+  \onslide<1->{Шаг 1. Находим $STL$ разложение ряда $(y_t)$.
+
+  \[
+     y_t = trend_t + seas_t + remainder_t
+  \]}
+  
+  \onslide<2->{Шаг 2. Рассчитываем силу сезонности.
+
+  \[
+    F_{seas} = \max\left\{1 - \frac{\sVar(remainder)}{\sVar(seas + remainder)}, 0 \right\}.
+  \]}
+  \onslide<3->{Шаг 3. Если сила сезонности выше порога, то переходим к $\Delta_{12} y_t = y_t - y_{t-12}$.}
+
+\end{frame}
+
 
 \begin{frame}
-  \frametitle{ARMA процесс: итоги}
+  \frametitle{Сезонная ARIMA: итоги}
   \begin{itemize}[<+->]
-    \item Процесс стационарен по \alert{определению};
-    \item $AR$ и $MA$ процессы являются \alert{частными случаями} $ARMA$ процесса;
-    \item \alert{Малым числом параметров} описываются разнообразные $MA(\infty)$ процессы. 
-    \item Можно \alert{приблизить} любую структуру $ACF$ и $PACF$.
-    \item Теоретические $ACF$ и $PACF$ \alert{экспоненциально} убывают.
-   \item Условие обратимости гарантирует \alert{единственность записи}. 
+  \item Сезонная ARIMA \alert{экономит} параметры.
+  \item Сила сезонности из \alert{STL} разложения используется для решения о необходимости сезонной разности $\Delta_12 y_t$.
   \end{itemize}
-
 \end{frame}
 
 
