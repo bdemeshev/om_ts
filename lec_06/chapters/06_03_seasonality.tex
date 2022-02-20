@@ -12,7 +12,7 @@
   \begin{itemize}[<+->]
     \item ARMA должна быть экономной! 
     \item Сезонные полиномы.
-    \item Нужно ли переходить к разностям?
+    \item Нужно ли переходить к сезонным разностям?
   \end{itemize}
 
 \end{frame}
@@ -56,17 +56,17 @@ P_{non}(L)P_{seas}(L^{12}) y_t = c + Q_{non}(L) Q_{seas}(L^{12}) u_t,
   \frametitle{Примеры}
 
   \begin{itemize}[<+->]
-    \item $SARMA(1,0)(0,2)[12]$
+    \item $SARMA(\alert{1},0)(0,\alert{2})[12]$
     \[
-    (1 - b_1 L) y_t = c + (1 + d_1 L^{12} + d_2 L^{24}) u_t;  
+    (1 - b_{\alert{1}} L) y_t = c + (1 + d_1 L^{12} + d_{\alert{2}} L^{24}) u_t;  
     \]
-    \item $SARMA(0,2)(1,0)[12]$
+    \item $SARMA(0,\alert{2})(\alert{1},0)[12]$
     \[
-    (1 - f_1 L^{12}) y_t = c + (1 + a_1 L + a_2 L^2) u_t;  
+    (1 - f_{\alert{1}} L^{12}) y_t = c + (1 + a_1 L + a_{\alert{2}} L^2) u_t;  
     \]
-    \item $SARMA(1,2)(2,1)[12]$
+    \item $SARMA(\alert{1},\alert{2})(2,1)[12]$
     \[
-    (1 - f_1 L^{12} - f_2 L^{24}) (1 - b_1 L^1) y_t = c + (1 + a_1 L + a_2 L^2) (1 + d_1 L^{12}) u_t;  
+    (1 - f_1 L^{12} - f_{\alert{2}} L^{24}) (1 - b_{\alert{1}} L^1) y_t = c + (1 + a_1 L + a_2 L^2) (1 + d_1 L^{12}) u_t;  
     \]
   \end{itemize}
 
@@ -85,15 +85,15 @@ P_{non}(L)P_{seas}(L^{12}) y_t = c + Q_{non}(L) Q_{seas}(L^{12}) u_t,
 
   \pause 
   \begin{block}{Определение}
-    Если ряд $z_t = \Delta^d \Delta^D_{12} y_t$ описывается стационарной моделью $SARMA(p, q)(P, Q)[12]$,
-    то говорят, что $y_t$ описывается моделью $SARIMA(p, d, q)(P, D, Q)[12]$.
+    Если ряд $z_t = \Delta^{\alert{d}} \Delta^{\alert{D}}_{12} y_t$ описывается стационарной моделью $SARMA(p, q)(P, Q)[12]$,
+    то говорят, что $y_t$ описывается моделью $SARIMA(p, \alert{d}, q)(P, \alert{D}, Q)[12]$.
   \end{block}
   \pause
   $d$ — количество взятий обычной разности $\Delta = 1 - L$;
 
   $D$ — количество взятий сезонной разности $\Delta_{12} = 1- L^{12}$;
   \pause
-  $y_t \sim SARIMA(0, 0, 2)(1, 1, 2)[12]$ означает, что 
+  $y_t \sim SARIMA(0, 0, 2)(1, \alert{1}, 2)[12]$ означает, что 
   
   $\Delta_{12} y_t \sim SARMA(0, 2)(1, 2)[12]$
 \end{frame}
@@ -128,13 +128,11 @@ P_{non}(L)P_{seas}(L^{12}) y_t = c + Q_{non}(L) Q_{seas}(L^{12}) u_t,
   \frametitle{STL разложение и сила сезонности}
 
   \onslide<1->{Шаг 1. Находим $STL$ разложение ряда $(y_t)$.
-
   \[
      y_t = trend_t + seas_t + remainder_t
   \]}
   
   \onslide<2->{Шаг 2. Рассчитываем силу сезонности.
-
   \[
     F_{seas} = \max\left\{1 - \frac{\sVar(remainder)}{\sVar(seas + remainder)}, 0 \right\}.
   \]}
@@ -147,7 +145,7 @@ P_{non}(L)P_{seas}(L^{12}) y_t = c + Q_{non}(L) Q_{seas}(L^{12}) u_t,
   \frametitle{Сезонная ARIMA: итоги}
   \begin{itemize}[<+->]
   \item Сезонная ARIMA \alert{экономит} параметры.
-  \item Сила сезонности из \alert{STL} разложения используется для решения о необходимости сезонной разности $\Delta_12 y_t$.
+  \item Сила сезонности из \alert{STL} разложения используется для решения о необходимости сезонной разности $\Delta_{12} y_t$.
   \end{itemize}
 \end{frame}
 
