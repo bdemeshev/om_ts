@@ -65,7 +65,7 @@
   
   $(\Delta y_t)$ — стационарный $AR(p)$ процесс;
 
-  $y_t = y_0 + mt + \sum_{i=1}^t (\Delta y_t - \E(\Delta y_t))$;
+  $y_t = y_0 + mt + \sum_{i=1}^t (\Delta y_i - \E(\Delta y_i))$;
 
   \pause
 
@@ -77,21 +77,7 @@
 
 \begin{frame}
   \frametitle{ADF с константой: $H_0$ и $H_a$}
-
-
-  тут два графика,
-
-
-  слева $H_0$
-
-  $\Delta y_t$ — стационарный $AR(p)$ процесс;
-
-  $y_t = y_0 + ct + \sum_{i=1}^t (\Delta y_t - \E(\Delta y_t))$;
-
-
-  справа $H_a$
-
-  $y_t$ — стационарный $AR(p + 1)$ процесс c ненулевым ожиданием
+  \includegraphics[width=\textwidth]{pictures/om_ts_06-046.png}
 
 \end{frame}
 
@@ -132,7 +118,7 @@
   
   $(\Delta y_t)$ — стационарный $AR(p)$ процесс c $\E(\Delta y_t) = 0$;
 
-  $y_t = y_0 + \sum_{i=1}^t \Delta y_t $;
+  $y_t = y_0 + \sum_{i=1}^t \Delta y_i $;
 
   \pause
 
@@ -149,16 +135,7 @@
 
 \begin{frame}
   \frametitle{ADF без константы: $H_0$ и $H_a$}
-
-
-  тут два графика,
-
-
-  слева $H_0$
-
-
-  справа $H_a$
-
+  \includegraphics[width=\textwidth]{pictures/om_ts_06-055.png}
 
 \end{frame}
 
@@ -178,7 +155,7 @@
   
   $(x_t)$ — стационарный $AR(p)$ процесс c $\E(x_t) = 0$;
 
-  $y_t = y_0 + m_1 t + m_2 t^2 + \sum_{i=1}^t x_t$;
+  $y_t = y_0 + m_1 t + m_2 t^2 + \sum_{i=1}^t x_i$;
 
   \pause
 
@@ -197,17 +174,7 @@
 
 \begin{frame}
   \frametitle{ADF с трендом: $H_0$ и $H_a$}
-
-
-  тут два графика,
-
-
-  слева $H_0$
-
-
-  справа $H_a$
-
-
+  \includegraphics[width=\textwidth]{pictures/om_ts_06-060.png}
 \end{frame}
 
 
