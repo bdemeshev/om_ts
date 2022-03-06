@@ -1,190 +1,170 @@
-% !TEX root = ../om_ts_06.tex
+% !TEX root = ../om_ts_07.tex
 
 \begin{frame} % название фрагмента
 
-\videotitle{ADF тест}
+\videotitle{У нас есть ещё время!}
+
+% https://www.youtube.com/watch?v=7CCBsshm-cQ
 
 \end{frame}
 
 
 
-\begin{frame}{ADF тест: план}
+\begin{frame}{У нас ещё есть время: план}
   \begin{itemize}[<+->]
-    \item Предположения теста.
-    \item Алгоритм теста.
-    \item Три вариации теста.
+    \item Предикторы \alert{тренда}.
+    \item \alert{Сезонные} и \alert{праздничные} дамми.
+    \item \alert{Косинусы} и \alert{синусы}.
   \end{itemize}
 
 \end{frame}
-
 
 \begin{frame}
-  \frametitle{Зачем нужен ADF тест?}
+  \frametitle{Используем время!}
 
-  Хотим ответить на вопросы:
+  Для примера возьмём $t$ и $\sqrt{t}$. 
   \pause
-  \begin{itemize}[<+->]
-    \item Использовать $ARMA$ модель для $(y_t)$ или для $(\Delta y_t)$?
-    \item Как включать константу в модель?
-  \end{itemize}
 
-  \pause
-  Название «тест на единичные корни»:
-  \pause
+  \alert{Обучающая} выборка:
   \[
-  \Delta = 1 - L = P(L) 
+  \begin{pmatrix}
+    y_1 \\
+    y_2 \\
+    y_3 \\
+    \vdots \\
+    y_T 
+  \end{pmatrix}  \quad 
+  \begin{pmatrix}
+    1 & \sqrt{1} \\
+    2 & \sqrt{2} \\
+    3 & \sqrt{3} \\
+    \vdots & \vdots \\
+    T & \sqrt{T} \\ 
+  \end{pmatrix}
   \]
-  Уравнение $1 - \ell = 0$ имеет корень $\ell =1$.
+  \pause
+  Выборка для \alert{прогнозирования}:
+  \[
+  \begin{pmatrix}
+    ? 
+  \end{pmatrix}  \quad 
+  \begin{pmatrix}
+    T+1 & \sqrt{T+1} \\ 
+  \end{pmatrix}
+  \]
+  
+\end{frame}
 
+
+\begin{frame}
+  \frametitle{Включать ли монотонные преобразования времени?}
+
+  \begin{itemize}[<+->]
+    \item Всегда \alert{можно попробовать} включить!
+    \item Алгоритмам основанным на построении \alert{деревьев} (случайные лес, градиентный бустинг)
+    дополнительные монотонные преобразования времени \alert{бесполезны}. 
+    \item Помните о возможном преобразовании \alert{исходной переменной} (логарифм, преобразование Бокса-Кокса).
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{ADF тест}
+  \frametitle{Сезонные и праздничные дамми}
+
+  Если сезонов \alert{немного}, то разумно включить дамми на каждый сезон.
+
+  \pause
+  \alert{Обучающая} выборка для квартальных данных:
+  \[
+  \begin{pmatrix}
+    y_1 \\
+    y_2 \\
+    y_3 \\
+    y_4 \\
+    y_5 \\
+    y_6 \\
+    \vdots \\
+    y_T 
+  \end{pmatrix}  \quad 
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1 \\
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    \vdots & \vdots &  \vdots & \vdots \\
+    0 & 0 & 1 & 0 \\
+  \end{pmatrix}
+  \]
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Ловушка дамми-переменных}
+
   
-  \begin{block}{Расшифровка}
-    Augmented Dickey Fuller test
-    
-    Расширенный тест Дики-Фуллера  
+  В \alert{регрессии} помните о \alert{ловушке} дамми-переменных! \pause 
+  
+  \begin{itemize}[<+->]
+    \item Либо дамми на каждый сезон и модель без константы.
+    \item Либо дамми на все сезоны кроме одного и модель с константой. 
+  \end{itemize}
+  
+  \pause 
+  Алгоритмы основанные на построении \alert{деревьев} (случайные лес, градиентный бустинг)
+ \alert{устойчивы} к ловушке дамми. 
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Зачем нужны синусы и косинусы?}
+
+  Стратегия добавления всех дамми переменных \alert{плохо} работает, если их нужно \alert{много}. \pause 
+  
+  Вряд ли стоит добавлять 365 дамми-переменных для \alert{дневных} данных. \pause
+
+  Обойтись \alert{малым числом} предикторов помогут синус и косинус!
+
+  \pause 
+  Два факта:
+  \begin{itemize}[<+->]
+    \item Период у $\sin t$ и $\cos t$ равен $2\pi$;
+    \item При умножении аргумента на $a$ период \alert{сокращается} в $a$ раз.
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Разложение Фурье}
+
+  \begin{block}{Теорема}
+    Любая непрерывная и дифференциируемая функция $f$ с периодом $2\pi$ может быть представлена в виде 
+        \[
+        f(t) = c + \sum_{k=1}^{\infty} a_k \cos(kt) + b_k \sin (kt).   
+        \]
   \end{block}
 
   \pause 
-  Три вариации теста: без константы, с константой, c трендом.
+  Практический рецепт для дневных данных:
+  \begin{itemize}[<+->]
+    \item Добавьте предикторы $\cos\left(\frac{2\pi}{365} \cdot t\right)$ и $\sin\left(\frac{2\pi}{365}  \cdot t\right)$;
+    \item Добавьте предикторы $\cos\left(\frac{2\pi}{365}  \cdot 2t\right)$ и $\sin\left(\frac{2\pi}{365} \cdot  2t\right)$;
+    \item Добавьте предикторы $\cos\left(\frac{2\pi}{365}  \cdot 3t\right)$ и $\sin\left(\frac{2\pi}{365}  \cdot 3t\right)$;
+    \item \ldots 
+  \end{itemize}
+
+
   
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{ADF с константой}
-  \[
-  \Delta y_t = c + \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_p \Delta y_{t-p} + u_t,  
-  \]
-
-  \pause
-
-  \alert{$H_0$: $\beta = 0$};
-  
- $\Delta y_t = m + x_t$;
-
-$(x_t)$ — стационарный $AR(p)$ процесс с $\E(x_t) = 0$;
-
-  $y_t = y_0 + mt + \sum_{i=1}^t x_i$;
-
-  \pause
-
-  \alert{$H_a$: $\beta < 0$};
-
-  $(y_t)$ — стационарный $AR(p + 1)$ процесс;
 
 \end{frame}
 
-\begin{frame}
-  \frametitle{ADF с константой: $H_0$ и $H_a$}
-  \includegraphics[width=\textwidth]{pictures/om_ts_06-046.png}
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{ADF с константой: алгоритм}
-
-  Шаг 1. Оцениваем \alert{регрессию}
-  \[
-    \widehat{\Delta y_t} = \hat c + \hat \beta y_{t-1} + \hat d_1 \Delta y_{t-1} + \ldots + \hat d_p \Delta y_{t-p}.  
-  \]
-
-  \pause
-  Шаг 2. Считаем по \alert{классической формуле} $t$-статистику
-  \[
-  ADF = \frac{\hat \beta -  0}{se(\hat \beta)}.  
-  \]
-
-  \pause
-  При верной $H_0$ распределение $ADF$-статистики стремится к \alert{особому распределению} $DF^c$!
-
-  \pause 
-  Шаг 3. Делаем вывод:
-  
-  Если $ADF < DF^c$, то $H_0$ отвергается. 
-
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{ADF без константы}
-  \[
-  \Delta y_t = \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_p \Delta y_{t-p} + u_t,  
-  \]
-
-  \pause
-
-  \alert{$H_0$: $\beta = 0$};
-  
-  $(\Delta y_t)$ — стационарный $AR(p)$ процесс c $\E(\Delta y_t) = 0$;
-
-  $y_t = y_0 + \sum_{i=1}^t \Delta y_i $;
-
-  \pause
-
-  \alert{$H_a$: $\beta < 0$};
-
-  $(y_t)$ — стационарный $AR(p + 1)$ процесс с $\E(y_t) = 0$;
-
-  \pause 
-
-  В алгоритме будет \alert{регрессия без константы} и другое распределение $DF^0$.
-
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{ADF без константы: $H_0$ и $H_a$}
-  \includegraphics[width=\textwidth]{pictures/om_ts_06-055.png}
-
-\end{frame}
-
-
-
-\begin{frame}
-  \frametitle{ADF с трендом}
-  \[
-  \Delta y_t = c + g t + \beta y_{t-1} + d_1 \Delta y_{t-1} + \ldots + d_p \Delta y_{t-p} + u_t,  
-  \]
-
-  \pause
-
-  \alert{$H_0$: $\beta = 0$};
-  
-  $\Delta y_t = k_1 + k_2 t + x_t$;
-  
-  $(x_t)$ — стационарный $AR(p)$ процесс c $\E(x_t) = 0$;
-
-  $y_t = y_0 + m_1 t + m_2 t^2 + \sum_{i=1}^t x_i$;
-
-  \pause
-
-  \alert{$H_a$: $\beta < 0$};
-
-  $y_t = m_1 + m_2 t + x_t$;
-  
-  $(x_t)$ — стационарный $AR(p + 1)$ процесс с $\E(x_t) = 0$;
-
-  \pause 
-
-  В алгоритме будет регрессия \alert{с константой и трендом} и другое распределение $DF^{ct}$.
-
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{ADF с трендом: $H_0$ и $H_a$}
-  \includegraphics[width=\textwidth]{pictures/om_ts_06-060.png}
-\end{frame}
-
-
-\begin{frame}{$ADF$ тест: итоги}
+\begin{frame}{У нас есть ещё время: итоги}
 
   \begin{itemize}[<+->]
-    \item Применим для принятия решения о переходе к $\Delta y_t$.
-    \item Есть три варианта теста с разными предпосылками.
+    \item Используйте \alert{время} в качестве предиктора.
+    \item Сезонность в предикторах можно отразить с помощью \alert{дамми-переменных} или 
+    с помощью \alert{косинуса} и \alert{синуса}.
   \end{itemize}
 \end{frame}
 
