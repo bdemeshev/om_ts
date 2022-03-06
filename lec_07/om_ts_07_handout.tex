@@ -1,0 +1,126 @@
+% arara: xelatex
+%% arara: xelatex
+
+
+% https://koalatea.io/r-knn-regression/
+% http://freerangestats.info/blog/2017/04/09/propensity-v-regression
+% https://economics.stackexchange.com/questions/45335/what-is-the-difference-between-ate-and-att
+% https://kosukeimai.github.io/MatchIt/articles/matching-methods.html
+
+
+\documentclass[14pt,xcolor=dvipsnames,handout]{beamer}
+
+
+\input{preamble.tex}
+\usepackage{physics}
+\usepackage[makeroom]{cancel}
+
+
+
+% tikz block
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{quotes,angles}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning,intersections,decorations.markings}
+\usetikzlibrary{patterns}
+
+\usepackage{tkz-euclide} 
+%\tikzset{>=latex}
+
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+cross/.default={5pt}}
+
+\colorlet{veca}{red}
+\colorlet{vecb}{blue}
+\colorlet{vecc}{olive}
+
+
+\newcommand{\grid}{\draw[color=gray,step=1.0,dotted] (-2.1,-2.1) grid (9.6,6.1)}
+
+% end tikz block
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rot}{\mathrm{R}}
+\newcommand{\HH}{\mathrm{H}}
+\newcommand{\Id}{\mathrm{I}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\la}{\lambda}
+\let\P\relax
+\newcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\dN}{\mathcal{N}}
+
+\newcommand{\qL}{q_{\text{left}}}
+\newcommand{\qR}{q_{\text{right}}}
+
+
+
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bd}{\mathbf{d}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bff}{\mathbf{f}} % \bf is already def
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bzero}{\mathbf{0}}
+
+
+
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\sVar}{sVar}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\sCov}{sCov}
+\DeclareMathOperator{\sCorr}{sCorr}
+\DeclareMathOperator{\pCorr}{pCorr}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\Med}{Med}
+\let\L\relax
+\DeclareMathOperator{\L}{L}
+
+
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\sign}{sign}
+
+
+\newcommand{\graylink}[1]{{\fontsize{11}{12}\selectfont \textcolor{gray}{#1}}}
+\newcommand{\figcaption}[1]{{\fontsize{18}{20}\selectfont #1}}
+
+
+
+
+
+\begin{document}
+
+
+\begin{frame} % название лекции
+
+
+\lecturetitle{ARIMA и сезонная ARIMA}
+
+\end{frame}
+
+
+\input{chapters/06_01_arima.tex}
+
+\input{chapters/06_02_adf.tex}
+\input{chapters/06_02_kpss.tex}
+
+
+\input{chapters/06_03_seasonality.tex}
+
+\input{chapters/06_04_khandakar_hyndman.tex}
+
+
+
+\end{document}
