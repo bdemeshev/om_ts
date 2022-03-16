@@ -1,0 +1,103 @@
+% !TEX root = ../om_ts_08.tex
+
+\begin{frame} % название фрагмента
+
+    \videotitle{Структурная модель как конструктор}
+    
+    \end{frame}
+    
+
+
+    \begin{frame}{Структурная модель: план}
+        \begin{itemize}[<+->]
+          \item \alert{Локальный линейный} тренд. 
+          \item Два варианта \alert{сезонной} составляющей.
+          \item \alert{Динамическая регрессия}. 
+        \end{itemize}
+      
+      \end{frame}
+      
+      
+
+\begin{frame}
+    \frametitle{Тренд}
+    \[
+    y_t = \mu_t + s_t + \beta_t x_t +  u_t, \quad u_t \sim \cN(0; \sigma^2_{obs}).  
+    \]
+  
+    \pause
+    \alert{Локальный линейный тренд}:
+    \[
+       \mu_t = \mu_{t-1} + \delta_{t-1} + w_{1t}, \quad w_{1t} \sim \cN(0; \sigma^2_{level}).
+    \]
+    \pause
+    Уравнение для наклона $\delta_t$:
+    \[
+      \delta_{t} = \delta_{t-1} +  w_{2t}, \quad w_{2t} \sim \cN(0; \sigma^2_{slope}).
+    \]
+    
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Сезонность с помощью дамми}
+    \[
+    y_t = \mu_t + s_t + \beta_t x_t +  u_t, \quad u_t \sim \cN(0; \sigma^2_{obs}).  
+    \]
+  
+    \pause
+    $\gamma_{it}$ — оценка сезонного эффекта для наблюдения $t-i$ в момент $t$. 
+    \[
+    s_t = \gamma_{0t},  
+    \]
+    \pause
+    \begin{eqnarray*}
+      \gamma_{it} = \gamma{i-1,t-1}, \quad i \in \{1, \ldots, 11\}.  \\
+      \gamma_{0t} + \gamma{1,t-1} + \gamma{2,t-1} + \ldots + \gamma_{11,t-1} = w_{3t} \sim \cN(0;\sigma^2_{seas})
+    \end{eqnarray*}
+  \end{frame}
+  
+  
+  \begin{frame}
+    \frametitle{Сезонность с помощью Фурье}
+    \[
+    y_t = \mu_t + s_t + \beta_t x_t +  u_t, \quad u_t \sim \cN(0; \sigma^2_{obs}).  
+    \]
+  
+    \pause
+    \begin{eqnarray*}
+       s_t = a_{1t} \cos(\frac{2\pi}{365} t) + b_{1t} \sin(\frac{2\pi}{365} t) + \\
+           + a_{2t} \cos(2\cdot \frac{2\pi}{365} t) + b_{2t} \sin(2\cdot\frac{2\pi}{365} t)
+    \end{eqnarray*}
+    \pause
+    \begin{eqnarray*}
+      a_{it} = a_{i,t-1} + w_{4it}, \quad w_{4it} \sim \cN(0;\sigma^2_{ai}) \\
+      b_{it} = b_{i,t-1} + w_{5it}, \quad w_{5it} \sim \cN(0;\sigma^2_{bi})
+    \end{eqnarray*}
+    
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Эволюция зависимости от предиктора}
+    \[
+    y_t = \mu_t + s_t + \beta_t x_t +  u_t, \quad u_t \sim \cN(0; \sigma^2_{obs}).  
+    \]
+  
+    \pause
+    \[
+       \beta_{t} = \beta_{t-1} + w_{6t}, \quad  w_{6t} \sim \cN(0;\sigma^2_{reg})
+    \]
+    
+  \end{frame}
+  
+  
+
+  \begin{frame}{Структурная модель как конструктор: итоги}
+
+    \begin{itemize}[<+->]
+      \item Огромное количество \alert{вариантов модели}.
+    \item Сезонность: \alert{тригонометрические функции} и \alert{дамми-переменные}.
+      \item Все параметры могут \alert{меняться} во времени.
+      \item В отличие от $ETS$ модели \alert{много источников} случайности. 
+    \end{itemize}
+  \end{frame}
+  

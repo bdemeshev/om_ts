@@ -19,12 +19,9 @@ model = AddLocalLinearTrend(model, y = air)
 # model = AddSeasonal(model, y = air, nseasons = 12)
 model = AddTrig(model, y = air, period = 12, frequencies = 1:2)
 
-
-
 posterior = bsts(air, state.specification = model, niter = 200)
 
 plot(posterior, 'components')
-
 
 fcst = predict(posterior, horizon = 24, burn = 100, quantiles = c(.05, .95))
 fcst$mean
@@ -54,10 +51,19 @@ gg_tsdisplay(rm4, deaths)
 
 tail(rm_tsibble, 25)
 
+
+world_mort
+
+rm = dplyr::filter(world_mort, country_name == 'Russia')
+rm
+rm2 = mutate(rm, date = ymd(paste0(year, '-', time, '-01')))
+rm2
+
+rm3 = dplyr::select(rm2, deaths, date)
+rm3
+
 the_date = 61
 rm_ts[61]
-
-
 
 impact = CausalImpact(data = as.vector(rm_ts), pre.period = c(1, the_date - 1), 
                       post.period = c(the_date, nrow(rm_tsibble)))
