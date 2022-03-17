@@ -1,0 +1,181 @@
+% arara: xelatex
+%% arara: xelatex
+
+\documentclass[12pt]{article}
+
+\usepackage{tikz} % картинки в tikz
+\usepackage{microtype} % свешивание пунктуации
+
+\usepackage{array} % для столбцов фиксированной ширины
+
+\usepackage{indentfirst} % отступ в первом параграфе
+
+\usepackage{sectsty} % для центрирования названий частей
+\allsectionsfont{\centering}
+
+\usepackage{amsmath, amssymb, amsthm} % куча стандартных математических плюшек
+
+\usepackage{amsfonts}
+
+\usepackage{comment}
+
+\usepackage[top=2cm, left=1.2cm, right=1.2cm, bottom=2cm]{geometry} % размер текста на странице
+
+\usepackage{lastpage} % чтобы узнать номер последней страницы
+
+\usepackage{enumitem} % дополнительные плюшки для списков
+%  например \begin{enumerate}[resume] позволяет продолжить нумерацию в новом списке
+\usepackage{caption}
+
+
+\usepackage{hyperref} % гиперссылки
+
+\usepackage{multicol} % текст в несколько столбцов
+
+
+\usepackage{fancyhdr} % весёлые колонтитулы
+\pagestyle{fancy}
+\lhead{Анализ временных рядов, Экономический анализ, НИУ-ВШЭ}
+\rhead{Проект}
+
+\cfoot{}
+\rfoot{}
+% \rfoot{\thepage/3}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+
+% \usepackage{todonotes} % для вставки в документ заметок о том, что осталось сделать
+% \todo{Здесь надо коэффициенты исправить}
+% \missingfigure{Здесь будет Последний день Помпеи}
+% \listoftodos - печатает все поставленные \todo'шки
+
+
+% более красивые таблицы
+\usepackage{booktabs}
+% заповеди из документации:
+% 1. Не используйте вертикальные линии
+% 2. Не используйте двойные линии
+% 3. Единицы измерения - в шапку таблицы
+% 4. Не сокращайте .1 вместо 0.1
+% 5. Повторяющееся значение повторяйте, а не говорите "то же"
+
+
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setmainlanguage{russian}
+\setotherlanguages{english}
+
+% download "Linux Libertine" fonts:
+% http://www.linuxlibertine.org/index.php?id=91&L=1
+\setmainfont{Linux Libertine O} % or Helvetica, Arial, Cambria
+% why do we need \newfontfamily:
+% http://tex.stackexchange.com/questions/91507/
+\newfontfamily{\cyrillicfonttt}{Linux Libertine O}
+
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ} % для списков с русскими буквами
+\setlist[enumerate, 2]{label=\asbuk*),ref=\asbuk*}
+
+%% эконометрические сокращения
+\let\P\relax
+\DeclareMathOperator{\P}{\mathbb{P}}
+\DeclareMathOperator{\Cov}{\mathbb{C}ov}
+\DeclareMathOperator{\Corr}{\mathbb{C}orr}
+\DeclareMathOperator{\Var}{\mathbb{V}ar}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\tr}{trace}
+\newcommand \hb{\hat{\beta}}
+\newcommand \hs{\hat{\sigma}}
+\newcommand \htheta{\hat{\theta}}
+\newcommand \s{\sigma}
+\newcommand \hy{\hat{y}}
+\newcommand \hY{\hat{Y}}
+\newcommand \vone{\vec{1}}
+\newcommand \e{\varepsilon}
+\newcommand \he{\hat{\e}}
+\newcommand \z{z}
+\newcommand \hVar{\widehat{\Var}}
+\newcommand \hCorr{\widehat{\Corr}}
+\newcommand \hCov{\widehat{\Cov}}
+\newcommand \cN{\mathcal{N}}
+
+
+
+\begin{document}
+
+\section*{Проект}
+
+\begin{enumerate}
+
+\item Возьмите любой ряд с ежемесячными наблюдениями. 
+
+\item (30 баллов) Визуализируйте сам ряд, ряд обычных и сезонных разностей, компоненты ряда,
+обычные и частные автокорреляционные функции. 
+
+Прокомментируйте графики. 
+
+\item (10 баллов) Является ряд стационарным? 
+
+Подтвердите ответ подходящим тестом. 
+
+\item (10 баллов) Если разумно применить к исходному ряду какое-либо преобразование, 
+то примените его, мотивировав свой выбор. 
+
+\item (5 баллов) Поделите ряд на тестовую и обучающую выборку. 
+
+\item (60 баллов) Оцените ряд моделей/алгоритмов на тестовой выборке. 
+
+Здесь вы ограничены только вашей фантазией!
+Как минимум следует рассмотреть: наивную модель, ETS, SARIMA, случайный лес, 
+тета-метод и усреднение моделей-лидеров.
+Можно в качестве предикторов взять дополнительные ряды. 
+Можно прогнозировать компоненты ряда разными моделями. 
+
+\item (10 баллов) Выберите наилучшую модель. 
+
+Визуализируйте ряд остатков наилучшей модели на обучающей выборке, прокомментируйте.
+Постройте график прогнозов на два года вперед, переоценив наилучшую моделей по полной выборке.
+Не забудьте вернуться к исходному ряду, если вы делали преобразование.
+
+
+\item (20 баллов) Удивите проверяющих реализацией какой-нибудь интересной дополнительной идеи. 
+
+Можно заполнить пропуски, проверить наличие структурных сдвигов, выявить аномальные наблюдения, 
+можно использовать техники не упомянутые в курсе. 
+
+\item (бонус, 10 баллов) Если вы занимались прогнозированием рядов вне данного курса,
+кратко опишите проблемы с которыми вам пришлось столкнуться и как вы их решали. 
+Если не занимались, то расскажите, какие сюжеты курса дались легко, а какие вызывают сложности. 
+
+    
+\end{enumerate}
+
+
+\section*{Комментарии}
+
+Работу следует представить в виде отчёта в pdf или html формате. 
+В начале работы должен идти текст с графиками, в конце работы в качестве приложения должен идти код. 
+Общий объем текста (без приложений) должен составлять \textbf{не более 10 страниц}.
+
+В отличие от домашнего задания формулировка проекта во многих пунктах является вольной и предполагает творческий подход. 
+В каждом пункте можно сделать больше, чем указанный минимум.
+
+Проект можно выполнять в одиночку, а также группой из двух или трёх человек. 
+
+Исходные данные должны быть прикреплены к работе или загружаться автоматически из открытых источников в интернете.
+
+Дедлайн сдачи - \textbf{28 марта 2022, 20:59}. До указанного времени файл должен быть загружен по ссылке
+\url{}.
+
+
+
+
+
+
+
+\end{document}
+
+
