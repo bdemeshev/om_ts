@@ -8,9 +8,9 @@
 
 \begin{frame}{Предикторы и $ARIMA$: план}
   \begin{itemize}[<+->]
-    \item Регрессия с $ARMA$ ошибками.
-    \item $ARMAX$ модель.
-    \item $ARDL$ модель.
+    \item Регрессия с \alert{$ARMA$ ошибками}.
+    \item \alert{$ARMAX$ модель}.
+    \item \alert{$ARDL$ модель}.
   \end{itemize}
 \end{frame}
 
@@ -28,7 +28,7 @@
   \item Ряды $(y_t)$, $(a_t)$, $(b_t)$, $(\varepsilon_t)$ \alert{стационарны}.
   \item $\varepsilon_t \sim ARMA(p, q)$ относительно белого шума $(u_t)$.
 \item $\E(\varepsilon_t \mid a_{t-1}, b_{t-1}, a_{t-2}, b_{t-2}, \ldots) = 0$.
-\item Четвертые моменты предикторов конечны.  
+\item \alert{Четвертые моменты} предикторов конечны.  
 \end{itemize}
   
 \end{frame}
@@ -47,10 +47,10 @@
   \begin{itemize}[<+->]
   \item Ряды $(y_t)$, $(a_t)$, $(b_t)$ \alert{стационарны}.
 \item $\E(u_t \mid a_{t-1}, b_{t-1}, y_{t-1}, a_{t-2}, b_{t-2}, y_{t-2}, \ldots) = 0$.
-\item Четвертые моменты предикторов конечны.  
+\item \alert{Четвертые моменты предикторов} конечны.  
 \end{itemize}
   \pause
-  $ARMAX$ модель не полностью эквивалентна регрессии с $ARMA$ ошибками, но качество прогнозов у моделей примерно одинаковое.  
+  $ARMAX$ модель не полностью эквивалентна регрессии с $ARMA$ ошибками, но качество прогнозов у моделей \alert{примерно одинаковое}.  
 
 \end{frame}
 
