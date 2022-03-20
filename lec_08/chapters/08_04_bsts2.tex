@@ -50,15 +50,17 @@
     s_t = \gamma_{0t},  
     \]
     \pause
-    \begin{eqnarray*}
-      \gamma_{it} = \gamma{i-1,t-1}, \quad i \in \{1, \ldots, 11\}.  \\
-      \gamma_{0t} + \gamma{1,t-1} + \gamma{2,t-1} + \ldots + \gamma_{11,t-1} = w_{3t} \sim \cN(0;\sigma^2_{seas})
-    \end{eqnarray*}
+    \[
+      \begin{cases}
+      \gamma_{it} = \gamma_{i-1,t-1}, \quad i \in \{1, \ldots, 11\}.  \\
+      \gamma_{0t} + \gamma_{1,t-1} + \gamma_{2,t-1} + \ldots + \gamma_{11,t-1} = w_{3t} \sim \cN(0;\sigma^2_{seas})
+      \end{cases}
+    \]
   \end{frame}
   
   
   \begin{frame}
-    \frametitle{Сезонность с помощью Фурье}
+    \frametitle{Сезонность с помощью рядов Фурье}
     \[
     y_t = \mu_t + s_t + \beta_t x_t +  u_t, \quad u_t \sim \cN(0; \sigma^2_{obs}).  
     \]
