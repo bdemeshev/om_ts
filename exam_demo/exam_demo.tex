@@ -1,0 +1,168 @@
+% arara: xelatex
+
+\documentclass[12pt]{article}
+
+\usepackage{tikz} % картинки в tikz
+\usepackage{microtype} % свешивание пунктуации
+
+\usepackage{array} % для столбцов фиксированной ширины
+
+\usepackage{indentfirst} % отступ в первом параграфе
+
+\usepackage{sectsty} % для центрирования названий частей
+\allsectionsfont{\centering}
+
+\usepackage{amsmath, amssymb} % куча стандартных математических плюшек
+
+\usepackage{physics}
+\usepackage{comment}
+
+\usepackage[top=2cm, left=1.2cm, right=1.2cm, bottom=2cm]{geometry} % размер текста на странице
+
+\usepackage{lastpage} % чтобы узнать номер последней страницы
+
+\usepackage{enumitem} % дополнительные плюшки для списков
+%  например \begin{enumerate}[resume] позволяет продолжить нумерацию в новом списке
+\usepackage{caption}
+
+
+\usepackage{fancyhdr} % весёлые колонтитулы
+\pagestyle{fancy}
+\lhead{Анализ временных рядов}
+\chead{демо-версия}
+\rhead{2022-04-02}
+\lfoot{}
+\cfoot{НЕ ПАНИКОВАТЬ}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\let\P\relax
+\DeclareMathOperator{\P}{\mathbb{P}}
+
+\usepackage{todonotes} % для вставки в документ заметок о том, что осталось сделать
+% \todo{Здесь надо коэффициенты исправить}
+% \missingfigure{Здесь будет Последний день Помпеи}
+% \listoftodos --- печатает все поставленные \todo'шки
+
+
+% более красивые таблицы
+\usepackage{booktabs}
+% заповеди из докупентации:
+% 1. Не используйте вертикальные линни
+% 2. Не используйте двойные линии
+% 3. Единицы измерения - в шапку таблицы
+% 4. Не сокращайте .1 вместо 0.1
+% 5. Повторяющееся значение повторяйте, а не говорите "то же"
+
+
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setmainlanguage{russian}
+\setotherlanguages{english}
+
+% download "Linux Libertine" fonts:
+% http://www.linuxlibertine.org/index.php?id=91&L=1
+\setmainfont{Linux Libertine O} % or Helvetica, Arial, Cambria
+% why do we need \newfontfamily:
+% http://tex.stackexchange.com/questions/91507/
+\newfontfamily{\cyrillicfonttt}{Linux Libertine O}
+
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ} % для списков с русскими буквами
+%\setlist[enumerate, 2]{label=\asbuk*),ref=\asbuk*}
+
+%% эконометрические сокращения
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\E}{E}
+\def \hb{\hat{\beta}}
+\def \hs{\hat{\sigma}}
+\def \htheta{\hat{\theta}}
+\def \s{\sigma}
+\def \hy{\hat{y}}
+\def \hY{\hat{Y}}
+\def \v1{\vec{1}}
+\def \e{\varepsilon}
+\def \he{\hat{\e}}
+\def \z{z}
+\def \hVar{\widehat{\Var}}
+\def \hCorr{\widehat{\Corr}}
+\def \hCov{\widehat{\Cov}}
+\def \cN{\mathcal{N}}
+
+
+\begin{document}
+
+Краткие правила: 120 минут, без прокторинга, можно использовать любые материалы. 
+Благородные доны и доньи решают самостоятельно. 
+
+\begin{enumerate}
+
+\item Вспомним $ETS(AAN)$ модель, которая описывается системой уравнений
+
+	\[
+	\begin{cases}
+	y_t = \ell_{t-1} + b_{t-1} + u_t \\
+	\ell_t = \ell_{t-1} + b_{t-1} + \alpha u_t \\
+	b_t = b_{t-1} + \beta u_t \\
+	u_t \sim \cN(0;\sigma^2). \\
+	% s_t = s_{t-12} + \gamma \varepsilon_t \\
+	\end{cases}
+	\]
+	
+		
+Для $\ell_{100} = 30$, $b_{100} = 1$, $\alpha=0.2$, $\beta=0.3$, $\sigma^2 = 16$ постройте
+		интервальный прогноз на один и два шага вперёд. 
+	
+
+\item Рассмотрим $ETS(AAN)$ модель с $\ell_{0} = 30$, $b_{0} = 1$, $\alpha=0.2$, $\beta=0.3$, $\sigma^2 = 16$.
+Известно, что $y_1 = 32$, $y_2 = 35$ и $y_3 = 37$. 
+
+Найдите сглаженные значения $\ell_1$, $\ell_2$, $\ell_3$. 
+	
+
+
+\item Для $ETS(ANN)$ модели найдите $\E(y_t)$ и $\Var(y_t)$. 
+Найдите пределы
+$$
+\lim_{t\to \infty} \E(y_t), \quad \text{ и } \lim_{t\to \infty} \Var(y_t).
+$$
+
+\item Рассмотрим $MA(2)$ процесс $y_t = 5 + u_t + 0.3 u_{t-1} + 0.5 u_{t-2}$, где $(u_t)$ — белый шум с дисперсией $16$.
+
+\begin{enumerate}
+	\item Является ли данный процесс стационарным?
+	\item Найдите автокорреляционную функцию данного процесса. 
+	\item Найдите $\E(y_{t+1} \mid y_{t}, y_{t-1})$.
+\end{enumerate}
+
+\item Рассмотрим стационарный $AR(1)$ процесс относительно белого шума $(u_t)$ с уравнением 
+\[
+y_t = 5 + 0.3 y_{t-1} + u_t.
+\]
+
+\begin{enumerate}
+	\item Найдите автокорреляционную и частную автокорреляционную функции. 
+	\item Найдите $\E(y_{t+1} \mid y_{t}, y_{t-1})$.
+	\item Приведите пример нестационарного процесса, также являющегося решением упомянутого уравнения.
+\end{enumerate}
+
+
+\item Рассмотрим уравнение $y_t = 3 + 0.5 y_{t-1} - 0.06 y_{t-2} + u_t - 0.2 u_{t-1}$, где $(u_t)$ — белый шум. 
+
+\begin{enumerate}
+	\item Запишите уравнение с помощью лаговых полиномов и разложите полиномы на сомножители. 
+	\item Присмотревшись пристальным взглядом к корням явно выпишите хотя бы одно стационарное решение этого уравнения. 
+	Является ли стационарное решение единственным?
+	\item Найдите $\Corr(y_t, y_{t-k})$ для всех стационарных решений. 
+\end{enumerate}
+
+
+
+\end{enumerate}
+
+\end{document}
