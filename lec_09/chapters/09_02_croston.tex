@@ -1,0 +1,137 @@
+% !TEX root = ../om_ts_09.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Данные прерывающиеся нулями}
+
+\end{frame}
+
+
+
+\begin{frame}{Данные прерывающиеся нулями: план}
+  \begin{itemize}[<+->]
+    \item Нули в данных.
+    \item Алгоритм Кростона. 
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Откуда нули в данных?}
+
+  Счётные данные с \alert{небольшим} ожиданием: 
+  \begin{itemize}[<+->]
+    \item Ежедневное количество пожаров в небольшое городе.
+    \item Еженедельное количество написанных писателем романов. 
+    \item \ldots
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Как моделировать?}
+
+  \begin{itemize}[<+->]
+    \item Специальные модели для счётных данных. 
+    
+    Используют распределение \alert{Пуассона}, \alert{отрицательное биномиальное}, \ldots
+
+    \item Простой алгоритм Кростона. 
+    
+    Подходит для \alert{несезонных} данных, основан на \alert{экспоненциальном сглаживании}. 
+  \end{itemize}
+
+  
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Напоминание про ETS(ANN)}
+
+  Уравнения модели:
+  \[
+  \begin{cases}
+  y_t = \ell_{t-1} + u_t  \\
+  \ell_t = \ell_{t-1} + \alpha u_t \\
+  \end{cases}
+  \]
+  \pause
+  \[
+  \ell_t = \alpha y_t + (1 - \alpha) \ell_{t-1}
+  \]
+  \pause 
+  Прогноз на 1 шаг вперёд:
+  \[
+  \hat y_{t+1} = \alpha y_t + (1-\alpha )\hat y_{t}.
+  \]
+\end{frame}
+
+
+\begin{frame}{Алгоритм Кростона}
+  
+  Шаг 1. Разобъём исходный ряд $(y_t)$
+  \[
+   3, 0, 2, 0, 0, 4, 0, 0, 0, 3, 0, 1, \ldots
+  \] \pause
+  на ряд \alert{положительных} значений $(q_t)$
+  \[
+  3, 2, 4, 3, 1, \ldots  
+  \]
+  и \alert{длины нулевых промежутков} $(a_t)$:
+  \[
+  1, 2, 3, 1, \ldots   
+  \]
+  \pause 
+
+  Шаг 2. Применим простое экспоненциальное сглаживание.
+  \[
+\begin{cases}
+  \hat q_{t+1} = \alpha_q q_t + (1-\alpha_q )\hat q_{t} \\
+  \hat a_{t+1} = \alpha_a a_t + (1-\alpha_a )\hat a_{t}
+\end{cases}
+  \]
+  \pause 
+  Параметры: $\alpha_a$, $\alpha_q$, $\hat a_{0}$, $\hat q_{0}$.
+
+
+\end{frame}
+  
+
+\begin{frame}
+  \frametitle{Прогнозирование}
+
+  Из алгоритма Кростона можно извлечь:
+  \begin{itemize}[<+->]
+    \item $\hat q_{T+1}$ — прогноз следующего ненулевого числа. 
+    \item $\hat a_{T+1}$ — прогноз длины нулевого промежутка. 
+    \item $\hat y_{T+1} = \hat q_{T+1} / \hat a_{T+1}$ — прогноз для исходного ряда. 
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Сравнение прогнозов}
+
+  Используйте \alert{MASE}:
+    \[
+      MASE  = \frac{\abs {q_{T+1}} + \abs{q_{T+2}}+ \ldots + \abs{q_{T+H}} }{H},
+  \]  
+  где 
+  \begin{itemize}
+    \item $e_t$ — ошибка прогноза;
+    \item $q_t = \frac{e_t}{MAE^{naive}}$ — ошибка прогноза,
+    отмашстабированная на среднюю абсолютную ошибку наивного прогноза. 
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Данные прерывающиеся нулями: итоги}
+
+  \begin{itemize}[<+->]
+    \item Как правило, много нулей в \alert{счётных} данных.
+    \item Алгоритм Кростона подойдёт для \alert{несезонных} данных. 
+    \item Алгоритм Кростона \alert{нестатический}: нет прогнозных интервалов. 
+  \end{itemize}
+\end{frame}
+

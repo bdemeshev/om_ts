@@ -1,0 +1,155 @@
+% !TEX root = ../om_ts_09.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Сравнение прогнозов}
+
+\end{frame}
+
+
+
+\begin{frame}{Сравнение прогнозов: план}
+  \begin{itemize}[<+->]
+    \item Тест Диболда-Мариано.
+    \item RC-тест Уайта.
+    \item SPA-тест Хансена. 
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Тест Диболда-Мариано}
+
+  \begin{itemize}[<+->]
+    \item Предназначен для сравнения \alert{двух} прогнозов.
+    \item Сравнивает прогнозы на \alert{заданный горизонт} прогнозирования $h$.
+    \item Не является оптимальным для \alert{сравнения моделей}. 
+    \item Не подходит для \alert{попарного} сравнения множества прогнозов.
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Предпосылки DM-теста}
+
+  Рассмотрим \alert{разницу потерь} двух прогнозов:
+  \[
+  d_t = e_{A,t}^2 - e_{B,t}^2, \quad e_{\text{Model},t} = \hat y_{\text{Model},t} - y_t;
+  \]
+  \pause
+  Разница $d_t$ предполагается \alert{стационарной}:\pause
+  \[
+  \E(d_t) = \mu_d,
+  \]
+  \pause 
+  \[
+  \Cov(d_t, d_{t-k}) = \gamma_k,    
+  \] \pause
+  В частности,
+  \[
+  \Var(d_t) = \gamma_0.    
+  \]
+  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Способ тестирования}
+    При верной $H_0: \mu_d = 0$:
+    \[
+       DM = \frac{\bar d}{se(\bar d)} \to \cN(0;1),
+    \]
+    где $se^2(\bar d)$ — состоятельная оценка для $\Var(\bar d)$.
+    \pause 
+    На практике оценивают регрессию на константу
+    \[
+    \hat d_t = \hat \beta_1
+    \]
+    \pause 
+    Получают $\hat\beta_1 = \bar d$ и используют \alert{робастные стандартные ошибки},
+    \[
+        DM = \frac{\hat \beta_1}{se_{HAC}(\hat\beta_1)}.
+    \]
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{RC-тест Уайта}
+
+    RC = Reality Check, проверка реальностью. 
+    \pause 
+
+    \begin{itemize}
+        \item Предназначен для сравнения \alert{множества} прогнозов с эталонным. \pause
+        \item Сравнивает прогнозы на \alert{заданный горизонт} прогнозирования $h$. \pause
+        \item Не является оптимальным для \alert{сравнения моделей}. \pause
+      \end{itemize}
+
+      $H_0$: ни один из прогнозов не обыгрывает эталонный прогноз. 
+
+      $H_a$: хотя бы один из прогнозов лучше. 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Обозначения}
+    
+    \begin{itemize}
+        \item $e_{jt} = \hat y_{jt} - y_t$ — ошибки прогноза модели $j$; \pause
+        \item $d_{jt} = e_{jt}^2 - e_{\text{bench}, t}^2$ — разница потерь по сравнению с эталонным прогнозом. \pause
+        \item $\bar d_j$ — средняя разница потерь модели $j$. \pause
+        \item Статистика теста $RC = \max_j \bar d_j$.  
+    \end{itemize}    
+    \pause 
+    Гипотезы:
+    $H_0$: $\max_j \E(d_jt) \leq 0$. 
+
+    $H_a$: $\max_j \E(d_jt) > 0$.
+
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Запускаем бутстрэп}
+
+    \begin{enumerate}
+        \item По 
+    \end{enumerate}
+    
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Вариации}
+
+    Есть \alert{много} вариаций этого подхода. 
+
+
+    
+
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Почему сравнение прогнозов?}
+
+    \alert{Тонкий нюанс}: сравнение прогнозов и сравнение моделей — разные задачи. 
+    \pause
+    Модель может сильно выигрывать \alert{по простоте} и немного проигрывать по прогнозам.
+    \pause 
+    На малой выборке \alert{потеря информации} о качестве прогнозов на обучающей выборке существенна. 
+\end{frame}
+
+
+\begin{frame}{Сравнение прогнозов: итоги}
+
+  \begin{itemize}[<+->]
+    \item Тест Диболда-Мариано подходит для сравнения \alert{двух} прогнозов. 
+    \item SPA-тест и RC-тест подходят для сравнения \alert{множества} прогнозов. 
+    \item Лучше использовать \alert{SPA-тест} Хансена. 
+    \item Иногда названия \alert{SPA} и \alert{RC} путают. 
+    \item SPA-тест используют, например, для сравнения \alert{торговых стратегий}. 
+  \end{itemize}
+\end{frame}
+
