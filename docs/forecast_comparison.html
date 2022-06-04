@@ -72,6 +72,7 @@ ul.task-list{list-style: none;}
 \newcommand\E{{\mathbb{E}}}
 \newcommand\Var{{\mathrm{Var}}}
 \newcommand\Cov{{\mathrm{Cov}}}
+\newcommand\Corr{{\mathrm{Corr}}}
 \]</span></p>
 </div>
 <section id="тест-диболда-мариано" class="level2">
@@ -90,11 +91,11 @@ d_t = (\hat y_t^A - y_t)^2 - (\hat y_t^B - y_t)^2.
 DM = \frac{\bar d - 0}{se(\bar d)} \to \cN(0;1)
 \]</span></p>
 <p>Трудность возникает только в оценке <span class="math inline">\(se(\bar d)\)</span>, так как значения <span class="math inline">\(d_t\)</span> коррелированы.</p>
-<p>Как правило оценивают регрессию вектора <span class="math inline">\(d_t\)</span> на константу и использовать робастную стандартную ошибку <span class="math inline">\(se_{HAC}\)</span>.</p>
+<p>Как правило оценивают регрессию вектора <span class="math inline">\(d_t\)</span> на константу и используют робастную стандартную ошибку <span class="math inline">\(se_{HAC}\)</span>.</p>
 <p><span class="math display">\[
 \hat d_t = \hat \beta_1, \quad DM = \frac{\hat\beta_1 - 0}{se_{HAC}(\hat\beta_1)}.
 \]</span></p>
-<p>В качестве альтернативного подхода можно дополниетльно предположить, что <span class="math inline">\((d_t)\)</span> описывается стационарным <span class="math inline">\(ARMA(p, q)\)</span> процессом с небольшими <span class="math inline">\(p\)</span> и <span class="math inline">\(q\)</span> и рассчитать <span class="math inline">\(se(\bar d)\)</span> в рамках этого предположения.</p>
+<p>В качестве альтернативного подхода можно дополнительно предположить, что <span class="math inline">\((d_t)\)</span> описывается стационарным <span class="math inline">\(ARMA(p, q)\)</span> процессом с небольшими <span class="math inline">\(p\)</span> и <span class="math inline">\(q\)</span> и рассчитать <span class="math inline">\(se(\bar d)\)</span> в рамках этого предположения.</p>
 </section>
 <section id="rc-и-spa-тесты" class="level2">
 <h2 class="anchored" data-anchor-id="rc-и-spa-тесты">RC и SPA тесты</h2>
