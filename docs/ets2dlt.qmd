@@ -1,0 +1,194 @@
+---
+title: "DLT модель в структурной форме"
+format:
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+bibliography: references.bib
+editor_options: 
+  chunk_output_type: console
+  markdown: 
+    wrap: 72
+---
+
+# От ETS-модели к DLT-модели
+
+Вспомним ETS(A, Ad, A) модель в структурной форме. $$
+\begin{cases}
+y_t = (\ell_{t-1} + \phi b_{t-1}) + s_{t-12} + u_t \\
+s_{t} = s_{t-12} + \gamma u_t \\
+\ell_t = \ell_{t-1} + \phi b_{t-1} + \alpha u_t \\
+b_t = \phi b_{t-1} + \beta u_t \\
+u_t \sim \text{Normal}(\text{loc} = 0, \text{scale} = \sigma). \\
+\end{cases}
+$$ Стандартной ссылкой по ETS моделям является
+[@hyndman2018forecasting].
+
+Чтобы перейти к DLT модели сделаем ряд обобщений:
+
+* Добавим в наблюдаемый процесс $y_t$ регрессионную составляющую:
+$$
+r_t = \beta_1 x_{t1} + \beta_2 x_{t2}.
+$$
+* Добавим в наблюдаемый процесс глобальный тренд, например, линейный:
+$$
+g_t = \delta_1 + \delta_2 t.
+$$
+* Перейдем от нормального распределения ошибки к распределению Стьюдента,
+$$
+u_t \sim \text{Student}(\text{df} = \nu, \text{loc} = 0, \text{scale} = \sigma).
+$$
+
+Кроме того, в описании DLT модели по сравнению с ETS моделью почему-то сдвинут индекс у сезонной составляющей. 
+То есть величина, называемая $s_t$ у Хиндмана в [@hyndman2018forecasting], в статье [@ng2020orbit] названа $s_{t+12}$. 
+Поэтому уравнение на сезонную составляющую принимает вид 
+$$
+s_{t+12} = s_{t} + \gamma u_t.
+$$
+С учётом новых составляющих и сдвига индекса у сезонности уравнение на наблюдаемый $y_t$ примет вид
+$$
+y_t = g_t + (\ell_{t-1} + \phi b_{t-1}) + s_t + r_t + u_t.
+$$
+
+
+# DLT модель
+
+Наблюдаемый ряд $y_t$ раскладывается в сумму составляющих: глобальный
+тренд, локальное отклонение от глобального тренда, сезонная
+составляющая, регрессионная составляющая, ошибка. $$ 
+y_t = g_t + (\ell_{t-1} + \phi b_{t-1}) + s_t + r_t + u_t 
+$$ {#eq-y}
+
+Глобальный тренд $g_t$ может быть задан по-разному. Например, линейно $$
+g_t = \gamma_1 + \gamma_2 t.
+$$
+
+Сезонная составляющая плавно меняется во времени, $$
+s_{t+12} = s_t + \gamma u_t.
+$$ {#eq-s}
+
+Скорость локального тренда плавно меняется, $$
+b_t = \phi b_{t-1} + \beta u_t.
+$$ {#eq-b}
+
+Локальный тренд $$
+\ell_t = \ell_{t-1} + \phi b_{t-1} + \alpha u_t.
+$$ {#eq-ell}
+
+Регрессионная составляющая на примере двух регрессоров, $$
+r_t = \beta_1 x_{t1} + \beta_2 x_{t2}.
+$$ Ошибка, $$
+u_t \sim \text{Student}(\text{df} = \nu, \text{loc} = 0, \text{scale} = \sigma).
+$$
+
+Одной системой, $$
+\begin{cases}
+y_t = g_t + (\ell_{t-1} + \phi b_{t-1}) + s_t + r_t + u_t \\
+g_t = \gamma_1 + \gamma_2 t \\
+s_{t+12} = s_t + \gamma u_t \\
+r_t = \beta_1 x_{t1} + \beta_2 x_{t2} \\
+\ell_t = \ell_{t-1} + \phi b_{t-1} + \alpha u_t \\
+b_t = \phi b_{t-1} + \beta u_t \\
+u_t \sim \text{Student}(\text{df} = \nu, \text{loc} = 0, \text{scale} = \sigma). \\
+\end{cases}
+$$ Используя формулу для $\ell_t$ можно записать $y_t$ также в виде $$
+y_t = g_t + \ell_t + s_t + r_t + (1-\alpha)u_t.
+$$ {#eq-y-bis}
+
+# Рекуррентные соотношения
+
+Можно элегантно отказаться от $u_t$ в уравнениях на $s_{t+12}$, $\ell_t$
+и $b_t$. Это полезно для описания модели на вероятностных языках
+программирования, будь то stan, numpyro или что-то ещё.
+
+Выразим ошибку $u_t$ из формулы для локального тренда @eq-ell и
+подставим в формулу для скорости роста локального тренда @eq-b: $$
+b_t = \phi b_{t-1} + \frac{\beta}{\alpha}(\ell_t - \ell_{t-1} - \phi b_{t-1}). 
+$$ Перегруппируем и увидим, что скорость роста локального тренда $b_t$
+является средневзвешенным, $$
+b_t = \frac{\beta}{\alpha}(\ell_t - \ell_{t-1}) + \left(1 - \frac{\beta}{\alpha}\right) \phi b_{t-1}.
+$$ Можно определить $\rho_b = \frac{\beta}{\alpha}$, и тогда $$
+b_t = \rho_b(\ell_t - \ell_{t-1}) + (1-\rho_b) \phi b_{t-1}.
+$$ В коде пакета orbit на stan соответствующая строка имеет вид
+
+```{python}
+#| eval: false
+b[t] = slp_sm * (l[t] - l[t-1]) + (1 - slp_sm) * DAMPED_FACTOR * b[t-1];
+```
+
+Теперь выразим ошибку $u_t$ из @eq-y и подставим в @eq-ell. $$
+\ell_t = \ell_{t-1} + \phi b_{t-1} + \alpha (y_t - g_t - \ell_{t-1} - \phi b_{t-1} - s_t - r_t).
+$$ Перегруппируем и снова получаем вид средневзвешенного. $$
+\ell_t = \alpha (y_t - g_t - s_t - r_t) + (1-\alpha)(\ell_{t-1} + \phi b_{t-1}).
+$$ Смотрим на исходный код модели в stan,
+
+```{python}
+#| eval: false
+lt_sum[t] = l[t-1] + DAMPED_FACTOR * b[t-1];
+l[t] = lev_sm * (RESPONSE[t] - gt_sum[t] - s_t - r[t]) + (1 - lev_sm) * lt_sum[t];
+```
+
+На этот раз выразим ошибку $u_t$ из @eq-y-bis и подставим в @eq-s. $$
+s_{t+12} = s_t + \frac{\gamma}{1-\alpha}(y_t - g_t - \ell_t - s_t - r_t).
+$$ Перегруппируем и получаем вид средневзешенного, $$
+s_{t+12} = \frac{\gamma}{1-\alpha}(y_t - g_t - \ell_t - r_t) + \left( 1 -  \frac{\gamma}{1-\alpha} \right)s_t.
+$$ При обозначении $\rho_s = \frac{\gamma}{1-\alpha}$ получаем $$
+s_{t+12} = \rho_s(y_t - g_t - \ell_t - r_t) + ( 1 -  \rho_s) s_t.
+$$ Соответствующий фрагмент кода в stan,
+
+```{python}
+#| eval: false
+s[t + SEASONALITY] = sea_sm * (RESPONSE[t] - gt_sum[t] - l[t]  - r[t]) + (1 - sea_sm) * s_t;
+```
+
+Замечаем, что в статье [@ng2020orbit] в описании DLT модели есть пара
+описок. Пропущено $\phi$ перед $b_{t-1}$ в рекуррентной формуле для
+$\ell_t$. Пропущено $g_t$ в рекуррентной формуле для $s_{t+m}$.
+
+# Начальные условия 
+
+$$
+b_1 = 0
+$$
+
+$$
+g_1 = 
+$$
+
+$$
+r_1 = 
+$$
+
+$$
+s_{12} = -(s_1 + s_2 + \ldots + s_{11}) 
+$$
+
+$$
+\ell_1 = y_1 - g_1 - s_1 - r_1
+$$
+
+
+
+# Априорные распределения
+
+При $t\in \{1, 2, \ldots, 11\}$,
+$$
+s_t \sim \text{Normal}(\text{loc} = 0, \text{scale} = \sigma_{?})
+$$
+
+```{python}
+#| eval: false
+  for (i in 1:(SEASONALITY - 1))
+    init_sea[i] ~ normal(0, SEASONALITY_SD); 
+```
+
+
+$$
+\beta_j \sim \text{Normal}(\text{loc} = \mu_j, \text{scale} = \sigma_j),
+$$ где $\mu_j$, $\sigma_j$ --- гиперпараметры, по умолчанию равные
+$\mu_j = 0$ и $\sigma_j = 1$.
+
+$$
+\sigma \sim \text{HalfCauchy}(\text{loc} = 0, \text{scale} = \gamma_0),
+$$ где $\gamma_0$ ...

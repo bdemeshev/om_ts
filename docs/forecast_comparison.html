@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.508">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Сравнение прогнозов</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="forecast_comparison_files/libs/clipboard/clipboard.min.js"></script>
+<script src="forecast_comparison_files/libs/quarto-html/quarto.js"></script>
+<script src="forecast_comparison_files/libs/quarto-html/popper.min.js"></script>
+<script src="forecast_comparison_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="forecast_comparison_files/libs/quarto-html/anchor.min.js"></script>
+<link href="forecast_comparison_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="forecast_comparison_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="forecast_comparison_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="forecast_comparison_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="forecast_comparison_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#тест-диболда-мариано" id="toc-тест-диболда-мариано" class="nav-link active" data-scroll-target="#тест-диболда-мариано">Тест Диболда-Мариано</a></li>
+  <li><a href="#rc-и-spa-тесты" id="toc-rc-и-spa-тесты" class="nav-link" data-scroll-target="#rc-и-spa-тесты">RC и SPA тесты</a></li>
+  <li><a href="#кратко-про-стационарный-бутстрэп" id="toc-кратко-про-стационарный-бутстрэп" class="nav-link" data-scroll-target="#кратко-про-стационарный-бутстрэп">Кратко про стационарный бутстрэп</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Сравнение прогнозов</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="hidden">
+<p><span class="math display">\[
+\newcommand\cN{{\mathcal{N}}}
+\newcommand\P{{\mathbb{P}}}
+\newcommand\E{{\mathbb{E}}}
+\newcommand\Var{{\mathrm{Var}}}
+\newcommand\Cov{{\mathrm{Cov}}}
+\]</span></p>
+</div>
+<section id="тест-диболда-мариано" class="level2">
+<h2 class="anchored" data-anchor-id="тест-диболда-мариано">Тест Диболда-Мариано</h2>
+<p>Предпосылки:</p>
+<p>Два прогноза, <span class="math inline">\(\hat y_t^A\)</span> и <span class="math inline">\(\hat y_t^B\)</span>. Разница произвольных метрик качества,</p>
+<p><span class="math display">\[
+d_t = (\hat y_t^A - y_t)^2 - (\hat y_t^B - y_t)^2.
+\]</span></p>
+<p>Процесс <span class="math inline">\((d_t)\)</span> стационарный. Другими словами <span class="math inline">\(\E(d_t) = \mu\)</span>, <span class="math inline">\(\Cov(d_t, d_{t-k}) = \gamma_k\)</span>, в частности, <span class="math inline">\(\Var(d_t) = \gamma_0\)</span>.</p>
+<p>Гипотезы:</p>
+<p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\E(d_t) = 0\)</span>;</p>
+<p><span class="math inline">\(H_a\)</span>: <span class="math inline">\(\E(d_t) \neq 0\)</span>;</p>
+<p>Тестовая статистика при верной <span class="math inline">\(H_0\)</span>:</p>
+<p><span class="math display">\[
+DM = \frac{\bar d - 0}{se(\bar d)} \to \cN(0;1)
+\]</span></p>
+<p>Трудность возникает только в оценке <span class="math inline">\(se(\bar d)\)</span>, так как значения <span class="math inline">\(d_t\)</span> коррелированы.</p>
+<p>Как правило оценивают регрессию вектора <span class="math inline">\(d_t\)</span> на константу и использовать робастную стандартную ошибку <span class="math inline">\(se_{HAC}\)</span>.</p>
+<p><span class="math display">\[
+\hat d_t = \hat \beta_1, \quad DM = \frac{\hat\beta_1 - 0}{se_{HAC}(\hat\beta_1)}.
+\]</span></p>
+<p>В качестве альтернативного подхода можно дополниетльно предположить, что <span class="math inline">\((d_t)\)</span> описывается стационарным <span class="math inline">\(ARMA(p, q)\)</span> процессом с небольшими <span class="math inline">\(p\)</span> и <span class="math inline">\(q\)</span> и рассчитать <span class="math inline">\(se(\bar d)\)</span> в рамках этого предположения.</p>
+</section>
+<section id="rc-и-spa-тесты" class="level2">
+<h2 class="anchored" data-anchor-id="rc-и-spa-тесты">RC и SPA тесты</h2>
+<p>RC (Reality Check) тест Уайта и SPA (Superior Predictive Ability) тест Хансена обобщают тест Диболда-Мариано на случай сравнения множества прогнозов против одного эталонного.</p>
+<p>Для обоих тестов используется стационарный бутстрэп. Опишем стационарный бутстрэп на примере более простой задачи.</p>
+</section>
+<section id="кратко-про-стационарный-бутстрэп" class="level2">
+<h2 class="anchored" data-anchor-id="кратко-про-стационарный-бутстрэп">Кратко про стационарный бутстрэп</h2>
+<p>Представим себе, что у нас есть ряд <span class="math inline">\(y_1\)</span>, , <span class="math inline">\(y_T\)</span>, и мы хотим построить доверительный интервал для <span class="math inline">\(\rho = \Corr(y_t, y_{t-1})\)</span> с помощью бутстрэпа.</p>
+<p>Если использовать обычный бутстрэп, который из исходной выборки <span class="math inline">\((y_t)\)</span> много раз делает случайную выборку с повторениями, то структура временного ряда будет разрушаться при создании бутстрэп-выборок, и оценка корреляции по бустрэп-выборкам будет каждый раз примерно нулевой.</p>
+<p>Алгоритм стационарного бутстрэпа пытается решить эту проблему. На входе у нас временной ряд <span class="math inline">\(y_1\)</span>, , <span class="math inline">\(y_T\)</span>. На выходе мы хотим получить бустрэп копию этого ряда той же длины <span class="math inline">\(y_1^*\)</span>, , <span class="math inline">\(y_T^*\)</span>.</p>
+<ol type="1">
+<li><p>Выберем параметр вероятности <span class="math inline">\(p\)</span>. О правилах выбора чуть позже.</p></li>
+<li><p>Выберем случайный момент времени <span class="math inline">\(s \in \{1, \ldots, T\}\)</span> и запишем <span class="math inline">\(y_s\)</span> очередным элементом в бутстрэп копию.</p></li>
+<li><p>С вероятностью <span class="math inline">\(p\)</span> вернемся к шагу <span class="math inline">\(2\)</span>, с вероятностью <span class="math inline">\(1-p\)</span> пойдём дальше.</p></li>
+<li><p>Увеличим <span class="math inline">\(s\)</span> на 1, запишем <span class="math inline">\(y_s\)</span> очередным элементом в бутстрэп копию и перейдем к подкидыванию монетки на шаге 3.</p></li>
+</ol>
+<p>Алгоритм продолжается до тех пор, пока не наберем <span class="math inline">\(T\)</span> наблюдений в бутстрэп-копию ряда.</p>
+<p>Теперь мы можем построить бутстрэп-доверительный интервал для корреляции. Например, с помощью перцентильного бутстрэпа.</p>
+<p>По исходному ряду создаем 10000 бутстрэп-копий ряда. По каждой бутстрэп-копии считаем оценку корелляции. Удаляем по 2.5% самых больших и самых маленьких оценок корреляции. Полученные края и будут границами доверительного интервала.</p>
+<p>Про выбор <span class="math inline">\(p\)</span>.</p>
+<!-- TODO -->
+<p>Возвращаемся к тестам.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
