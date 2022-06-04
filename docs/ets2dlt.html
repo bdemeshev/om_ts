@@ -139,58 +139,78 @@ div.csl-indent {
 
 <section id="от-ets-модели-к-dlt-модели" class="level1">
 <h1>От ETS-модели к DLT-модели</h1>
-Вспомним ETS(A, Ad, A) модель в структурной форме. $$
-<span class="math display">\[\begin{cases}
+<p>Вспомним ETS(A, Ad, A) модель в структурной форме.</p>
+<p><span class="math display">\[
+\begin{cases}
 y_t = (\ell_{t-1} + \phi b_{t-1}) + s_{t-12} + u_t \\
 s_{t} = s_{t-12} + \gamma u_t \\
 \ell_t = \ell_{t-1} + \phi b_{t-1} + \alpha u_t \\
 b_t = \phi b_{t-1} + \beta u_t \\
 u_t \sim \text{Normal}(\text{loc} = 0, \text{scale} = \sigma). \\
-\end{cases}\]</span>
-<p>$$ Стандартной ссылкой по ETS моделям является <span class="citation" data-cites="hyndman2018forecasting">(<a href="#ref-hyndman2018forecasting" role="doc-biblioref">Hyndman and Athanasopoulos 2018</a>)</span>.</p>
+\end{cases}
+\]</span></p>
+<p>Стандартной ссылкой по ETS моделям является <span class="citation" data-cites="hyndman2018forecasting">(<a href="#ref-hyndman2018forecasting" role="doc-biblioref">Hyndman and Athanasopoulos 2018</a>)</span>.</p>
 <p>Чтобы перейти к DLT модели сделаем ряд обобщений:</p>
 <ul>
-<li>Добавим в наблюдаемый процесс <span class="math inline">\(y_t\)</span> регрессионную составляющую: $$</li>
+<li>Добавим в наблюдаемый процесс <span class="math inline">\(y_t\)</span> регрессионную составляющую:</li>
 </ul>
-<p>r_t = <em>1 x</em>{t1} + <em>2 x</em>{t2}.</p>
 <p><span class="math display">\[
-* Добавим в наблюдаемый процесс глобальный тренд, например, линейный:
+r_t = \beta_1 x_{t1} + \beta_2 x_{t2}.
 \]</span></p>
-<p>g_t = _1 + _2 t.</p>
+<ul>
+<li>Добавим в наблюдаемый процесс глобальный тренд, например, линейный:</li>
+</ul>
 <p><span class="math display">\[
-* Перейдем от нормального распределения ошибки к распределению Стьюдента,
+g_t = \delta_1 + \delta_2 t.
 \]</span></p>
-<p>u_t ( = , = 0, = ).</p>
-<p>$$</p>
-<p>Кроме того, в описании DLT модели по сравнению с ETS моделью почему-то сдвинут индекс у сезонной составляющей. То есть величина, называемая <span class="math inline">\(s_t\)</span> у Хиндмана в <span class="citation" data-cites="hyndman2018forecasting">(<a href="#ref-hyndman2018forecasting" role="doc-biblioref">Hyndman and Athanasopoulos 2018</a>)</span>, в статье <span class="citation" data-cites="ng2020orbit">(<a href="#ref-ng2020orbit" role="doc-biblioref">Ng et al. 2020</a>)</span> названа <span class="math inline">\(s_{t+12}\)</span>. Поэтому уравнение на сезонную составляющую принимает вид $$</p>
-<p>s_{t+12} = s_{t} + u_t.</p>
+<ul>
+<li>Перейдем от нормального распределения ошибки к распределению Стьюдента,</li>
+</ul>
 <p><span class="math display">\[
-С учётом новых составляющих и сдвига индекса у сезонности уравнение на наблюдаемый $y_t$ примет вид
+u_t \sim \text{Student}(\text{df} = \nu, \text{loc} = 0, \text{scale} = \sigma).
 \]</span></p>
-<p>y_t = g_t + (<em>{t-1} + b</em>{t-1}) + s_t + r_t + u_t.</p>
-<p>$$</p>
+<p>Кроме того, в описании DLT модели по сравнению с ETS моделью почему-то сдвинут индекс у сезонной составляющей. То есть величина, называемая <span class="math inline">\(s_t\)</span> у Хиндмана в <span class="citation" data-cites="hyndman2018forecasting">(<a href="#ref-hyndman2018forecasting" role="doc-biblioref">Hyndman and Athanasopoulos 2018</a>)</span>, в статье <span class="citation" data-cites="ng2020orbit">(<a href="#ref-ng2020orbit" role="doc-biblioref">Ng et al. 2020</a>)</span> названа <span class="math inline">\(s_{t+12}\)</span>. Поэтому уравнение на сезонную составляющую принимает вид</p>
+<p><span class="math display">\[
+s_{t+12} = s_{t} + \gamma u_t.
+\]</span></p>
+<p>С учётом новых составляющих и сдвига индекса у сезонности уравнение на наблюдаемый <span class="math inline">\(y_t\)</span> примет вид</p>
+<p><span class="math display">\[
+y_t = g_t + (\ell_{t-1} + \phi b_{t-1}) + s_t + r_t + u_t.
+\]</span></p>
 </section>
 <section id="dlt-модель" class="level1">
 <h1>DLT модель</h1>
-<p>Наблюдаемый ряд <span class="math inline">\(y_t\)</span> раскладывается в сумму составляющих: глобальный тренд, локальное отклонение от глобального тренда, сезонная составляющая, регрессионная составляющая, ошибка. <span id="eq-y"><span class="math display">\[
+<p>Наблюдаемый ряд <span class="math inline">\(y_t\)</span> раскладывается в сумму составляющих: глобальный тренд, локальное отклонение от глобального тренда, сезонная составляющая, регрессионная составляющая, ошибка.</p>
+<p><span id="eq-y"><span class="math display">\[
 y_t = g_t + (\ell_{t-1} + \phi b_{t-1}) + s_t + r_t + u_t
 \tag{1}\]</span></span></p>
-<p>Глобальный тренд <span class="math inline">\(g_t\)</span> может быть задан по-разному. Например, линейно $$ g_t = _1 + _2 t.</p>
-<p>$$</p>
-<p>Сезонная составляющая плавно меняется во времени, <span id="eq-s"><span class="math display">\[
+<p>Глобальный тренд <span class="math inline">\(g_t\)</span> может быть задан по-разному. Например, линейно</p>
+<p><span class="math display">\[
+g_t = \gamma_1 + \gamma_2 t.
+\]</span></p>
+<p>Сезонная составляющая плавно меняется во времени,</p>
+<p><span id="eq-s"><span class="math display">\[
 s_{t+12} = s_t + \gamma u_t.
 \tag{2}\]</span></span></p>
-<p>Скорость локального тренда плавно меняется, $$ b_t = b_{t-1} + u_t.</p>
-<p>$$ {#eq-b}</p>
-<p>Локальный тренд <span id="eq-ell"><span class="math display">\[
-\ell_t = \ell_{t-1} + \phi b_{t-1} + \alpha u_t.
+<p>Скорость локального тренда плавно меняется,</p>
+<p><span id="eq-b"><span class="math display">\[
+b_t = \phi b_{t-1} + \beta u_t.
 \tag{3}\]</span></span></p>
-<p>Регрессионная составляющая на примере двух регрессоров, $$ r_t = <em>1 x</em>{t1} + <em>2 x</em>{t2}.</p>
-<p><span class="math display">\[ Ошибка, \]</span></p>
-<p>u_t ( = , = 0, = ).</p>
-<p>$$</p>
-Одной системой, $$
-<span class="math display">\[\begin{cases}
+<p>Локальный тренд</p>
+<p><span id="eq-ell"><span class="math display">\[
+\ell_t = \ell_{t-1} + \phi b_{t-1} + \alpha u_t.
+\tag{4}\]</span></span></p>
+<p>Регрессионная составляющая на примере двух регрессоров,</p>
+<p><span class="math display">\[
+r_t = \beta_1 x_{t1} + \beta_2 x_{t2}.
+\]</span></p>
+<p>Ошибка,</p>
+<p><span class="math display">\[
+u_t \sim \text{Student}(\text{df} = \nu, \text{loc} = 0, \text{scale} = \sigma).
+\]</span></p>
+<p>Одной системой,</p>
+<p><span class="math display">\[
+\begin{cases}
 y_t = g_t + (\ell_{t-1} + \phi b_{t-1}) + s_t + r_t + u_t \\
 g_t = \gamma_1 + \gamma_2 t \\
 s_{t+12} = s_t + \gamma u_t \\
@@ -198,34 +218,58 @@ r_t = \beta_1 x_{t1} + \beta_2 x_{t2} \\
 \ell_t = \ell_{t-1} + \phi b_{t-1} + \alpha u_t \\
 b_t = \phi b_{t-1} + \beta u_t \\
 u_t \sim \text{Student}(\text{df} = \nu, \text{loc} = 0, \text{scale} = \sigma). \\
-\end{cases}\]</span>
-<p><span class="math display">\[ Используя формулу для $\ell_t$ можно записать $y_t$ также в виде \]</span></p>
-<p>y_t = g_t + _t + s_t + r_t + (1-)u_t. $$ {#eq-y-bis}</p>
+\end{cases}
+\]</span></p>
+<p>Используя формулу для <span class="math inline">\(\ell_t\)</span> можно записать <span class="math inline">\(y_t\)</span> также в виде</p>
+<p><span id="eq-y-bis"><span class="math display">\[
+y_t = g_t + \ell_t + s_t + r_t + (1-\alpha)u_t.
+\tag{5}\]</span></span></p>
 </section>
 <section id="рекуррентные-соотношения" class="level1">
 <h1>Рекуррентные соотношения</h1>
 <p>Можно элегантно отказаться от <span class="math inline">\(u_t\)</span> в уравнениях на <span class="math inline">\(s_{t+12}\)</span>, <span class="math inline">\(\ell_t\)</span> и <span class="math inline">\(b_t\)</span>. Это полезно для описания модели на вероятностных языках программирования, будь то stan, numpyro или что-то ещё.</p>
-<p>Выразим ошибку <span class="math inline">\(u_t\)</span> из формулы для локального тренда <a href="#eq-ell">Equation&nbsp;3</a> и подставим в формулу для скорости роста локального тренда <strong>?@eq-b</strong>: $$ b_t = b_{t-1} + (<em>t - </em>{t-1} - b_{t-1}).</p>
-<p><span class="math display">\[ Перегруппируем и увидим, что скорость роста локального тренда $b_t$
-является средневзвешенным, \]</span> b_t = (<em>t - </em>{t-1}) + (1 - ) b_{t-1}.</p>
-<p><span class="math display">\[ Можно определить $\rho_b = \frac{\beta}{\alpha}$, и тогда \]</span></p>
-<p>b_t = _b(<em>t - </em>{t-1}) + (1-<em>b) b</em>{t-1}. $$ В коде пакета orbit на stan соответствующая строка имеет вид</p>
+<p>Выразим ошибку <span class="math inline">\(u_t\)</span> из формулы для локального тренда <a href="#eq-ell">Equation&nbsp;4</a> и подставим в формулу для скорости роста локального тренда <a href="#eq-b">Equation&nbsp;3</a>:</p>
+<p><span class="math display">\[
+b_t = \phi b_{t-1} + \frac{\beta}{\alpha}(\ell_t - \ell_{t-1} - \phi b_{t-1}).
+\]</span></p>
+<p>Перегруппируем и увидим, что скорость роста локального тренда <span class="math inline">\(b_t\)</span> является средневзвешенным,</p>
+<p><span class="math display">\[
+b_t = \frac{\beta}{\alpha}(\ell_t - \ell_{t-1}) + \left(1 - \frac{\beta}{\alpha}\right) \phi b_{t-1}.
+\]</span></p>
+<p>Можно определить <span class="math inline">\(\rho_b = \frac{\beta}{\alpha}\)</span>, и тогда</p>
+<p><span class="math display">\[
+b_t = \rho_b(\ell_t - \ell_{t-1}) + (1-\rho_b) \phi b_{t-1}.
+\]</span></p>
+<p>В коде пакета orbit на stan соответствующая строка имеет вид</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>b[t] <span class="op">=</span> slp_sm <span class="op">*</span> (l[t] <span class="op">-</span> l[t<span class="op">-</span><span class="dv">1</span>]) <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> slp_sm) <span class="op">*</span> DAMPED_FACTOR <span class="op">*</span> b[t<span class="op">-</span><span class="dv">1</span>]<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Теперь выразим ошибку <span class="math inline">\(u_t\)</span> из <a href="#eq-y">Equation&nbsp;1</a> и подставим в <a href="#eq-ell">Equation&nbsp;3</a>. $$ <em>t = </em>{t-1} + b_{t-1} + (y_t - g_t - <em>{t-1} - b</em>{t-1} - s_t - r_t).</p>
-<p><span class="math display">\[ Перегруппируем и снова получаем вид средневзвешенного. \]</span></p>
-<p><em>t = (y_t - g_t - s_t - r_t) + (1-)(</em>{t-1} + b_{t-1}).</p>
-<p>$$ Смотрим на исходный код модели в stan,</p>
+<p>Теперь выразим ошибку <span class="math inline">\(u_t\)</span> из <a href="#eq-y">Equation&nbsp;1</a> и подставим в <a href="#eq-ell">Equation&nbsp;4</a>.</p>
+<p><span class="math display">\[
+\ell_t = \ell_{t-1} + \phi b_{t-1} + \alpha (y_t - g_t - \ell_{t-1} - \phi b_{t-1} - s_t - r_t).
+\]</span></p>
+<p>Перегруппируем и снова получаем вид средневзвешенного.</p>
+<p><span class="math display">\[
+\ell_t = \alpha (y_t - g_t - s_t - r_t) + (1-\alpha)(\ell_{t-1} + \phi b_{t-1}).
+\]</span></p>
+<p>Смотрим на исходный код модели в stan,</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lt_sum[t] <span class="op">=</span> l[t<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> DAMPED_FACTOR <span class="op">*</span> b[t<span class="op">-</span><span class="dv">1</span>]<span class="op">;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>l[t] <span class="op">=</span> lev_sm <span class="op">*</span> (RESPONSE[t] <span class="op">-</span> gt_sum[t] <span class="op">-</span> s_t <span class="op">-</span> r[t]) <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> lev_sm) <span class="op">*</span> lt_sum[t]<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>На этот раз выразим ошибку <span class="math inline">\(u_t\)</span> из <strong>?@eq-y-bis</strong> и подставим в <a href="#eq-s">Equation&nbsp;2</a>. $$ s_{t+12} = s_t + (y_t - g_t - _t - s_t - r_t).</p>
-<p><span class="math display">\[ Перегруппируем и получаем вид средневзешенного, \]</span></p>
-<p>s_{t+12} = (y_t - g_t - _t - r_t) + ( 1 - )s_t.</p>
-<p><span class="math display">\[ При обозначении $\rho_s = \frac{\gamma}{1-\alpha}$ получаем \]</span></p>
-<p>s_{t+12} = _s(y_t - g_t - _t - r_t) + ( 1 - _s) s_t. $$ Соответствующий фрагмент кода в stan,</p>
+<p>На этот раз выразим ошибку <span class="math inline">\(u_t\)</span> из <a href="#eq-y-bis">Equation&nbsp;5</a> и подставим в <a href="#eq-s">Equation&nbsp;2</a>.</p>
+<p><span class="math display">\[
+s_{t+12} = s_t + \frac{\gamma}{1-\alpha}(y_t - g_t - \ell_t - s_t - r_t).
+\]</span></p>
+<p>Перегруппируем и получаем вид средневзешенного,</p>
+<p><span class="math display">\[
+s_{t+12} = \frac{\gamma}{1-\alpha}(y_t - g_t - \ell_t - r_t) + \left( 1 -  \frac{\gamma}{1-\alpha} \right)s_t.
+\]</span></p>
+<p>При обозначении <span class="math inline">\(\rho_s = \frac{\gamma}{1-\alpha}\)</span> получаем</p>
+<p><span class="math display">\[
+s_{t+12} = \rho_s(y_t - g_t - \ell_t - r_t) + ( 1 -  \rho_s) s_t.
+\]</span></p>
+<p>Соответствующий фрагмент кода в stan,</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>s[t <span class="op">+</span> SEASONALITY] <span class="op">=</span> sea_sm <span class="op">*</span> (RESPONSE[t] <span class="op">-</span> gt_sum[t] <span class="op">-</span> l[t]  <span class="op">-</span> r[t]) <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> sea_sm) <span class="op">*</span> s_t<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -261,11 +305,12 @@ s_t \sim \text{Normal}(\text{loc} = 0, \text{scale} = \sigma_{?})
 </div>
 <p><span class="math display">\[
 \beta_j \sim \text{Normal}(\text{loc} = \mu_j, \text{scale} = \sigma_j),
-\]</span> где <span class="math inline">\(\mu_j\)</span>, <span class="math inline">\(\sigma_j\)</span> — гиперпараметры, по умолчанию равные</p>
-<p><span class="math inline">\(\mu_j = 0\)</span> и <span class="math inline">\(\sigma_j = 1\)</span>.</p>
+\]</span></p>
+<p>где <span class="math inline">\(\mu_j\)</span>, <span class="math inline">\(\sigma_j\)</span> — гиперпараметры, по умолчанию равные <span class="math inline">\(\mu_j = 0\)</span> и <span class="math inline">\(\sigma_j = 1\)</span>.</p>
 <p><span class="math display">\[
 \sigma \sim \text{HalfCauchy}(\text{loc} = 0, \text{scale} = \gamma_0),
-\]</span> где <span class="math inline">\(\gamma_0\)</span> …</p>
+\]</span></p>
+<p>где <span class="math inline">\(\gamma_0\)</span> …</p>
 
 </section>
 
