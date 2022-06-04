@@ -1,6 +1,8 @@
 ---
 title: "DLT модель в структурной форме"
 format:
+  html:
+    toc: true
   pdf:
     toc: true
     number-sections: true
