@@ -1,0 +1,113 @@
+% !TEX root = ../om_ts_09.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Сравнение двух прогнозов}
+
+\end{frame}
+
+
+
+\begin{frame}{Сравнение прогнозов: план}
+  \begin{itemize}[<+->]
+    \item Тест Диболда-Мариано.
+    \item \alert{Предпосылки} теста.
+    \item Реализация теста. 
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Тест Диболда-Мариано}
+
+  \begin{itemize}[<+->]
+    \item Предназначен для сравнения \alert{двух} прогнозов.
+    \item Сравнивает прогнозы на \alert{заданный горизонт} прогнозирования $h$.
+    \item Не является оптимальным для \alert{сравнения моделей}. 
+    \item Не подходит для \alert{попарного} сравнения множества прогнозов.
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Предпосылки DM-теста}
+
+  Рассмотрим \alert{разницу потерь} двух прогнозов:
+  \[
+  d_t = e_{A,t}^2 - e_{B,t}^2, \quad e_{\text{Model},t} = \hat y_{\text{Model},t} - y_t;
+  \]
+  \pause
+  Разница $d_t$ предполагается \alert{стационарной}:\pause
+  \[
+  \E(d_t) = \mu_d,
+  \]
+  \pause 
+  \[
+  \Cov(d_t, d_{t-k}) = \gamma_k,    
+  \] \pause
+  в частности,
+  \[
+  \Var(d_t) = \gamma_0.    
+  \]
+  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Способ тестирования}
+    При верной $H_0: \mu_d = 0$:
+    \[
+       DM = \frac{\bar d}{se(\bar d)} \to \cN(0;1),
+    \]
+    где $se^2(\bar d)$ — состоятельная оценка для $\Var(\bar d)$.
+    \pause 
+    На практике оценивают регрессию на константу
+    \[
+    \hat d_t = \hat \beta_1,
+    \]
+    \pause 
+    получают $\hat\beta_1 = \bar d$ и используют готовые \alert{робастные стандартные ошибки},
+    \[
+        DM = \frac{\hat \beta_1}{se_{HAC}(\hat\beta_1)}.
+    \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Как устроена робастная оценка?}
+  
+  Сравниваем прогнозы по $P$ точкам, 
+  \[
+  \Var(\bar d) = \frac{1}{P^2} (\Var(d_1) + \Var(d_2) + \ldots + \Cov(d_1, d_2) + \ldots)  
+  \]\pause
+  Из стационарности $d_t$:
+  \[
+    \Var(\bar d) = \frac{1}{P^2} (P\Var(d_1) + (P-1) \Cov(d_1, d_2) + (P-2)\Cov(d_1, d_3) +\ldots)  
+  \]\pause 
+  Наивная оценка:
+  \[
+    \widehat\Var(\bar d) = \frac{1}{P^2} (P\widehat\Var(d_1) + (P-1) \widehat\Cov(d_1, d_2) + (P-2)\widehat\Cov(d_1, d_3) +\ldots)  
+  \]
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Почему сравнение прогнозов?}
+
+    \alert{Нюанс}: сравнение прогнозов и сравнение моделей — разные задачи. 
+    \pause
+    Модель может сильно выигрывать \alert{по простоте} и немного проигрывать по прогнозам.
+    \pause 
+    На малой выборке \alert{потеря информации} о качестве прогнозов на обучающей выборке существенна. 
+    \pause 
+    На практике часто \alert{говорят «моделей»}.
+\end{frame}
+
+
+\begin{frame}{Сравнение двух прогнозов: итоги}
+
+  \begin{itemize}[<+->]
+    \item Тест Диболда-Мариано подходит для сравнения \alert{двух} прогнозов. 
+    \item Сравнение прогнозов и сравнение моделей — \alert{немного разные} задачи.  
+  \end{itemize}
+\end{frame}
+

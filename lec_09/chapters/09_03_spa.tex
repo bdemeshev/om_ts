@@ -1,0 +1,154 @@
+% !TEX root = ../om_ts_09.tex
+
+\begin{frame} % название фрагмента
+
+\videotitle{Сравнение множества прогнозов}
+
+\end{frame}
+
+
+
+\begin{frame}{Сравнение множества прогнозов: план}
+  \begin{itemize}[<+->]
+    \item RC-теста Уайта.
+    \item Стационарный \alert{бутстрэп}.
+    \item \alert{Уточнения} SPA-теста.
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{RC-тест Уайта и SPA-тест Хансена}
+
+    RC = Reality Check, проверка реальностью;
+
+    SPA = Superior Predictive Ability, превосходящее качество прогнозов.
+    \pause 
+
+    \begin{itemize}
+        \item Два похожих теста, предназначенных для сравнения \alert{множества} прогнозов с эталонным. \pause
+        \item Сравнивают прогнозы на \alert{заданный горизонт} прогнозирования $h$. \pause
+        \item Не являются оптимальным для \alert{сравнения моделей}. \pause
+        \item SPA-тест — более \alert{робастная} вариация RC-теста. \pause
+        \item Предполагают \alert{оптимальные} параметры всех алгоритмов.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Обозначения}
+    
+    \begin{itemize}
+        \item $e_{jt} = \hat y_{jt} - y_t$ — ошибки прогноза алгоритма $j$; \pause
+        \item Превосходство алгоритмов над эталонным в момент $t$:
+        \[
+        d_t = \begin{pmatrix}
+          e_{\text{bench}, t}^2 - e_{At}^2 \\
+          e_{\text{bench}, t}^2 - e_{Bt}^2 \\          
+          e_{\text{bench}, t}^2 - e_{Ct}^2 \\
+          \ldots
+        \end{pmatrix}  
+        \] \pause
+        \item $\bar d = \sum d_t / P$ —  среднее превосходство алгоритмов, $P$ — число наблюдений, по которым идёт сравнение.  
+    \end{itemize}    
+    \pause 
+    Гипотезы RC-теста:
+    
+    $H_0$: $\E(d_t) = 0$. 
+
+    $H_a$: $\max(\E(d_t)) > 0$.
+\end{frame}
+
+
+
+
+\begin{frame}
+    \frametitle{Реализация RC-теста}
+
+    \begin{enumerate}[<+->]
+        \item Находим значение наилучшего среднего превосходства $RC = \max (\bar d)$.  
+        \item Генерируем \alert{бутстрэп-копию} траектории $d_t$: 
+        \[
+        d_1, d_2, \ldots, d_P  \quad \to \quad     d_1^*, d_2^*, \ldots, d_P^*.
+        \]
+        \item По бустрэп-копии находим для каждого алгоритма $j$
+        \[
+            \Delta_j = \bar d^*_j - \bar d_j.
+        \]
+        \item Находим $RC^* = \max(\Delta)$.
+        \item Повторяем шаги (2-4) 10000 раз, получаем $RC^*_1$, $RC^*_{10000}$.
+        \item Считаем P-значение как долю $RC^*$, оказавшихся больше фактического $RC$.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Бутстрэп-подделка}
+
+    Генерируем \alert{бутстрэп-копию} траектории $d_t$: 
+        \[
+        d_1, d_2, \ldots, d_P  \quad \to \quad     d_1^*, d_2^*, \ldots, d_P^*.
+        \] \pause
+    
+    Бутстрэп-подделка имеет длину исходного ряда.\pause 
+
+    Состоит из случайных, возможно накладывающихся, \alert{фрагментов} ряда. \pause 
+
+    Длина каждого фрагмента имеет \alert{геометрическое} распределение. 
+\end{frame}
+
+
+
+
+\begin{frame}
+    \frametitle{Уточнения SPA-теста}
+
+
+    \alert{Стьюдентизация} (нормировка) среднего превосходства каждого алгоритма. 
+        \[
+        \bar d = \begin{pmatrix}
+            \bar d_A \\
+            \bar d_B \\
+            \bar d_C \\
+            \ldots 
+        \end{pmatrix}     \to 
+        d_{stud} = \begin{pmatrix}
+            \bar d_A / se(\bar d_A) \\
+            \bar d_B / se(\bar d_B) \\
+            \bar d_C / se(\bar d_C) \\
+            \ldots 
+        \end{pmatrix}        
+        \] \pause
+        \[
+        SPA = \max(d_{stud})    
+        \]
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Уточнения SPA-теста}
+
+    \alert{Предварительное деление} алгоритмов на «хорошие» и «плохие». \pause
+
+    По бустрэп-копии находим для каждого алгоритма $j$
+    \[
+        \Delta_j = \begin{cases}
+            \bar d^*_j / se(\bar d_j) \text{ для плохого алгоритма } j\\
+            (\bar d^*_j - \bar d_j)/ se(\bar d_j) \text{ для хорошего алгоритма }j.
+        \end{cases}
+    \]
+\end{frame}
+
+
+
+\begin{frame}{Сравнение множества прогнозов: итоги}
+
+  \begin{itemize}[<+->]
+    \item SPA-тест и RC-тест подходят для сравнения \alert{множества} прогнозов. 
+    \item \alert{SPA-тест} Хансена имеет большую мощность. 
+    \item Иногда названия \alert{SPA} и \alert{RC} путают. 
+    \item SPA-тест используют, например, для сравнения \alert{торговых стратегий}. 
+    \item Сравнение прогнозов и сравнение моделей — \alert{разные} задачи. 
+  \end{itemize}
+\end{frame}
+
