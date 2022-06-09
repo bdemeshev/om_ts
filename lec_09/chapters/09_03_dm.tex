@@ -60,6 +60,7 @@
     \]
     где $se^2(\bar d)$ — состоятельная оценка для $\Var(\bar d)$.
     \pause 
+
     На практике оценивают регрессию на константу
     \[
     \hat d_t = \hat \beta_1,
@@ -76,15 +77,15 @@
   
   Сравниваем прогнозы по $P$ точкам, 
   \[
-  \Var(\bar d) = \frac{1}{P^2} (\Var(d_1) + \Var(d_2) + \ldots + \Cov(d_1, d_2) + \ldots)  
+  \Var(\bar d) = \frac{(\Var(d_1) + \Var(d_2) + \ldots + 2\Cov(d_1, d_2) + \ldots)}{P^2}
   \]\pause
   Из стационарности $d_t$:
   \[
-    \Var(\bar d) = \frac{1}{P^2} (P\Var(d_1) + (P-1) \Cov(d_1, d_2) + (P-2)\Cov(d_1, d_3) +\ldots)  
+    \Var(\bar d) = \frac{P\gamma_0 + 2(P-1) \gamma_1 + 2(P-2)\gamma_2 +\ldots}{P^2} 
   \]\pause 
   Наивная оценка:
   \[
-    \widehat\Var(\bar d) = \frac{1}{P^2} (P\widehat\Var(d_1) + (P-1) \widehat\Cov(d_1, d_2) + (P-2)\widehat\Cov(d_1, d_3) +\ldots)  
+    \widehat\Var(\bar d) = \frac{ P\hat\gamma_0 + 2(P-1) \hat\gamma_1 + 2(P-2)\hat\gamma_2 +\ldots}{P^2}
   \]
 \end{frame}
 
@@ -95,10 +96,13 @@
 
     \alert{Нюанс}: сравнение прогнозов и сравнение моделей — разные задачи. 
     \pause
+
     Модель может сильно выигрывать \alert{по простоте} и немного проигрывать по прогнозам.
     \pause 
+
     На малой выборке \alert{потеря информации} о качестве прогнозов на обучающей выборке существенна. 
     \pause 
+
     На практике часто \alert{говорят «моделей»}.
 \end{frame}
 
