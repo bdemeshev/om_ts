@@ -1,13 +1,18 @@
 file_name = om_ts_09
 
-$(file_name).pdf: $(file_name).tex chapters/*.tex figures/ preamble.tex
+$(file_name).pdf: $(file_name).tex chapters/*.tex figures/
 	# protection against biber error
 	# http://tex.stackexchange.com/questions/140814/
 	rm -rf `biber --cache`
 
+	# remove file indicator of handout
+	-rm .produce_handout
+
+
 	# create pdf
 	# will automatically run pdflatex/biber if necessary
 	# latexmk -xelatex $(file_name).tex
+	
 	arara -v $(file_name).tex
 
 	# clean auxillary files
@@ -30,13 +35,27 @@ handout:
 	# http://tex.stackexchange.com/questions/140814/
 	rm -rf `biber --cache`
 
+	# create file indicator of handout and copy the original tex
+	# we copy original file to not override pdf
+	touch .produce_handout
+	cp $(file_name).tex $(file_name)_handout.tex
+
+
 	# create pdf
 	# will automatically run pdflatex/biber if necessary
 	# latexmk -xelatex $(file_name)_handout.tex
+
+
 	arara -v $(file_name)_handout.tex
 
+	# remove file indicator of handout 
+	-rm .produce_handout
+
 	# clean auxillary files
-	# latexmk -c $(file_name)_handout.tex
+	latexmk -c $(file_name)_handout.tex
+
+	# remove auxillary tex file
+	-rm $(file_name)_handout.tex
 
 
 clean:
