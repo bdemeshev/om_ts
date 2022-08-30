@@ -18,13 +18,16 @@ $(file_name).pdf: $(file_name).tex chapters/*.tex figures/
 	# clean auxillary files
 	# latexmk -c $(file_name).tex
 
-	echo
-	echo
-	echo ---------------------------------------------
-	echo To make pngs use 'make png'
-	echo ---------------------------------------------
-	echo To compile handout version use 'make handout'
-	echo ---------------------------------------------
+	@echo
+	@echo
+	@echo ---------------------------------------------
+	@echo 'To make pngs use "make png"'
+	@echo ---------------------------------------------
+	@echo 'To compile handout version use "make handout"'
+	@echo ---------------------------------------------
+	@echo 'To clean non source files use "make clean"'
+	@echo ---------------------------------------------
+
 
 png:
 	mkdir -p slides
@@ -60,11 +63,12 @@ handout:
 
 clean:
 	latexmk -c $(file_name).tex
+	# latexmk -c $(file_name)_handout.tex
 	-rm *.nav
 	-rm *.snm
 	-rm *.xdv
 	-rm *.blg
 	-rm *.bbl
 	-rm *.log
-	-rm *.pdf
+	-rm *.aux
 
