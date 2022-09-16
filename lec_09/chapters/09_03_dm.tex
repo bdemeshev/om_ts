@@ -77,15 +77,15 @@
   
   Сравниваем прогнозы по $P$ точкам, 
   \[
-  \Var(\bar d) = \frac{(\Var(d_1) + \Var(d_2) + \ldots + 2\Cov(d_1, d_2) + \ldots)}{P^2}
+  \Var(\bar d) = \frac{\Var(d_1) + \Var(d_2) + \ldots + 2\Cov(d_1, d_2) + \ldots}{P^2}
   \]\pause
-  Из стационарности $d_t$:
+  Из стационарности $d_t$ дисперсия $\Var(\bar d)$ равна
   \[
-    \Var(\bar d) = \frac{P\gamma_0 + 2(P-1) \gamma_1 + 2(P-2)\gamma_2 +\ldots}{P^2} 
+    \frac{P\gamma_0 + 2(P-1) \gamma_1 + 2(P-2)\gamma_2 +\ldots}{P^2} 
   \]\pause 
-  Наивная оценка:
+  Наивная оценка дисперсии $\widehat\Var(\bar d)$ равна
   \[
-    \widehat\Var(\bar d) = \frac{ P\hat\gamma_0 + 2(P-1) \hat\gamma_1 + 2(P-2)\hat\gamma_2 +\ldots}{P^2}
+    \frac{ P\hat\gamma_0 + 2(P-1) \hat\gamma_1 + 2(P-2)\hat\gamma_2 +\ldots}{P^2}
   \]
 \end{frame}
 
